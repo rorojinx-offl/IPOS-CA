@@ -1,0 +1,38 @@
+name: simpleCI.yml
+on: # Script for PRs and pushes to main
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+jobs:
+  build: # Configure build environment
+    name: Build/Compile
+    runs-on: ubuntu-latest # Ubuntu for kernel distro
+
+    steps:
+      - name: Checkout repo # First, checkout repo for actions to work with
+        uses: actions/checkout@v4
+
+      - name: Setup JDK # Setup Java environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin' # Apparently is the top standard and very stable JDK distribution
+          java-version: '25' # Has to match the project's JDK version
+
+      - name: Cache Gradle dependencies # Cache Gradle packages to speed up later workflow executions
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }} # Key for cache to enable refresh caches if changes are made
+          restore-keys: |  # Restore the cache if no exact key is found but a similar one exists
+            gradle-${{ runner.os }}-
+
+      - name: Make Gradle Wrapper Executable # Just to make sure the wrapper is always executable
+        run: chmod +x ./gradlew
+
+      - name: Build Project # Successful build enforcement
+        run: ./gradlew build -x test
