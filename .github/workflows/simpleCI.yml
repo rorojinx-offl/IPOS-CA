@@ -8,7 +8,7 @@ on: # Script for PRs and pushes to main
       - main
 jobs:
   build: # Configure build environment
-    name: Build/Compile
+    name: Simple CI
     runs-on: ubuntu-latest # Ubuntu for kernel distro
 
     steps:
