@@ -33,6 +33,7 @@ public class DatabaseOps {
         //insertData(connection);
 
         queryData(connection);
+        closeConnection(connection);
     }
 
     private static void createTable(Connection connection, String tableName, ArrayList<Table> tableSchema) {
@@ -67,6 +68,12 @@ public class DatabaseOps {
                 System.out.println(rs.getString("NAME") + " " + rs.getString("AGE") + " " + rs.getString("ADDRESS") + " " + rs.getString("SALARY"));
             }
             stm.close();
+        } catch (Exception e) {System.err.println(e.getClass().getName() + ": " + e.getMessage());}
+    }
+
+    private static void closeConnection(Connection connection) {
+        try {
+            connection.close();
         } catch (Exception e) {System.err.println(e.getClass().getName() + ": " + e.getMessage());}
     }
 }
