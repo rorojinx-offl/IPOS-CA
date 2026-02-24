@@ -6,8 +6,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DatabaseOps {
-    public record Table(String tupleName, String type, boolean isPrimaryKey, boolean isNotNull) {}
-    private static StatementBuilder statementBuilder;
+    public sealed interface TableSchema permits Column, ForeignKey{}
+    public record Column(String tupleName, String type, boolean isPrimaryKey, boolean isNotNull) implements TableSchema {}
+    public record ForeignKey(String fkColumns, String refTable, String refColumns, boolean onDeleteCascade, boolean onUpdateCascade) implements TableSchema {}
+    private static DDLEngine DDLEngine;
     private static Statement stm;
 
     static void main() {
@@ -16,30 +18,40 @@ public class DatabaseOps {
         System.out.println("Connection established");
 
         //Create a table
-        ArrayList<Table> tableSchema = new ArrayList<>(){
+        /*ArrayList<Column> tableSchema = new ArrayList<>(){
             {
-                add(new Table("ID", "INTEGER", true, false));
-                add(new Table("NAME", "TEXT", false, true));
-                add(new Table("AGE", "INT", false, true));
-                add(new Table("ADDRESS", "CHAR(100)", false, false));
-                add(new Table("SALARY", "REAL", false, false));
+                add(new Column("ID", "INTEGER", true, false));
+                add(new Column("NAME", "TEXT", false, true));
+                add(new Column("AGE", "INT", false, true));
+                add(new Column("ADDRESS", "CHAR(100)", false, false));
+                add(new Column("SALARY", "REAL", false, false));
+            }
+        };*/
+
+        ArrayList<TableSchema> tableSchema = new ArrayList<>() {
+            {
+                add(new Column("ID", "INTEGER", true, false));
+                add(new Column("NAME", "TEXT", false, true));
+                add(new Column("AGE", "INT", false, true));
+                add(new Column("ADDRESS", "CHAR(100)", false, false));
+                add(new Column("SALARY", "REAL", false, false));
             }
         };
 
-        statementBuilder = new StatementBuilder();
-        createTable(connection, "COMPANY", tableSchema);
-        System.out.println(statementBuilder.createTableStm("COMPANY",tableSchema));
+        DDLEngine = new DDLEngine();
+        //createTable(connection, "COMPANY", tableSchema);
+        System.out.println(DDLEngine.createTableStm("COMPANY",tableSchema));
 
         //insertData(connection);
 
-        queryData(connection);
+        //queryData(connection);
         closeConnection(connection);
     }
 
-    private static void createTable(Connection connection, String tableName, ArrayList<Table> tableSchema) {
+    private static void createTable(Connection connection, String tableName, ArrayList<TableSchema> tableSchema) {
         try {
             stm = connection.createStatement();
-            String sql = statementBuilder.createTableStm(tableName,tableSchema);
+            String sql = DDLEngine.createTableStm(tableName,tableSchema);
             stm.executeUpdate(sql);
             stm.close();
         } catch (Exception e) {
