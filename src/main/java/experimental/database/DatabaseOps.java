@@ -35,6 +35,7 @@ public class DatabaseOps {
                 add(new Column("AGE", "INT", false, true));
                 add(new Column("ADDRESS", "CHAR(100)", false, false));
                 add(new Column("SALARY", "REAL", false, false));
+                add(new ForeignKey("ID, ADDRESS", "COMPANY", "ID,SALARY", true, true));
             }
         };
 
