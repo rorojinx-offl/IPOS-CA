@@ -30,7 +30,7 @@ jooq {
     configuration {
         jdbc {
             driver = "org.sqlite.JDBC"
-            url = "jdbc:sqlite:${projectDir}/test.db"
+            url = "jdbc:sqlite:${projectDir}/iposca.db"
             user = ""
             password = ""
         }
@@ -46,8 +46,8 @@ jooq {
             }
 
             target {
-                packageName = "experimental.database.generated"
-                directory = "src/main/java/experimental/database/generated"
+                packageName = "schema"
+                directory = "src/main/java/org/novastack/iposca/utils/db/generated"
             }
         }
     }
