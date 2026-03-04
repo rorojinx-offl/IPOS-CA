@@ -44,3 +44,4 @@ bin/
 /.idea/
 logs
 *.db
+/src/main/resources/ui/cust/assets/
