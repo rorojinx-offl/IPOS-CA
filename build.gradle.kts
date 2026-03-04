@@ -1,6 +1,8 @@
 plugins {
     id("java")
     id("org.jooq.jooq-codegen-gradle") version "3.20.11"
+    id("application")
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 group = "org.example"
@@ -17,6 +19,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.28")
     implementation("org.xerial:sqlite-jdbc:3.51.2.0")
     implementation("org.jooq:jooq:3.20.11")
+    implementation("org.openjfx:javafx:25.0.2")
     jooqCodegen("org.xerial:sqlite-jdbc:3.51.2.0") //Add SQLite to task's classpath
 }
 
@@ -51,4 +54,13 @@ jooq {
             }
         }
     }
+}
+
+javafx {
+    version = "25.0.2"
+    modules("javafx.controls", "javafx.fxml")
+}
+
+application {
+    mainClass.set("org.novastack.iposca.cust.UIMain")
 }
