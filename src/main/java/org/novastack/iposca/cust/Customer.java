@@ -42,6 +42,9 @@ public class Customer {
     public enum AccountStatus {
         NORMAL, SUSPENDED, IN_DEFAULT
     }
+    public enum DiscountPlan {
+        FLEXIBLE, FIXED
+    }
 
     public void addCustomer(Customer customer) throws DataAccessException {
         DSLContext ctx = JooqConnection.getDSLContext();
