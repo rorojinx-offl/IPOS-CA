@@ -6,13 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.net.URL;
-
 public class UIMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/ui/cust/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ui/cust/custMenu.fxml"));
         stage.setTitle("Customer");
         stage.setScene(new Scene(root));
         stage.show();
