@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.utils.ui.CommonCalls;
-import org.novastack.iposca.utils.ui.ErrorController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,33 +24,7 @@ import java.util.ResourceBundle;
 public class ManagementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        customerID.setCellValueFactory(new PropertyValueFactory<Customer,Integer>("customerID"));
-        name.setCellValueFactory(new PropertyValueFactory<Customer,String>("name"));
-        email.setCellValueFactory(new PropertyValueFactory<Customer,String>("email"));
-        address.setCellValueFactory(new PropertyValueFactory<Customer,String>("address"));
-        phone.setCellValueFactory(new PropertyValueFactory<Customer,String>("phone"));
-        credLimit.setCellValueFactory(new PropertyValueFactory<Customer,Float>("creditLimit"));
-        discountPlan.setCellValueFactory(new PropertyValueFactory<Customer,String>("discountPlan"));
-        status.setCellValueFactory(new PropertyValueFactory<Customer,String>("status"));
-
-        Customer customer = new Customer();
-        try {
-            ArrayList<Customer> list = customer.getAllCustomers();
-            customers.addAll(list);
-            customerTable.setItems(customers);
-        } catch (DataAccessException e) {
-            try {
-                new CommonCalls().openErrorDialog(e.getMessage());
-            } catch (IOException e1) {
-                throw new RuntimeException(e1);
-            }
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            try {
-                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+        refreshTable();
     }
 
     ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -116,6 +89,44 @@ public class ManagementController implements Initializable {
         } catch (DataAccessException e) {
             new CommonCalls().openErrorDialog(e.getMessage());
         }
-        customerTable.getItems().remove(customerTable.getSelectionModel().getSelectedItem());
+        //customerTable.getItems().remove(customerTable.getSelectionModel().getSelectedItem());
+        customerTable.getItems().removeAll(customerTable.getSelectionModel().getTableView().getItems());
+        refreshTable();
+    }
+
+    @FXML
+    void setFixedDsc(MouseEvent event) throws IOException {
+        Stage stage = (Stage) editButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/cust/fixedDsc.fxml");
+    }
+
+    private void refreshTable() {
+        customerID.setCellValueFactory(new PropertyValueFactory<Customer,Integer>("customerID"));
+        name.setCellValueFactory(new PropertyValueFactory<Customer,String>("name"));
+        email.setCellValueFactory(new PropertyValueFactory<Customer,String>("email"));
+        address.setCellValueFactory(new PropertyValueFactory<Customer,String>("address"));
+        phone.setCellValueFactory(new PropertyValueFactory<Customer,String>("phone"));
+        credLimit.setCellValueFactory(new PropertyValueFactory<Customer,Float>("creditLimit"));
+        discountPlan.setCellValueFactory(new PropertyValueFactory<Customer,String>("discountPlan"));
+        status.setCellValueFactory(new PropertyValueFactory<Customer,String>("status"));
+
+        Customer customer = new Customer();
+        try {
+            ArrayList<Customer> list = customer.getAllCustomers();
+            customers.addAll(list);
+            customerTable.setItems(customers);
+        } catch (DataAccessException e) {
+            try {
+                new CommonCalls().openErrorDialog(e.getMessage());
+            } catch (IOException e1) {
+                throw new RuntimeException(e1);
+            }
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            try {
+                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 }
