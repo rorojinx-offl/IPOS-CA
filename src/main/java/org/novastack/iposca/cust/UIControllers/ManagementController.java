@@ -108,4 +108,14 @@ public class ManagementController implements Initializable {
         stage.setScene(new javafx.scene.Scene(root));
         stage.show();
     }
+
+    @FXML
+    void delCustomer(MouseEvent event) throws IOException {
+        try {
+            new Customer().deleteCustomer(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
+        } catch (DataAccessException e) {
+            new CommonCalls().openErrorDialog(e.getMessage());
+        }
+        customerTable.getItems().remove(customerTable.getSelectionModel().getSelectedItem());
+    }
 }

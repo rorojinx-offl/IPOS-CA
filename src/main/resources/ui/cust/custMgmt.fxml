@@ -51,7 +51,7 @@
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #8b0000;" text="Delete Customer" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#delCustomer" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #8b0000;" text="Delete Customer" GridPane.rowIndex="1">
                <font>
                   <Font size="29.0" />
                </font>
