@@ -80,7 +80,6 @@ public class EditController implements Initializable {
 
     @FXML
     void editUser(MouseEvent event) throws IOException {
-        IValid iv = new IValid();
         boolean allFieldsFilled = true;
 
         if (name.getText().isEmpty()) {
@@ -91,7 +90,7 @@ public class EditController implements Initializable {
             emailWarning.setText("Email cannot be empty!");
             allFieldsFilled = false;
         }
-        if (!iv.checkEmail(email.getText()) && !email.getText().isEmpty()) {
+        if (!IValid.checkEmail(email.getText()) && !email.getText().isEmpty()) {
             emailWarning.setText("Email Format is invalid!");
             allFieldsFilled = false;
         }
@@ -103,7 +102,7 @@ public class EditController implements Initializable {
             phoneWarning.setText("Phone number cannot be empty!");
             allFieldsFilled = false;
         }
-        if (!iv.checkPhone(phone.getText()) && !phone.getText().isEmpty()) {
+        if (!IValid.checkPhone(phone.getText()) && !phone.getText().isEmpty()) {
             phoneWarning.setText("Phone number format is invalid!");
             allFieldsFilled = false;
         }
@@ -111,7 +110,7 @@ public class EditController implements Initializable {
             credLimitWarning.setText("Credit limit cannot be empty!");
             allFieldsFilled = false;
         }
-        if (!iv.checkCreditLimit(credLimit.getText()) && !credLimit.getText().isEmpty()) {
+        if (!IValid.checkCreditLimit(credLimit.getText()) && !credLimit.getText().isEmpty()) {
             credLimitWarning.setText("Credit limit value is invalid!");
             allFieldsFilled = false;
         }
