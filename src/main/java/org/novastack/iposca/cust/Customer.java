@@ -6,6 +6,7 @@ import org.novastack.iposca.utils.db.JooqConnection;
 
 import java.util.ArrayList;
 
+import static org.jooq.impl.DSL.max;
 import static schema.tables.Customer.CUSTOMER;
 
 public class Customer {
@@ -116,6 +117,13 @@ public class Customer {
                 .set(CUSTOMER.STATUS, status)
                 .where(CUSTOMER.ID.eq(customerID))
                 .execute();
+    }
+
+    public int getLatestID() {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        return ctx.select(max(CUSTOMER.ID))
+                .from(CUSTOMER)
+                .fetchOneInto(Integer.class);
     }
 
     public void setCustomerID(int customerID) {
