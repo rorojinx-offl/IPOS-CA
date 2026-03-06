@@ -28,7 +28,7 @@ public class DDLEngine {
         return new ChainData(String.join(", ", tokens), fkChainLength);
     }
 
-    private String createTableStm(String tableName, ArrayList<TableSchema> tableSchema) {
+    public String createTableStm(String tableName, ArrayList<TableSchema> tableSchema) {
        tableName = identifierCheck(tableName);
 
         StringBuilder stm = new StringBuilder();
@@ -52,7 +52,14 @@ public class DDLEngine {
                         isEnd = ")";
                     }
 
-                    stm.append(String.format("%s %s %s %s%s", tupleName, col.type(), pk, notNull, isEnd));
+                    String extraConstraints = "";
+                    if (col.extraConstraints() != null) {
+                        if (!col.extraConstraints().isEmpty()) {
+                            extraConstraints = collateColumnConstraints(col.extraConstraints());
+                        }
+                    }
+
+                    stm.append(String.format("%s %s %s %s %s%s", tupleName, col.type(), pk, notNull,extraConstraints, isEnd));
                 }
                 case TableSchema.ForeignKey fk -> {
                     ChainData fkColChain = fkChainIdentifierCheck(fk.fkColumns());
@@ -61,8 +68,6 @@ public class DDLEngine {
                     if (colObjCount < 1) {throw new IllegalStateException("Foreign keys can only be added when atleast one column is present");}
                     if (fkObjCount > 1) {throw new IllegalStateException("Please add multiple foreign key declarations in one statement");}
                     if (fkColChain.length != refColChain.length) {throw new IllegalStateException("Foreign key column count and reference column count should be same");}
-
-
 
                     String refTable = identifierCheck(fk.refTable());
                     String onDeleteCascade = fk.onDeleteCascade() ? "ON DELETE CASCADE" : "";
@@ -86,6 +91,19 @@ public class DDLEngine {
         } catch (SQLException e) {
             throw new SQLException(String.format("Failed to create %s table: %s",tableName, e.getMessage()));
         }
+    }
+
+    private String collateColumnConstraints(ArrayList<ColumnConstraint> constraints) {
+        StringBuilder stm = new StringBuilder();
+        for (ColumnConstraint constraint : constraints) {
+            switch (constraint) {
+                case ColumnConstraint.Unique unique -> stm.append("UNIQUE ");
+                case ColumnConstraint.Default dft -> stm.append(String.format("DEFAULT %s", dft.value()));
+                case ColumnConstraint.Check check -> stm.append(String.format("CHECK(%s)", check.condition()));
+                default -> throw new IllegalStateException("Unexpected value: " + constraint);
+            }
+        }
+        return stm.toString();
     }
 
     public String dropTableStm(String tableName) {
