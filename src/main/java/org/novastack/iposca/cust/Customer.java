@@ -103,6 +103,13 @@ public class Customer {
                 .execute();
     }
 
+    public void deleteCustomer(int id) throws DataAccessException {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.deleteFrom(CUSTOMER)
+                .where(CUSTOMER.ID.eq(id))
+                .execute();
+    }
+
     public void updateAccountStatus(int customerID, String status) throws DataAccessException {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.update(CUSTOMER)
