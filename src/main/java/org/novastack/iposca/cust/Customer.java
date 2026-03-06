@@ -101,6 +101,7 @@ public class Customer {
                 .set(CUSTOMER.PHONE, customer.getPhone())
                 .set(CUSTOMER.CREDITLIMIT, customer.getCreditLimit())
                 .set(CUSTOMER.DSCPLAN, customer.getDiscountPlan())
+                .where(CUSTOMER.ID.eq(customer.getCustomerID()))
                 .execute();
     }
 
