@@ -4,13 +4,17 @@
 package schema;
 
 
+import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
+import org.jooq.impl.QOM.ForeignKeyRule;
 
 import schema.tables.Customer;
+import schema.tables.FixedDsc;
 import schema.tables.records.CustomerRecord;
+import schema.tables.records.FixedDscRecord;
 
 
 /**
@@ -25,4 +29,11 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<CustomerRecord> CUSTOMER__PK_CUSTOMER = Internal.createUniqueKey(Customer.CUSTOMER, DSL.name("pk_customer"), new TableField[] { Customer.CUSTOMER.ID }, true);
+    public static final UniqueKey<FixedDscRecord> FIXED_DSC__PK_FIXED_DSC = Internal.createUniqueKey(FixedDsc.FIXED_DSC, DSL.name("pk_fixed_dsc"), new TableField[] { FixedDsc.FIXED_DSC.CUST_ID }, true);
+
+    // -------------------------------------------------------------------------
+    // FOREIGN KEY definitions
+    // -------------------------------------------------------------------------
+
+    public static final ForeignKey<FixedDscRecord, CustomerRecord> FIXED_DSC__FK_FIXED_DSC_PK_CUSTOMER = Internal.createForeignKey(FixedDsc.FIXED_DSC, DSL.name("fk_fixed_dsc_pk_customer"), new TableField[] { FixedDsc.FIXED_DSC.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
 }
