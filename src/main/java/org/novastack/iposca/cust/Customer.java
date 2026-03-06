@@ -76,12 +76,43 @@ public class Customer {
         return customers;
     }
 
+    public Customer getCustomer(int customerID) throws DataAccessException {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        return ctx.selectFrom(CUSTOMER)
+                .where(CUSTOMER.ID.eq(customerID))
+                .fetchOne(record -> new Customer(
+                        CUSTOMER.ID.getValue(record),
+                        CUSTOMER.NAME.getValue(record),
+                        CUSTOMER.EMAIL.getValue(record),
+                        CUSTOMER.ADDRESS.getValue(record),
+                        CUSTOMER.PHONE.getValue(record),
+                        CUSTOMER.CREDITLIMIT.getValue(record),
+                        CUSTOMER.DSCPLAN.getValue(record),
+                        CUSTOMER.STATUS.getValue(record)));
+    }
+
+    public void editCustomer(Customer customer) throws DataAccessException {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.update(CUSTOMER)
+                .set(CUSTOMER.NAME, customer.getName())
+                .set(CUSTOMER.EMAIL, customer.getEmail())
+                .set(CUSTOMER.ADDRESS, customer.getAddress())
+                .set(CUSTOMER.PHONE, customer.getPhone())
+                .set(CUSTOMER.CREDITLIMIT, customer.getCreditLimit())
+                .set(CUSTOMER.DSCPLAN, customer.getDiscountPlan())
+                .execute();
+    }
+
     public void updateAccountStatus(int customerID, String status) throws DataAccessException {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.update(CUSTOMER)
                 .set(CUSTOMER.STATUS, status)
                 .where(CUSTOMER.ID.eq(customerID))
                 .execute();
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
 
     public int getCustomerID() {
