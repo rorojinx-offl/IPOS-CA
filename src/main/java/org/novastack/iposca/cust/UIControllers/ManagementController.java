@@ -89,7 +89,6 @@ public class ManagementController implements Initializable {
         } catch (DataAccessException e) {
             new CommonCalls().openErrorDialog(e.getMessage());
         }
-        //customerTable.getItems().remove(customerTable.getSelectionModel().getSelectedItem());
         customerTable.getItems().removeAll(customerTable.getSelectionModel().getTableView().getItems());
         refreshTable();
     }
