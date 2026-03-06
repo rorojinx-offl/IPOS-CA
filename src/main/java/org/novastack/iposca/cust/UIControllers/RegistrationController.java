@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.utils.ui.CommonCalls;
+import org.novastack.iposca.utils.ui.IValid;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,6 +65,7 @@ public class RegistrationController implements Initializable {
 
     @FXML
     void registerUser(MouseEvent event) throws IOException {
+        IValid iv = new IValid();
         boolean allFieldsFilled = true;
 
         if (name.getText().isEmpty()) {
@@ -74,7 +76,7 @@ public class RegistrationController implements Initializable {
             emailWarning.setText("Email cannot be empty!");
             allFieldsFilled = false;
         }
-        if (!checkEmail(email.getText()) && !email.getText().isEmpty()) {
+        if (!iv.checkEmail(email.getText()) && !email.getText().isEmpty()) {
             emailWarning.setText("Email Format is invalid!");
             allFieldsFilled = false;
         }
@@ -86,7 +88,7 @@ public class RegistrationController implements Initializable {
             phoneWarning.setText("Phone number cannot be empty!");
             allFieldsFilled = false;
         }
-        if (!checkPhone(phone.getText()) && !phone.getText().isEmpty()) {
+        if (!iv.checkPhone(phone.getText()) && !phone.getText().isEmpty()) {
             phoneWarning.setText("Phone number format is invalid!");
             allFieldsFilled = false;
         }
@@ -94,7 +96,7 @@ public class RegistrationController implements Initializable {
             credLimitWarning.setText("Credit limit cannot be empty!");
             allFieldsFilled = false;
         }
-        if (!checkCreditLimit(credLimit.getText()) && !credLimit.getText().isEmpty()) {
+        if (!iv.checkCreditLimit(credLimit.getText()) && !credLimit.getText().isEmpty()) {
             credLimitWarning.setText("Credit limit value is invalid!");
             allFieldsFilled = false;
         }
@@ -127,25 +129,5 @@ public class RegistrationController implements Initializable {
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
         new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
-    }
-
-
-
-    private boolean checkCreditLimit(String creditLimit) {
-        float limit;
-        try {
-            limit = Float.parseFloat(creditLimit);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return limit > 0;
-    }
-
-    private boolean checkEmail(String email) {
-        return email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$");
-    }
-
-    private boolean checkPhone(String phone) {
-        return phone.matches("^\\d{11}$");
     }
 }
