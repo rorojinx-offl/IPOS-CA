@@ -5,6 +5,7 @@ package schema;
 
 
 import schema.tables.Customer;
+import schema.tables.FixedDsc;
 
 
 /**
@@ -17,4 +18,9 @@ public class Tables {
      * The table <code>customer</code>.
      */
     public static final Customer CUSTOMER = Customer.CUSTOMER;
+
+    /**
+     * The table <code>fixed_dsc</code>.
+     */
+    public static final FixedDsc FIXED_DSC = FixedDsc.FIXED_DSC;
 }
