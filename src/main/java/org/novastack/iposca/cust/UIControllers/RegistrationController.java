@@ -111,7 +111,7 @@ public class RegistrationController implements Initializable {
                     email.getText(),
                     address.getText(),
                     phone.getText(),
-                    credLimit.getLength(),
+                    Float.parseFloat(credLimit.getText()),
                     discountPlan.getValue(),
                     Customer.AccountStatus.NORMAL.name()
             );
