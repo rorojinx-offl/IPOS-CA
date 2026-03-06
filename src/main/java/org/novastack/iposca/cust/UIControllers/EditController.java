@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.Customer;
+import org.novastack.iposca.cust.FixedDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.IValid;
 
@@ -62,6 +63,8 @@ public class EditController implements Initializable {
     @FXML
     private Label phoneWarning;
 
+    private String oldDS;
+
     public void setID(int ID) {
         this.id = ID;
         Customer customer = new Customer();
@@ -72,6 +75,7 @@ public class EditController implements Initializable {
         phone.setText(customer.getPhone());
         credLimit.setText(String.valueOf(customer.getCreditLimit()));
         discountPlan.getSelectionModel().select(customer.getDiscountPlan());
+        oldDS = customer.getDiscountPlan();
     }
 
     @FXML
@@ -118,6 +122,7 @@ public class EditController implements Initializable {
 
         if (allFieldsFilled) {
             Customer customer = new Customer(
+                    id,
                     name.getText(),
                     email.getText(),
                     address.getText(),
@@ -132,6 +137,15 @@ public class EditController implements Initializable {
             } catch (DataAccessException e) {
                 new CommonCalls().openErrorDialog(e.getMessage());
             }
+
+            if (!(checkDSChange(id)) && (discountPlan.getValue().equals(Customer.DiscountPlan.FLEXIBLE.name()))) {
+                FixedDiscountPlan fdp = new FixedDiscountPlan();
+                fdp.removeDiscount(id);
+            } else if (!(checkDSChange(id)) && (discountPlan.getValue().equals(Customer.DiscountPlan.FIXED.name()))) {
+                FixedDiscountPlan fdp = new FixedDiscountPlan(id, 20);
+                fdp.addDiscount(fdp);
+            }
+
             returnToParent(event);
         }
     }
@@ -141,5 +155,10 @@ public class EditController implements Initializable {
         Stage stage = (Stage) backButton.getScene().getWindow();
         new CommonCalls().traverse(stage, "/ui/cust/custMgmt.fxml");
 
+    }
+
+    private boolean checkDSChange(int id) {
+        String newDS = discountPlan.getValue();
+        return newDS.equals(oldDS);
     }
 }
