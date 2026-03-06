@@ -1,7 +1,7 @@
 package org.novastack.iposca.utils.ui;
 
 public class IValid {
-    public boolean checkCreditLimit(String creditLimit) {
+    public static boolean checkCreditLimit(String creditLimit) {
         float limit;
         try {
             limit = Float.parseFloat(creditLimit);
@@ -11,11 +11,21 @@ public class IValid {
         return limit > 0;
     }
 
-    public boolean checkEmail(String email) {
+    public static boolean checkEmail(String email) {
         return email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$");
     }
 
-    public boolean checkPhone(String phone) {
+    public static boolean checkPhone(String phone) {
         return phone.matches("^\\d{11}$");
+    }
+
+    public static boolean checkRate(String rate) {
+        int rateInt;
+        try {
+            rateInt = Integer.parseInt(rate);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return rateInt >= 0 && rateInt <= 100;
     }
 }
