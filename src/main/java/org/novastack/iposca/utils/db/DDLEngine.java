@@ -47,7 +47,7 @@ public class DDLEngine {
                     String notNull = col.isNotNull() ? "NOT NULL" : "";
                     String isEnd = ", ";
                     if (i < tableSchema.size() - 1) {
-                        if (!(tableSchema.get(i + 1) instanceof TableSchema.Column)) {isEnd = ")";}
+                        if (!(tableSchema.get(i + 1) instanceof TableSchema.Column)) {isEnd = ", ";}
                     } else if (i == tableSchema.size() - 1) {
                         isEnd = ")";
                     }
@@ -68,7 +68,7 @@ public class DDLEngine {
                     String onDeleteCascade = fk.onDeleteCascade() ? "ON DELETE CASCADE" : "";
                     String onUpdateCascade = fk.onUpdateCascade() ? "ON UPDATE CASCADE" : "";
 
-                    stm.append(String.format(", FOREIGN KEY (%s) REFERENCES %s(%s) %s %s", fkColChain.chain, refTable, refColChain.chain, onDeleteCascade, onUpdateCascade));
+                    stm.append(String.format("FOREIGN KEY (%s) REFERENCES %s(%s) %s %s)", fkColChain.chain, refTable, refColChain.chain, onDeleteCascade, onUpdateCascade));
                 }
                 default -> throw new IllegalStateException("Unexpected value: " + rule);
             }
@@ -105,8 +105,6 @@ public class DDLEngine {
     }
 
     private String createIndexStm(String tableName, String columnName) {
-        tableName = identifierCheck(tableName);
-        columnName = identifierCheck(columnName);
         return String.format("CREATE INDEX IF NOT EXISTS idx_%s_%s ON %s(%s)", tableName.toLowerCase(), columnName.toLowerCase(), tableName, columnName);
     }
 
