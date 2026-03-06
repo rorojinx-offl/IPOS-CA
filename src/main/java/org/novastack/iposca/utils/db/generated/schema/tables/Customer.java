@@ -8,9 +8,13 @@ import java.util.Collection;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -25,6 +29,7 @@ import org.jooq.impl.TableImpl;
 
 import schema.DefaultSchema;
 import schema.Keys;
+import schema.tables.FixedDsc.FixedDscPath;
 import schema.tables.records.CustomerRecord;
 
 
@@ -118,6 +123,39 @@ public class Customer extends TableImpl<CustomerRecord> {
         this(DSL.name("customer"), null);
     }
 
+    public <O extends Record> Customer(Table<O> path, ForeignKey<O, CustomerRecord> childPath, InverseForeignKey<O, CustomerRecord> parentPath) {
+        super(path, childPath, parentPath, CUSTOMER);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class CustomerPath extends Customer implements Path<CustomerRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> CustomerPath(Table<O> path, ForeignKey<O, CustomerRecord> childPath, InverseForeignKey<O, CustomerRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private CustomerPath(Name alias, Table<CustomerRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public CustomerPath as(String alias) {
+            return new CustomerPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public CustomerPath as(Name alias) {
+            return new CustomerPath(alias, this);
+        }
+
+        @Override
+        public CustomerPath as(Table<?> alias) {
+            return new CustomerPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : DefaultSchema.DEFAULT_SCHEMA;
@@ -126,6 +164,18 @@ public class Customer extends TableImpl<CustomerRecord> {
     @Override
     public UniqueKey<CustomerRecord> getPrimaryKey() {
         return Keys.CUSTOMER__PK_CUSTOMER;
+    }
+
+    private transient FixedDscPath _fixedDsc;
+
+    /**
+     * Get the implicit to-many join path to the <code>fixed_dsc</code> table
+     */
+    public FixedDscPath fixedDsc() {
+        if (_fixedDsc == null)
+            _fixedDsc = new FixedDscPath(this, null, Keys.FIXED_DSC__FK_FIXED_DSC_PK_CUSTOMER.getInverseKey());
+
+        return _fixedDsc;
     }
 
     @Override

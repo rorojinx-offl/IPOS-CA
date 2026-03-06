@@ -13,6 +13,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 
 import schema.tables.Customer;
+import schema.tables.FixedDsc;
 
 
 /**
@@ -34,6 +35,11 @@ public class DefaultSchema extends SchemaImpl {
     public final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
+     * The table <code>fixed_dsc</code>.
+     */
+    public final FixedDsc FIXED_DSC = FixedDsc.FIXED_DSC;
+
+    /**
      * No further instances allowed
      */
     private DefaultSchema() {
@@ -49,7 +55,8 @@ public class DefaultSchema extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
-            Customer.CUSTOMER
+            Customer.CUSTOMER,
+            FixedDsc.FIXED_DSC
         );
     }
 }
