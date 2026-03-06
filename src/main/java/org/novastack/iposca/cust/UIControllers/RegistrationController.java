@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.Customer;
+import org.novastack.iposca.cust.FixedDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.IValid;
 
@@ -121,7 +122,12 @@ public class RegistrationController implements Initializable {
             } catch (DataAccessException e) {
                 new CommonCalls().openErrorDialog(e.getMessage());
             }
+
             returnToParent(event);
+            if (discountPlan.getValue().equals(Customer.DiscountPlan.FIXED.name())) {
+                FixedDiscountPlan fdp = new FixedDiscountPlan(customer.getLatestID(), 10);
+                fdp.addDiscount(fdp);
+            }
         }
     }
 
