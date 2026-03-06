@@ -24,4 +24,10 @@ public class MenuController implements Initializable {
         Stage stage = (Stage) regButton.getScene().getWindow();
         new CommonCalls().traverse(stage, "/ui/cust/custReg.fxml");
     }
+
+    @FXML
+    void manageCustomer(MouseEvent event) throws IOException {
+        Stage stage = (Stage) regButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/cust/custMgmt.fxml");
+    }
 }

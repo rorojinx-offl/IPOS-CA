@@ -12,7 +12,7 @@
    <children>
       <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Orange;">
          <children>
-            <Label layoutX="209.0" layoutY="13.0" prefHeight="45.0" prefWidth="332.0" text="Customer Management">
+            <Label layoutX="253.0" layoutY="8.0" prefHeight="55.0" prefWidth="245.0" text="Customer Portal">
                <font>
                   <Font name="Agency FB" size="45.0" />
                </font>
@@ -27,6 +27,20 @@
                </image>
             </ImageView>
             <Label prefHeight="50.0" prefWidth="154.0" text="Register a Customer" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="480.0" layoutY="107.0" onMouseClicked="#manageCustomer" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/edit.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="50.0" prefWidth="154.0" text="Manage Customers" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
