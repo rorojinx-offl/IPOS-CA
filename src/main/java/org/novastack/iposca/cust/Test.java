@@ -15,8 +15,8 @@ public class Test {
 
         DDLEngine ddl = new DDLEngine();
         try {
-            ddl.createTable(conn,"customer",initiateTables());
-            ddl.createIndex(conn,"customer","ID");
+            ddl.createTable(conn,"fixed_dsc",initiateTables());
+            ddl.createIndex(conn,"fixed_dsc","CUST_ID");
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -25,14 +25,9 @@ public class Test {
     private static ArrayList<TableSchema> initiateTables() {
         return new ArrayList<>() {
             {
-                add(new TableSchema.Column("ID", "INTEGER", true, false));
-                add(new TableSchema.Column("NAME", "VARCHAR(255)", false, true));
-                add(new TableSchema.Column("EMAIL", "VARCHAR(255)", false, true));
-                add(new TableSchema.Column("ADDRESS", "TEXT", false, true));
-                add(new TableSchema.Column("PHONE", "VARCHAR(11)", false, true));
-                add(new TableSchema.Column("CREDITLIMIT", "REAL", false, true));
-                add(new TableSchema.Column("DSCPLAN", "VARCHAR(255)", false, true));
-                add(new TableSchema.Column("STATUS", "VARCHAR(255)", false, true));
+                add(new TableSchema.Column("CUST_ID", "INTEGER", true, false));
+                add(new TableSchema.Column("RATE", "INTEGER", false, true));
+                add(new TableSchema.ForeignKey("CUST_ID", "customer", "ID", true, true));
             }
         };
     }
