@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.cust.FixedDiscountPlan;
+import org.novastack.iposca.cust.FlexiDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.IValid;
 
@@ -140,9 +141,15 @@ public class EditController implements Initializable {
             if (!(checkDSChange(id)) && (discountPlan.getValue().equals(Customer.DiscountPlan.FLEXIBLE.name()))) {
                 FixedDiscountPlan fdp = new FixedDiscountPlan();
                 fdp.removeDiscount(id);
+
+                FlexiDiscountPlan fdp2 = new FlexiDiscountPlan(id, 0);
+                fdp2.addDiscount(fdp2);
             } else if (!(checkDSChange(id)) && (discountPlan.getValue().equals(Customer.DiscountPlan.FIXED.name()))) {
-                FixedDiscountPlan fdp = new FixedDiscountPlan(id, 20);
-                fdp.addDiscount(fdp);
+                FlexiDiscountPlan fdp = new FlexiDiscountPlan();
+                fdp.removeDiscount(id);
+
+                FixedDiscountPlan fdp2 = new FixedDiscountPlan(id, 20);
+                fdp2.addDiscount(fdp2);
             }
 
             returnToParent(event);
