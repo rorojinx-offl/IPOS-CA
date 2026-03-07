@@ -10,4 +10,6 @@ public interface DiscountPlans {
     int getCustomerID();
     String getCustomerName();
     int getDiscountRate();
+
+    public int getCurrentDiscountRate(int id);
 }

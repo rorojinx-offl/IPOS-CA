@@ -63,7 +63,8 @@ public class FixedDiscountPlan implements DiscountPlans {
                 .execute();
     }
 
-    public static int getCurrentDiscountRate(int id) {
+    @Override
+    public int getCurrentDiscountRate(int id) {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.select(FIXED_DSC.RATE)
                 .from(FIXED_DSC)

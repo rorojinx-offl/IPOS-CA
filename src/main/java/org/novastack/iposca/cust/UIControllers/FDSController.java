@@ -55,7 +55,7 @@ public class FDSController implements Initializable {
             return;
         }
 
-        int oldDiscountRate = FixedDiscountPlan.getCurrentDiscountRate(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
+        int oldDiscountRate = new FixedDiscountPlan().getCurrentDiscountRate(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
 
         if (!IValid.checkRate(newRate.getText()) || newRate.getText().isEmpty()) {
             new CommonCalls().openErrorDialog("The value is either invalid or empty!");
