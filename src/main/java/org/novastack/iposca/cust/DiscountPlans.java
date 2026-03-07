@@ -8,6 +8,5 @@ public interface DiscountPlans {
     void removeDiscount(int d);
     ArrayList<DiscountPlans> getAllDiscounts();
     int getCustomerID();
-    String getCustomerName();
     int getDiscountRate();
 }
