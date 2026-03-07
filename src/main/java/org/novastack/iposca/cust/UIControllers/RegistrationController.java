@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.cust.FixedDiscountPlan;
+import org.novastack.iposca.cust.FlexiDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.IValid;
 
@@ -125,6 +126,9 @@ public class RegistrationController implements Initializable {
             returnToParent(event);
             if (discountPlan.getValue().equals(Customer.DiscountPlan.FIXED.name())) {
                 FixedDiscountPlan fdp = new FixedDiscountPlan(customer.getLatestID(), 10);
+                fdp.addDiscount(fdp);
+            } else {
+                FlexiDiscountPlan fdp = new FlexiDiscountPlan(customer.getLatestID(), 0);
                 fdp.addDiscount(fdp);
             }
         }
