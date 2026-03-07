@@ -34,6 +34,11 @@ public class FixedDiscountPlan implements DiscountPlans {
     }
 
     @Override
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    @Override
     public int getDiscountRate() {
         return discountRate;
     }
