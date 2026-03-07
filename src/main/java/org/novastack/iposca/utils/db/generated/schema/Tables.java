@@ -5,7 +5,9 @@ package schema;
 
 
 import schema.tables.Customer;
+import schema.tables.CustomerMonthlySpend;
 import schema.tables.FixedDsc;
+import schema.tables.FlexiDsc;
 
 
 /**
@@ -20,7 +22,17 @@ public class Tables {
     public static final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
+     * The table <code>customer_monthly_spend</code>.
+     */
+    public static final CustomerMonthlySpend CUSTOMER_MONTHLY_SPEND = CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND;
+
+    /**
      * The table <code>fixed_dsc</code>.
      */
     public static final FixedDsc FIXED_DSC = FixedDsc.FIXED_DSC;
+
+    /**
+     * The table <code>flexi_dsc</code>.
+     */
+    public static final FlexiDsc FLEXI_DSC = FlexiDsc.FLEXI_DSC;
 }

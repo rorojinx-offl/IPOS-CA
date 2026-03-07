@@ -9,7 +9,9 @@ import org.jooq.OrderField;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
+import schema.tables.CustomerMonthlySpend;
 import schema.tables.FixedDsc;
+import schema.tables.FlexiDsc;
 
 
 /**
@@ -22,5 +24,7 @@ public class Indexes {
     // INDEX definitions
     // -------------------------------------------------------------------------
 
+    public static final Index IDX_CUSTOMER_MONTHLY_SPEND_CUST_ID = Internal.createIndex(DSL.name("idx_customer_monthly_spend_cust_id"), CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND, new OrderField[] { CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND.CUST_ID }, false);
     public static final Index IDX_FIXED_DSC_CUST_ID = Internal.createIndex(DSL.name("idx_fixed_dsc_cust_id"), FixedDsc.FIXED_DSC, new OrderField[] { FixedDsc.FIXED_DSC.CUST_ID }, false);
+    public static final Index IDX_FLEXI_DSC_CUST_ID = Internal.createIndex(DSL.name("idx_flexi_dsc_cust_id"), FlexiDsc.FLEXI_DSC, new OrderField[] { FlexiDsc.FLEXI_DSC.CUST_ID }, false);
 }

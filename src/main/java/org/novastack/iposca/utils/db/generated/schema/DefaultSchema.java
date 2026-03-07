@@ -13,7 +13,9 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 
 import schema.tables.Customer;
+import schema.tables.CustomerMonthlySpend;
 import schema.tables.FixedDsc;
+import schema.tables.FlexiDsc;
 
 
 /**
@@ -35,9 +37,19 @@ public class DefaultSchema extends SchemaImpl {
     public final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
+     * The table <code>customer_monthly_spend</code>.
+     */
+    public final CustomerMonthlySpend CUSTOMER_MONTHLY_SPEND = CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND;
+
+    /**
      * The table <code>fixed_dsc</code>.
      */
     public final FixedDsc FIXED_DSC = FixedDsc.FIXED_DSC;
+
+    /**
+     * The table <code>flexi_dsc</code>.
+     */
+    public final FlexiDsc FLEXI_DSC = FlexiDsc.FLEXI_DSC;
 
     /**
      * No further instances allowed
@@ -56,7 +68,9 @@ public class DefaultSchema extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Customer.CUSTOMER,
-            FixedDsc.FIXED_DSC
+            CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND,
+            FixedDsc.FIXED_DSC,
+            FlexiDsc.FLEXI_DSC
         );
     }
 }

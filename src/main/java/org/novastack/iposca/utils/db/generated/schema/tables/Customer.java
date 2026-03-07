@@ -29,7 +29,9 @@ import org.jooq.impl.TableImpl;
 
 import schema.DefaultSchema;
 import schema.Keys;
+import schema.tables.CustomerMonthlySpend.CustomerMonthlySpendPath;
 import schema.tables.FixedDsc.FixedDscPath;
+import schema.tables.FlexiDsc.FlexiDscPath;
 import schema.tables.records.CustomerRecord;
 
 
@@ -166,6 +168,19 @@ public class Customer extends TableImpl<CustomerRecord> {
         return Keys.CUSTOMER__PK_CUSTOMER;
     }
 
+    private transient CustomerMonthlySpendPath _customerMonthlySpend;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>customer_monthly_spend</code> table
+     */
+    public CustomerMonthlySpendPath customerMonthlySpend() {
+        if (_customerMonthlySpend == null)
+            _customerMonthlySpend = new CustomerMonthlySpendPath(this, null, Keys.CUSTOMER_MONTHLY_SPEND__FK_CUSTOMER_MONTHLY_SPEND_PK_CUSTOMER.getInverseKey());
+
+        return _customerMonthlySpend;
+    }
+
     private transient FixedDscPath _fixedDsc;
 
     /**
@@ -176,6 +191,18 @@ public class Customer extends TableImpl<CustomerRecord> {
             _fixedDsc = new FixedDscPath(this, null, Keys.FIXED_DSC__FK_FIXED_DSC_PK_CUSTOMER.getInverseKey());
 
         return _fixedDsc;
+    }
+
+    private transient FlexiDscPath _flexiDsc;
+
+    /**
+     * Get the implicit to-many join path to the <code>flexi_dsc</code> table
+     */
+    public FlexiDscPath flexiDsc() {
+        if (_flexiDsc == null)
+            _flexiDsc = new FlexiDscPath(this, null, Keys.FLEXI_DSC__FK_FLEXI_DSC_PK_CUSTOMER.getInverseKey());
+
+        return _flexiDsc;
     }
 
     @Override
