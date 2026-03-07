@@ -5,7 +5,12 @@ package schema;
 
 
 import schema.tables.Customer;
+import schema.tables.CustomerCharge;
+import schema.tables.CustomerDebt;
 import schema.tables.CustomerMonthlySpend;
+import schema.tables.CustomerReminder;
+import schema.tables.CustomerRepayment;
+import schema.tables.CustomerStatement;
 import schema.tables.FixedDsc;
 import schema.tables.FlexiDsc;
 
@@ -22,9 +27,34 @@ public class Tables {
     public static final Customer CUSTOMER = Customer.CUSTOMER;
 
     /**
+     * The table <code>customer_charge</code>.
+     */
+    public static final CustomerCharge CUSTOMER_CHARGE = CustomerCharge.CUSTOMER_CHARGE;
+
+    /**
+     * The table <code>customer_debt</code>.
+     */
+    public static final CustomerDebt CUSTOMER_DEBT = CustomerDebt.CUSTOMER_DEBT;
+
+    /**
      * The table <code>customer_monthly_spend</code>.
      */
     public static final CustomerMonthlySpend CUSTOMER_MONTHLY_SPEND = CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND;
+
+    /**
+     * The table <code>customer_reminder</code>.
+     */
+    public static final CustomerReminder CUSTOMER_REMINDER = CustomerReminder.CUSTOMER_REMINDER;
+
+    /**
+     * The table <code>customer_repayment</code>.
+     */
+    public static final CustomerRepayment CUSTOMER_REPAYMENT = CustomerRepayment.CUSTOMER_REPAYMENT;
+
+    /**
+     * The table <code>customer_statement</code>.
+     */
+    public static final CustomerStatement CUSTOMER_STATEMENT = CustomerStatement.CUSTOMER_STATEMENT;
 
     /**
      * The table <code>fixed_dsc</code>.

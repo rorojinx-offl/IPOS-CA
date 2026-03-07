@@ -29,7 +29,12 @@ import org.jooq.impl.TableImpl;
 
 import schema.DefaultSchema;
 import schema.Keys;
+import schema.tables.CustomerCharge.CustomerChargePath;
+import schema.tables.CustomerDebt.CustomerDebtPath;
 import schema.tables.CustomerMonthlySpend.CustomerMonthlySpendPath;
+import schema.tables.CustomerReminder.CustomerReminderPath;
+import schema.tables.CustomerRepayment.CustomerRepaymentPath;
+import schema.tables.CustomerStatement.CustomerStatementPath;
 import schema.tables.FixedDsc.FixedDscPath;
 import schema.tables.FlexiDsc.FlexiDscPath;
 import schema.tables.records.CustomerRecord;
@@ -168,6 +173,32 @@ public class Customer extends TableImpl<CustomerRecord> {
         return Keys.CUSTOMER__PK_CUSTOMER;
     }
 
+    private transient CustomerChargePath _customerCharge;
+
+    /**
+     * Get the implicit to-many join path to the <code>customer_charge</code>
+     * table
+     */
+    public CustomerChargePath customerCharge() {
+        if (_customerCharge == null)
+            _customerCharge = new CustomerChargePath(this, null, Keys.CUSTOMER_CHARGE__FK_CUSTOMER_CHARGE_PK_CUSTOMER.getInverseKey());
+
+        return _customerCharge;
+    }
+
+    private transient CustomerDebtPath _customerDebt;
+
+    /**
+     * Get the implicit to-many join path to the <code>customer_debt</code>
+     * table
+     */
+    public CustomerDebtPath customerDebt() {
+        if (_customerDebt == null)
+            _customerDebt = new CustomerDebtPath(this, null, Keys.CUSTOMER_DEBT__FK_CUSTOMER_DEBT_PK_CUSTOMER.getInverseKey());
+
+        return _customerDebt;
+    }
+
     private transient CustomerMonthlySpendPath _customerMonthlySpend;
 
     /**
@@ -179,6 +210,45 @@ public class Customer extends TableImpl<CustomerRecord> {
             _customerMonthlySpend = new CustomerMonthlySpendPath(this, null, Keys.CUSTOMER_MONTHLY_SPEND__FK_CUSTOMER_MONTHLY_SPEND_PK_CUSTOMER.getInverseKey());
 
         return _customerMonthlySpend;
+    }
+
+    private transient CustomerReminderPath _customerReminder;
+
+    /**
+     * Get the implicit to-many join path to the <code>customer_reminder</code>
+     * table
+     */
+    public CustomerReminderPath customerReminder() {
+        if (_customerReminder == null)
+            _customerReminder = new CustomerReminderPath(this, null, Keys.CUSTOMER_REMINDER__FK_CUSTOMER_REMINDER_PK_CUSTOMER.getInverseKey());
+
+        return _customerReminder;
+    }
+
+    private transient CustomerRepaymentPath _customerRepayment;
+
+    /**
+     * Get the implicit to-many join path to the <code>customer_repayment</code>
+     * table
+     */
+    public CustomerRepaymentPath customerRepayment() {
+        if (_customerRepayment == null)
+            _customerRepayment = new CustomerRepaymentPath(this, null, Keys.CUSTOMER_REPAYMENT__FK_CUSTOMER_REPAYMENT_PK_CUSTOMER.getInverseKey());
+
+        return _customerRepayment;
+    }
+
+    private transient CustomerStatementPath _customerStatement;
+
+    /**
+     * Get the implicit to-many join path to the <code>customer_statement</code>
+     * table
+     */
+    public CustomerStatementPath customerStatement() {
+        if (_customerStatement == null)
+            _customerStatement = new CustomerStatementPath(this, null, Keys.CUSTOMER_STATEMENT__FK_CUSTOMER_STATEMENT_PK_CUSTOMER.getInverseKey());
+
+        return _customerStatement;
     }
 
     private transient FixedDscPath _fixedDsc;
