@@ -11,10 +11,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.utils.ui.CommonCalls;
+import org.novastack.iposca.utils.ui.ErrorController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -97,6 +99,17 @@ public class ManagementController implements Initializable {
     void setFixedDsc(MouseEvent event) throws IOException {
         Stage stage = (Stage) editButton.getScene().getWindow();
         new CommonCalls().traverse(stage, "/ui/cust/fixedDsc.fxml");
+    }
+
+    @FXML
+    void viewFlexiDsc(MouseEvent event) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/cust/flexiDsc.fxml"));
+        Parent root = loader.load();
+        stage.setTitle("View Flexible Discount Plans");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
 
     private void refreshTable() {
