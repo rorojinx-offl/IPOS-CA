@@ -37,6 +37,7 @@ public class DDLEngine {
         int i = 0;
         long colObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.Column).count();
         long fkObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.ForeignKey).count();
+        long pkObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.MultiPrimaryKey).count();
 
         for (TableSchema rule : tableSchema) {
             switch (rule) {
@@ -73,7 +74,31 @@ public class DDLEngine {
                     String onDeleteCascade = fk.onDeleteCascade() ? "ON DELETE CASCADE" : "";
                     String onUpdateCascade = fk.onUpdateCascade() ? "ON UPDATE CASCADE" : "";
 
-                    stm.append(String.format("FOREIGN KEY (%s) REFERENCES %s(%s) %s %s)", fkColChain.chain, refTable, refColChain.chain, onDeleteCascade, onUpdateCascade));
+                    String isEnd = ", ";
+                    if (i < tableSchema.size() - 1) {
+                        if (!(tableSchema.get(i + 1) instanceof TableSchema.ForeignKey)) {isEnd = ", ";}
+                    } else if (i == tableSchema.size() - 1) {
+                        isEnd = ")";
+                    }
+
+                    stm.append(String.format("FOREIGN KEY (%s) REFERENCES %s(%s) %s %s%s", fkColChain.chain, refTable, refColChain.chain, onDeleteCascade, onUpdateCascade, isEnd));
+                }
+
+                case TableSchema.MultiPrimaryKey pk -> {
+                    ChainData pkColChain = fkChainIdentifierCheck(pk.pkColumns());
+
+                    if (colObjCount < 1) {throw new IllegalStateException("Multi primary keys can only be added when atleast one column is present");}
+                    if (pkObjCount > 1) {throw new IllegalStateException("Please add multiple multi primary key declarations in one statement");}
+                    if (pkColChain.length < 2) {throw new IllegalStateException("Multi primary key column count should be atleast 2");}
+
+                    String isEnd = ", ";
+                    if (i < tableSchema.size() - 1) {
+                        if (!(tableSchema.get(i + 1) instanceof TableSchema.MultiPrimaryKey)) {isEnd = ", ";}
+                    } else if (i == tableSchema.size() - 1) {
+                        isEnd = ")";
+                    }
+
+                    stm.append(String.format("PRIMARY KEY (%s)%s", pkColChain.chain, isEnd));
                 }
                 default -> throw new IllegalStateException("Unexpected value: " + rule);
             }
