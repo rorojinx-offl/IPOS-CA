@@ -4,19 +4,21 @@ import org.jooq.DSLContext;
 import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.utils.db.JooqConnection;
 
+import java.time.LocalDate;
 import java.util.Date;
 import static schema.tables.CustomerDebt.CUSTOMER_DEBT;
+import static schema.tables.Customer.CUSTOMER;
 
 public class CustomerDebt {
     private int customerID;
     private float balance;
     private String status1Reminder;
-    private Date date1Reminder;
+    private LocalDate date1Reminder;
     private String status2Reminder;
-    private Date date2Reminder;
-    private Date statusChangedAt;
+    private LocalDate date2Reminder;
+    private LocalDate statusChangedAt;
 
-    public CustomerDebt(int customerID, float balance, String status1Reminder, Date date1Reminder, String status2Reminder, Date date2Reminder, Date statusChangedAt) {
+    public CustomerDebt(int customerID, float balance, String status1Reminder, LocalDate date1Reminder, String status2Reminder, LocalDate date2Reminder, LocalDate statusChangedAt) {
         this.customerID = customerID;
         this.balance = balance;
         this.status1Reminder = status1Reminder;
@@ -26,21 +28,76 @@ public class CustomerDebt {
         this.statusChangedAt = statusChangedAt;
     }
 
+    public CustomerDebt(int customerID, float balance) {
+        this.customerID = customerID;
+        this.balance = balance;
+    }
+
     public CustomerDebt() {}
 
-    public void addDebtAccount(int customerID, String status) {
+    public void upsertDebt(CustomerDebt cd, float creditLimit) {
         DSLContext ctx = JooqConnection.getDSLContext();
+        float initialBalance = creditLimit - cd.getBalance();
         ctx.insertInto(CUSTOMER_DEBT)
-                .set(CUSTOMER_DEBT.CUST_ID, customerID)
-                .set(CUSTOMER_DEBT.STATUS, status)
+                .set(CUSTOMER_DEBT.CUST_ID, cd.getCustomerID())
+                .set(CUSTOMER_DEBT.BALANCE, initialBalance)
+                .onConflict(CUSTOMER_DEBT.CUST_ID)
+                .doUpdate()
+                .set(CUSTOMER_DEBT.BALANCE, CUSTOMER_DEBT.BALANCE.minus(cd.getBalance()))
                 .execute();
     }
 
-    public void recordDebt(int id, float amount) {
+    public CustomerDebt getDebtSimple(int customerID) {
         DSLContext ctx = JooqConnection.getDSLContext();
-        ctx.update(CUSTOMER_DEBT)
-                .set(CUSTOMER_DEBT.BALANCE, CUSTOMER_DEBT.BALANCE.add(amount))
-                .where(CUSTOMER_DEBT.CUST_ID.eq(id))
-                .execute();
+        return ctx.selectFrom(CUSTOMER_DEBT)
+                .where(CUSTOMER_DEBT.CUST_ID.eq(customerID))
+                .fetchOne(record -> new CustomerDebt(
+                        CUSTOMER_DEBT.CUST_ID.getValue(record),
+                        CUSTOMER_DEBT.BALANCE.getValue(record)
+                ));
+    }
+
+    public CustomerDebt getDebtFull(int customerID) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        return ctx.selectFrom(CUSTOMER_DEBT)
+                .where(CUSTOMER_DEBT.CUST_ID.eq(customerID))
+                .fetchOne(record -> new CustomerDebt(
+                        CUSTOMER_DEBT.CUST_ID.getValue(record),
+                        CUSTOMER_DEBT.BALANCE.getValue(record),
+                        CUSTOMER_DEBT.STATUS_1_REMINDER.getValue(record),
+                        LocalDate.parse(CUSTOMER_DEBT.DATE_1_REMINDER.getValue(record)),
+                        CUSTOMER_DEBT.STATUS_2_REMINDER.getValue(record),
+                        LocalDate.parse(CUSTOMER_DEBT.DATE_2_REMINDER.getValue(record)),
+                        LocalDate.parse(CUSTOMER_DEBT.STATUS_CHANGED_AT.getValue(record))
+                ));
+    }
+
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public String getStatus1Reminder() {
+        return status1Reminder;
+    }
+
+    public LocalDate getDate1Reminder() {
+        return date1Reminder;
+    }
+
+    public String getStatus2Reminder() {
+        return status2Reminder;
+    }
+
+    public LocalDate getDate2Reminder() {
+        return date2Reminder;
+    }
+
+    public LocalDate getStatusChangedAt() {
+        return statusChangedAt;
     }
 }
