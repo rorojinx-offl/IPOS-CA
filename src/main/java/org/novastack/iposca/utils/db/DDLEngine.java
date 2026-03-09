@@ -28,7 +28,7 @@ public class DDLEngine {
         return new ChainData(String.join(", ", tokens), fkChainLength);
     }
 
-    private String createTableStm(String tableName, ArrayList<TableSchema> tableSchema) {
+    public String createTableStm(String tableName, ArrayList<TableSchema> tableSchema) {
        tableName = identifierCheck(tableName);
 
         StringBuilder stm = new StringBuilder();
@@ -37,6 +37,7 @@ public class DDLEngine {
         int i = 0;
         long colObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.Column).count();
         long fkObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.ForeignKey).count();
+        long pkObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.MultiPrimaryKey).count();
 
         for (TableSchema rule : tableSchema) {
             switch (rule) {
@@ -47,12 +48,19 @@ public class DDLEngine {
                     String notNull = col.isNotNull() ? "NOT NULL" : "";
                     String isEnd = ", ";
                     if (i < tableSchema.size() - 1) {
-                        if (!(tableSchema.get(i + 1) instanceof TableSchema.Column)) {isEnd = ")";}
+                        if (!(tableSchema.get(i + 1) instanceof TableSchema.Column)) {isEnd = ", ";}
                     } else if (i == tableSchema.size() - 1) {
                         isEnd = ")";
                     }
 
-                    stm.append(String.format("%s %s %s %s%s", tupleName, col.type(), pk, notNull, isEnd));
+                    String extraConstraints = "";
+                    if (col.extraConstraints() != null) {
+                        if (!col.extraConstraints().isEmpty()) {
+                            extraConstraints = collateColumnConstraints(col.extraConstraints());
+                        }
+                    }
+
+                    stm.append(String.format("%s %s %s %s %s%s", tupleName, col.type(), pk, notNull,extraConstraints, isEnd));
                 }
                 case TableSchema.ForeignKey fk -> {
                     ChainData fkColChain = fkChainIdentifierCheck(fk.fkColumns());
@@ -62,13 +70,35 @@ public class DDLEngine {
                     if (fkObjCount > 1) {throw new IllegalStateException("Please add multiple foreign key declarations in one statement");}
                     if (fkColChain.length != refColChain.length) {throw new IllegalStateException("Foreign key column count and reference column count should be same");}
 
-
-
                     String refTable = identifierCheck(fk.refTable());
                     String onDeleteCascade = fk.onDeleteCascade() ? "ON DELETE CASCADE" : "";
                     String onUpdateCascade = fk.onUpdateCascade() ? "ON UPDATE CASCADE" : "";
 
-                    stm.append(String.format(", FOREIGN KEY (%s) REFERENCES %s(%s) %s %s", fkColChain.chain, refTable, refColChain.chain, onDeleteCascade, onUpdateCascade));
+                    String isEnd = ", ";
+                    if (i < tableSchema.size() - 1) {
+                        if (!(tableSchema.get(i + 1) instanceof TableSchema.ForeignKey)) {isEnd = ", ";}
+                    } else if (i == tableSchema.size() - 1) {
+                        isEnd = ")";
+                    }
+
+                    stm.append(String.format("FOREIGN KEY (%s) REFERENCES %s(%s) %s %s%s", fkColChain.chain, refTable, refColChain.chain, onDeleteCascade, onUpdateCascade, isEnd));
+                }
+
+                case TableSchema.MultiPrimaryKey pk -> {
+                    ChainData pkColChain = fkChainIdentifierCheck(pk.pkColumns());
+
+                    if (colObjCount < 1) {throw new IllegalStateException("Multi primary keys can only be added when atleast one column is present");}
+                    if (pkObjCount > 1) {throw new IllegalStateException("Please add multiple multi primary key declarations in one statement");}
+                    if (pkColChain.length < 2) {throw new IllegalStateException("Multi primary key column count should be atleast 2");}
+
+                    String isEnd = ", ";
+                    if (i < tableSchema.size() - 1) {
+                        if (!(tableSchema.get(i + 1) instanceof TableSchema.MultiPrimaryKey)) {isEnd = ", ";}
+                    } else if (i == tableSchema.size() - 1) {
+                        isEnd = ")";
+                    }
+
+                    stm.append(String.format("PRIMARY KEY (%s)%s", pkColChain.chain, isEnd));
                 }
                 default -> throw new IllegalStateException("Unexpected value: " + rule);
             }
@@ -88,6 +118,19 @@ public class DDLEngine {
         }
     }
 
+    private String collateColumnConstraints(ArrayList<ColumnConstraint> constraints) {
+        StringBuilder stm = new StringBuilder();
+        for (ColumnConstraint constraint : constraints) {
+            switch (constraint) {
+                case ColumnConstraint.Unique unique -> stm.append("UNIQUE ");
+                case ColumnConstraint.Default dft -> stm.append(String.format("DEFAULT %s", dft.value()));
+                case ColumnConstraint.Check check -> stm.append(String.format("CHECK(%s)", check.condition()));
+                default -> throw new IllegalStateException("Unexpected value: " + constraint);
+            }
+        }
+        return stm.toString();
+    }
+
     public String dropTableStm(String tableName) {
         tableName = identifierCheck(tableName);
         return String.format("DROP TABLE IF EXISTS %s", tableName);
@@ -105,8 +148,6 @@ public class DDLEngine {
     }
 
     private String createIndexStm(String tableName, String columnName) {
-        tableName = identifierCheck(tableName);
-        columnName = identifierCheck(columnName);
         return String.format("CREATE INDEX IF NOT EXISTS idx_%s_%s ON %s(%s)", tableName.toLowerCase(), columnName.toLowerCase(), tableName, columnName);
     }
 
