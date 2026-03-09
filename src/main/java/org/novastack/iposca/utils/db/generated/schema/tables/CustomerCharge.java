@@ -78,11 +78,6 @@ public class CustomerCharge extends TableImpl<CustomerChargeRecord> {
      */
     public final TableField<CustomerChargeRecord, String> DATE = createField(DSL.name("DATE"), SQLDataType.CLOB.nullable(false), this, "");
 
-    /**
-     * The column <code>customer_charge.REMAINING_BALANCE</code>.
-     */
-    public final TableField<CustomerChargeRecord, Float> REMAINING_BALANCE = createField(DSL.name("REMAINING_BALANCE"), SQLDataType.REAL.nullable(false), this, "");
-
     private CustomerCharge(Name alias, Table<CustomerChargeRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

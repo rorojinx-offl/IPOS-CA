@@ -116,20 +116,6 @@ public class CustomerDebtRecord extends UpdatableRecordImpl<CustomerDebtRecord> 
         return (String) get(6);
     }
 
-    /**
-     * Setter for <code>customer_debt.STATUS</code>.
-     */
-    public void setStatus(String value) {
-        set(7, value);
-    }
-
-    /**
-     * Getter for <code>customer_debt.STATUS</code>.
-     */
-    public String getStatus() {
-        return (String) get(7);
-    }
-
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -153,7 +139,7 @@ public class CustomerDebtRecord extends UpdatableRecordImpl<CustomerDebtRecord> 
     /**
      * Create a detached, initialised CustomerDebtRecord
      */
-    public CustomerDebtRecord(Integer custId, Float balance, String status_1Reminder, String date_1Reminder, String status_2Reminder, String date_2Reminder, String statusChangedAt, String status) {
+    public CustomerDebtRecord(Integer custId, Float balance, String status_1Reminder, String date_1Reminder, String status_2Reminder, String date_2Reminder, String statusChangedAt) {
         super(CustomerDebt.CUSTOMER_DEBT);
 
         setCustId(custId);
@@ -163,7 +149,6 @@ public class CustomerDebtRecord extends UpdatableRecordImpl<CustomerDebtRecord> 
         setStatus_2Reminder(status_2Reminder);
         setDate_2Reminder(date_2Reminder);
         setStatusChangedAt(statusChangedAt);
-        setStatus(status);
         resetTouchedOnNotNull();
     }
 }

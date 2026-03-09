@@ -74,20 +74,6 @@ public class CustomerChargeRecord extends UpdatableRecordImpl<CustomerChargeReco
         return (String) get(3);
     }
 
-    /**
-     * Setter for <code>customer_charge.REMAINING_BALANCE</code>.
-     */
-    public void setRemainingBalance(Float value) {
-        set(4, value);
-    }
-
-    /**
-     * Getter for <code>customer_charge.REMAINING_BALANCE</code>.
-     */
-    public Float getRemainingBalance() {
-        return (Float) get(4);
-    }
-
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -111,14 +97,13 @@ public class CustomerChargeRecord extends UpdatableRecordImpl<CustomerChargeReco
     /**
      * Create a detached, initialised CustomerChargeRecord
      */
-    public CustomerChargeRecord(Integer crgId, Integer custId, Float amount, String date, Float remainingBalance) {
+    public CustomerChargeRecord(Integer crgId, Integer custId, Float amount, String date) {
         super(CustomerCharge.CUSTOMER_CHARGE);
 
         setCrgId(crgId);
         setCustId(custId);
         setAmount(amount);
         setDate(date);
-        setRemainingBalance(remainingBalance);
         resetTouchedOnNotNull();
     }
 }

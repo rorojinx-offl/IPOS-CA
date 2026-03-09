@@ -93,11 +93,6 @@ public class CustomerDebt extends TableImpl<CustomerDebtRecord> {
      */
     public final TableField<CustomerDebtRecord, String> STATUS_CHANGED_AT = createField(DSL.name("STATUS_CHANGED_AT"), SQLDataType.CLOB, this, "");
 
-    /**
-     * The column <code>customer_debt.STATUS</code>.
-     */
-    public final TableField<CustomerDebtRecord, String> STATUS = createField(DSL.name("STATUS"), SQLDataType.CLOB.nullable(false), this, "");
-
     private CustomerDebt(Name alias, Table<CustomerDebtRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
