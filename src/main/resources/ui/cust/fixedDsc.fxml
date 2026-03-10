@@ -38,12 +38,12 @@
       </TableView>
       <Button layoutX="67.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#selectRate" prefHeight="38.0" prefWidth="244.0" style="-fx-background-color: GoldenRod;" text="Edit Rate for Selected Customer">
          <font>
-            <Font size="15.0" />
+            <Font size="13.0" />
          </font>
       </Button>
       <Button layoutX="82.0" layoutY="536.0" mnemonicParsing="false" onMouseClicked="#allRate" prefHeight="44.0" prefWidth="214.0" style="-fx-background-color: Aquamarine;" text="Edit Rate for All">
          <font>
-            <Font size="26.0" />
+            <Font size="20.0" />
          </font>
       </Button>
       <Spinner fx:id="rateSpinner" editable="true" layoutX="101.0" layoutY="480.0" prefHeight="38.0" prefWidth="176.0" />
