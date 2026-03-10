@@ -86,32 +86,32 @@
             <Font size="62.0" />
          </font>
       </Button>
-      <Label fx:id="nameWarning" layoutX="282.0" layoutY="101.0" prefHeight="28.0" prefWidth="446.0" textFill="RED">
+      <Label fx:id="nameWarning" layoutX="282.0" layoutY="101.0" textFill="RED">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="emailWarning" layoutX="282.0" layoutY="139.0" prefHeight="28.0" prefWidth="446.0" textFill="RED">
+      <Label fx:id="emailWarning" layoutX="282.0" layoutY="139.0" textFill="RED">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="addressWarning" layoutX="282.0" layoutY="173.0" prefHeight="28.0" prefWidth="446.0" textFill="RED">
+      <Label fx:id="addressWarning" layoutX="282.0" layoutY="173.0" textFill="RED">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="phoneWarning" layoutX="282.0" layoutY="213.0" prefHeight="28.0" prefWidth="446.0" textFill="RED">
+      <Label fx:id="phoneWarning" layoutX="282.0" layoutY="213.0" textFill="RED">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="credLimitWarning" layoutX="282.0" layoutY="250.0" prefHeight="28.0" prefWidth="446.0" textFill="RED">
+      <Label fx:id="credLimitWarning" layoutX="282.0" layoutY="250.0" textFill="RED">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="discountPlanWarning" layoutX="320.0" layoutY="304.0" prefHeight="28.0" prefWidth="407.0" textFill="RED">
+      <Label fx:id="discountPlanWarning" layoutX="320.0" layoutY="304.0" textFill="RED">
          <font>
             <Font size="17.0" />
          </font>
