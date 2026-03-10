@@ -19,7 +19,7 @@
             </Label>
          </children>
       </Pane>
-      <VBox fx:id="regButton" layoutX="78.0" layoutY="107.0" onMouseClicked="#registerCustomer" prefHeight="200.0" prefWidth="100.0">
+      <VBox fx:id="regButton" layoutX="78.0" layoutY="107.0" onMouseClicked="#registerCustomer">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -33,7 +33,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="480.0" layoutY="107.0" onMouseClicked="#manageCustomer" prefHeight="200.0" prefWidth="100.0">
+      <VBox layoutX="480.0" layoutY="107.0" onMouseClicked="#manageCustomer">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
