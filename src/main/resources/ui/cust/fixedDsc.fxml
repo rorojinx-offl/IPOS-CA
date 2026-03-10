@@ -36,7 +36,7 @@
             <TableColumn fx:id="rate" minWidth="0.0" prefWidth="107.9999938964844" text="Rate" />
          </columns>
       </TableView>
-      <Button layoutX="37.0" layoutY="399.0" mnemonicParsing="false" onMouseClicked="#selectRate" style="-fx-background-color: GoldenRod;" text="Edit Rate for Selected Customer">
+      <Button layoutX="32.0" layoutY="400.0" mnemonicParsing="false" onMouseClicked="#selectRate" prefHeight="48.0" prefWidth="314.0" style="-fx-background-color: GoldenRod;" text="Edit Rate for Selected Customer">
          <font>
             <Font size="20.0" />
          </font>
