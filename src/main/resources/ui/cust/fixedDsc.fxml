@@ -13,12 +13,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.FDSController">
    <children>
       <Pane prefHeight="71.0" prefWidth="379.0" style="-fx-background-color: Orange;">
          <children>
-            <Label layoutX="77.0" layoutY="8.0" prefHeight="55.0" prefWidth="225.0" text="Fixed Discounts">
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="379.0" text="Fixed Discounts">
                <font>
                   <Font name="Agency FB" size="45.0" />
                </font>
@@ -37,7 +36,7 @@
             <TableColumn fx:id="rate" minWidth="0.0" prefWidth="107.9999938964844" text="Rate" />
          </columns>
       </TableView>
-      <Button layoutX="32.0" layoutY="400.0" mnemonicParsing="false" onMouseClicked="#selectRate" prefHeight="48.0" prefWidth="314.0" style="-fx-background-color: GoldenRod;" text="Edit Rate for Selected Customer">
+      <Button layoutX="37.0" layoutY="399.0" mnemonicParsing="false" onMouseClicked="#selectRate" style="-fx-background-color: GoldenRod;" text="Edit Rate for Selected Customer">
          <font>
             <Font size="20.0" />
          </font>
