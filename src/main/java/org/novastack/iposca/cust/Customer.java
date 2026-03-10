@@ -112,7 +112,7 @@ public class Customer {
                 .execute();
     }
 
-    public void updateAccountStatus(int customerID, String status) throws DataAccessException {
+    public static void updateAccountStatus(int customerID, String status) throws DataAccessException {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.update(CUSTOMER)
                 .set(CUSTOMER.STATUS, status)
