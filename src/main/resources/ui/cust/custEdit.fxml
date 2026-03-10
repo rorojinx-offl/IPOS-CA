@@ -31,7 +31,7 @@
             <TextField fx:id="name" />
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="139.0" prefHeight="28.0" prefWidth="242.0">
+      <HBox layoutX="22.0" layoutY="139.0">
          <children>
             <Label prefHeight="26.0" prefWidth="90.0" text="Email">
                <font>
@@ -41,7 +41,7 @@
             <TextField fx:id="email" />
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="173.0" prefHeight="28.0" prefWidth="242.0">
+      <HBox layoutX="22.0" layoutY="173.0">
          <children>
             <Label prefHeight="26.0" prefWidth="90.0" text="Address">
                <font>
@@ -51,7 +51,7 @@
             <TextField fx:id="address" />
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="213.0" prefHeight="28.0" prefWidth="242.0">
+      <HBox layoutX="22.0" layoutY="213.0">
          <children>
             <Label prefHeight="26.0" prefWidth="90.0" text="Phone">
                <font>
@@ -61,7 +61,7 @@
             <TextField fx:id="phone" />
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="250.0" prefHeight="28.0" prefWidth="242.0">
+      <HBox layoutX="22.0" layoutY="250.0">
          <children>
             <Label prefHeight="28.0" prefWidth="119.0" text="Credit Limit">
                <font>
@@ -71,7 +71,7 @@
             <TextField fx:id="credLimit" />
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="304.0" prefHeight="26.0" prefWidth="274.0">
+      <HBox layoutX="22.0" layoutY="304.0">
          <children>
             <Label prefHeight="28.0" prefWidth="119.0" text="Discount Plan">
                <font>
