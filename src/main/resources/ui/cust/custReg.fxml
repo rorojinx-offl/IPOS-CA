@@ -21,7 +21,7 @@
             <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #FF0000;" text="Back" />
          </children>
       </Pane>
-      <HBox layoutX="22.0" layoutY="101.0" prefHeight="28.0" prefWidth="242.0">
+      <HBox layoutX="22.0" layoutY="101.0">
          <children>
             <Label text="Full Name">
                <font>
