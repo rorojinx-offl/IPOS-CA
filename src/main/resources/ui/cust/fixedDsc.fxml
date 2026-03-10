@@ -13,23 +13,23 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="606.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.FDSController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.FDSController">
    <children>
-      <Pane prefHeight="71.0" prefWidth="379.0" style="-fx-background-color: Orange;">
+      <Pane prefHeight="44.0" prefWidth="379.0" style="-fx-background-color: Orange;">
          <children>
-            <Label alignment="CENTER" prefHeight="71.0" prefWidth="379.0" text="Fixed Discounts" textAlignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="379.0" text="Fixed Discounts" textAlignment="CENTER">
                <font>
-                  <Font name="Agency FB" size="45.0" />
+                  <Font name="Agency FB" size="35.0" />
                </font>
             </Label>
-            <ImageView fitHeight="63.0" fitWidth="72.0" layoutY="4.0" onMouseClicked="#returnToParent" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="38.0" fitWidth="63.0" layoutX="14.0" layoutY="3.0" onMouseClicked="#returnToParent" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/close.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <TableView fx:id="customerTable" layoutX="33.0" layoutY="82.0" prefHeight="266.0" prefWidth="313.0">
+      <TableView fx:id="customerTable" layoutX="33.0" layoutY="63.0" prefHeight="285.0" prefWidth="313.0">
          <columns>
             <TableColumn fx:id="customerID" prefWidth="42.39999485015869" text="ID" visible="false" />
             <TableColumn fx:id="name" editable="false" prefWidth="204.00002765655518" text="Name" />
