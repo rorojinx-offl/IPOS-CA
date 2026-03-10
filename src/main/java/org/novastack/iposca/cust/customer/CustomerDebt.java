@@ -1,8 +1,10 @@
 package org.novastack.iposca.cust.customer;
 
 import org.jooq.DSLContext;
+import org.jooq.TableField;
 import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.utils.db.JooqConnection;
+import schema.tables.records.CustomerDebtRecord;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -47,7 +49,30 @@ public class CustomerDebt {
                 .execute();
     }
 
-    public CustomerDebt getDebtSimple(int customerID) {
+    public static void setReminderDateStatus(int customerID, CustomerEnums.ReminderType type, String date, String status) {
+        TableField<CustomerDebtRecord,String> colDate = null;
+        TableField<CustomerDebtRecord,String> colStatus = null;
+
+        switch (type) {
+            case CustomerEnums.ReminderType.FIRST -> {
+                colDate = CUSTOMER_DEBT.DATE_1_REMINDER;
+                colStatus = CUSTOMER_DEBT.STATUS_1_REMINDER;
+            }
+            case CustomerEnums.ReminderType.SECOND -> {
+                colDate = CUSTOMER_DEBT.DATE_2_REMINDER;
+                colStatus = CUSTOMER_DEBT.STATUS_2_REMINDER;
+            }
+        }
+
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.update(CUSTOMER_DEBT)
+                .set(colDate, date)
+                .set(colStatus, status)
+                .where(CUSTOMER_DEBT.CUST_ID.eq(customerID))
+                .execute();
+    }
+
+    public static CustomerDebt getDebtSimple(int customerID) {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.selectFrom(CUSTOMER_DEBT)
                 .where(CUSTOMER_DEBT.CUST_ID.eq(customerID))
@@ -57,7 +82,7 @@ public class CustomerDebt {
                 ));
     }
 
-    public CustomerDebt getDebtFull(int customerID) {
+    public static CustomerDebt getDebtFull(int customerID) {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.selectFrom(CUSTOMER_DEBT)
                 .where(CUSTOMER_DEBT.CUST_ID.eq(customerID))
@@ -65,13 +90,16 @@ public class CustomerDebt {
                         CUSTOMER_DEBT.CUST_ID.getValue(record),
                         CUSTOMER_DEBT.BALANCE.getValue(record),
                         CUSTOMER_DEBT.STATUS_1_REMINDER.getValue(record),
-                        LocalDate.parse(CUSTOMER_DEBT.DATE_1_REMINDER.getValue(record)),
+                        parseDate(CUSTOMER_DEBT.DATE_1_REMINDER.getValue(record)),
                         CUSTOMER_DEBT.STATUS_2_REMINDER.getValue(record),
-                        LocalDate.parse(CUSTOMER_DEBT.DATE_2_REMINDER.getValue(record)),
-                        LocalDate.parse(CUSTOMER_DEBT.STATUS_CHANGED_AT.getValue(record))
+                        parseDate(CUSTOMER_DEBT.DATE_2_REMINDER.getValue(record)),
+                        parseDate(CUSTOMER_DEBT.STATUS_CHANGED_AT.getValue(record))
                 ));
     }
 
+    private static LocalDate parseDate(String date) {
+        return date == null ? null : LocalDate.parse(date);
+    }
 
     public int getCustomerID() {
         return customerID;
