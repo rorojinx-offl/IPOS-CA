@@ -12,7 +12,7 @@
    <children>
       <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Orange;">
          <children>
-            <Label layoutX="253.0" layoutY="8.0" prefHeight="55.0" prefWidth="245.0" text="Customer Portal">
+            <Label layoutX="253.0" layoutY="8.0" text="Customer Portal">
                <font>
                   <Font name="Agency FB" size="45.0" />
                </font>

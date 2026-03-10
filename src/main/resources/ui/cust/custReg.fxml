@@ -13,7 +13,7 @@
    <children>
       <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Orange;">
          <children>
-            <Label layoutX="209.0" layoutY="13.0" prefHeight="45.0" prefWidth="332.0" text="Customer Registration">
+            <Label layoutX="209.0" layoutY="13.0" text="Customer Registration">
                <font>
                   <Font name="Agency FB" size="45.0" />
                </font>
@@ -23,7 +23,7 @@
       </Pane>
       <HBox layoutX="22.0" layoutY="101.0" prefHeight="28.0" prefWidth="242.0">
          <children>
-            <Label prefHeight="26.0" prefWidth="90.0" text="Full Name">
+            <Label text="Full Name">
                <font>
                   <Font size="19.0" />
                </font>
