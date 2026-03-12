@@ -3,7 +3,9 @@ package org.novastack.iposca.cust.UIControllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -67,6 +69,21 @@ public class DebtController implements Initializable {
         Stage stage = (Stage) backButton.getScene().getWindow();
         new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
     }
+
+    @FXML
+    void processRepayment(MouseEvent event) throws IOException {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/cust/custEdit.fxml"));
+        Parent root = loader.load();
+
+        EditController controller = loader.getController();
+        controller.setID(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
+
+        stage.setTitle("Customer");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.show();
+    }
+
 
     private void refreshTable() {
         customerID.setCellValueFactory(new PropertyValueFactory<CustomerDebt,Integer>("customerID"));

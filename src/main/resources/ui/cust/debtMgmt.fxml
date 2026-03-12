@@ -46,7 +46,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Khaki;" text="Process Repayment">
+            <Button mnemonicParsing="false" onMouseClicked="#processRepayment" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Khaki;" text="Process Repayment">
                <font>
                   <Font size="29.0" />
                </font>
