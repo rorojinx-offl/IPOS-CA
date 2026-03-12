@@ -101,10 +101,14 @@
             <Font size="62.0" />
          </font>
       </Button>
-      <Label layoutX="22.0" layoutY="440.0" prefHeight="43.0" prefWidth="718.0" text="*Warning: By clicking on the button above, you confirm that the full repayment has been made and the debt is authorised to be absolved!" textFill="RED" wrapText="true">
-         <font>
-            <Font name="System Bold Italic" size="13.0" />
-         </font>
-      </Label>
+      <HBox layoutX="22.0" layoutY="436.0">
+         <children>
+            <Label prefHeight="40.0" prefWidth="706.0" text="*Warning: By clicking on the button above, you confirm that the full repayment has been made and the debt is authorised to be absolved!" textFill="RED" wrapText="true">
+               <font>
+                  <Font name="System Bold Italic" size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
