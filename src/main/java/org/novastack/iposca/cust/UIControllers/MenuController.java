@@ -43,6 +43,12 @@ public class MenuController implements Initializable {
     }
 
     @FXML
+    void manageDebt(MouseEvent event) throws IOException {
+        Stage stage = (Stage) debtButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/cust/debtMgmt.fxml");
+    }
+
+    @FXML
     void highlight(MouseEvent event) {
         VBox option = (VBox) event.getSource();
         Label childLabel = (Label) option.getChildren().get(1);
