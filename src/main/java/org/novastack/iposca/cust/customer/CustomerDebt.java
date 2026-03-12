@@ -7,12 +7,15 @@ import org.novastack.iposca.utils.db.JooqConnection;
 import schema.tables.records.CustomerDebtRecord;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import static schema.tables.CustomerDebt.CUSTOMER_DEBT;
 import static schema.tables.Customer.CUSTOMER;
 
 public class CustomerDebt {
     private int customerID;
+    private String customerName;
+    private float custCreditLimit;
     private float balance;
     private String status1Reminder;
     private LocalDate date1Reminder;
@@ -22,6 +25,18 @@ public class CustomerDebt {
 
     public CustomerDebt(int customerID, float balance, String status1Reminder, LocalDate date1Reminder, String status2Reminder, LocalDate date2Reminder, LocalDate statusChangedAt) {
         this.customerID = customerID;
+        this.balance = balance;
+        this.status1Reminder = status1Reminder;
+        this.date1Reminder = date1Reminder;
+        this.status2Reminder = status2Reminder;
+        this.date2Reminder = date2Reminder;
+        this.statusChangedAt = statusChangedAt;
+    }
+
+    public CustomerDebt(int customerID, String customerName, float credLim, float balance, String status1Reminder, LocalDate date1Reminder, String status2Reminder, LocalDate date2Reminder, LocalDate statusChangedAt) {
+        this.customerID = customerID;
+        this.customerName = customerName;
+        this.custCreditLimit = credLim;
         this.balance = balance;
         this.status1Reminder = status1Reminder;
         this.date1Reminder = date1Reminder;
@@ -97,6 +112,41 @@ public class CustomerDebt {
                 ));
     }
 
+    public static ArrayList<CustomerDebt> getAllDebts() {
+        ArrayList<CustomerDebt> debts = new ArrayList<>();
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.selectFrom(CUSTOMER_DEBT).fetch().forEach(record -> {
+            String custName = ctx.select(CUSTOMER.NAME)
+                    .from(CUSTOMER_DEBT)
+                    .join(CUSTOMER)
+                    .on(CUSTOMER_DEBT.CUST_ID.eq(CUSTOMER.ID))
+                    .where(CUSTOMER_DEBT.CUST_ID.eq(CUSTOMER_DEBT.CUST_ID.getValue(record)))
+                    .fetchOne(CUSTOMER.NAME);
+
+            Float creditLimitRetr = ctx.select(CUSTOMER.CREDITLIMIT)
+                            .from(CUSTOMER_DEBT)
+                                    .join(CUSTOMER)
+                                            .on(CUSTOMER_DEBT.CUST_ID.eq(CUSTOMER.ID))
+                                                    .where(CUSTOMER_DEBT.CUST_ID.eq(CUSTOMER_DEBT.CUST_ID.getValue(record)))
+                    .fetchOneInto(Float.class);
+
+            float creditLimit = creditLimitRetr == null ? 0f : creditLimitRetr;
+
+            debts.add(new CustomerDebt(
+                    CUSTOMER_DEBT.CUST_ID.getValue(record),
+                    custName,
+                    creditLimit,
+                    CUSTOMER_DEBT.BALANCE.getValue(record),
+                    CUSTOMER_DEBT.STATUS_1_REMINDER.getValue(record),
+                    parseDate(CUSTOMER_DEBT.DATE_1_REMINDER.getValue(record)),
+                    CUSTOMER_DEBT.STATUS_2_REMINDER.getValue(record),
+                    parseDate(CUSTOMER_DEBT.DATE_2_REMINDER.getValue(record)),
+                    parseDate(CUSTOMER_DEBT.STATUS_CHANGED_AT.getValue(record))
+            ));
+        });
+        return debts;
+    }
+
     private static LocalDate parseDate(String date) {
         return date == null ? null : LocalDate.parse(date);
     }
@@ -127,5 +177,13 @@ public class CustomerDebt {
 
     public LocalDate getStatusChangedAt() {
         return statusChangedAt;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public float getCustCreditLimit() {
+        return custCreditLimit;
     }
 }
