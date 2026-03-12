@@ -12,4 +12,8 @@ public class CustomerEnums {
     public enum PaymentMethod {
         CASH, CARD
     }
+
+    public enum CardType {
+        VISA, MASTERCARD, AMEX, OTHER
+    }
 }
