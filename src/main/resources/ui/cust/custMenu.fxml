@@ -19,21 +19,21 @@
             </Label>
          </children>
       </Pane>
-      <VBox fx:id="regButton" layoutX="78.0" layoutY="107.0" onMouseClicked="#registerCustomer">
+      <VBox fx:id="regButton" layoutX="78.0" layoutY="107.0" onMouseClicked="#registerCustomer" onMouseEntered="#highlight" onMouseExited="#restoreCol">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@assets/register.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" text="Register a Customer" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
+            <Label fx:id="regLabel" alignment="CENTER" text="Register a Customer" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="480.0" layoutY="107.0" onMouseClicked="#manageCustomer">
+      <VBox fx:id="manageButton" alignment="CENTER" layoutX="480.0" layoutY="107.0" onMouseClicked="#manageCustomer" onMouseEntered="#highlight" onMouseExited="#restoreCol">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,6 +41,20 @@
                </image>
             </ImageView>
             <Label alignment="CENTER" text="Manage Customers" textAlignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox fx:id="debtButton" alignment="CENTER" layoutX="78.0" layoutY="306.0" onMouseClicked="#registerCustomer" onMouseEntered="#highlight" onMouseExited="#restoreCol">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/debt.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Manage Debts" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="16.0" />
                </font>
