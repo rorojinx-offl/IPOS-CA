@@ -72,12 +72,17 @@ public class DebtController implements Initializable {
 
     @FXML
     void processRepayment(MouseEvent event) throws IOException {
+        if (customerTable.getSelectionModel().getSelectedItem() == null) {
+            new CommonCalls().openErrorDialog("Please select a customer!");
+            return;
+        }
+
         Stage stage = (Stage) backButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/cust/custEdit.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/cust/debtRepay.fxml"));
         Parent root = loader.load();
 
-        EditController controller = loader.getController();
-        controller.setID(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
+        RepaymentController controller = loader.getController();
+        controller.receiver(customerTable.getSelectionModel().getSelectedItem().getBalance(), customerTable.getSelectionModel().getSelectedItem().getCustomerID());
 
         stage.setTitle("Customer");
         stage.setScene(new javafx.scene.Scene(root));
