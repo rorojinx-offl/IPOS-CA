@@ -9,10 +9,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
-import org.novastack.iposca.cust.Customer;
-import org.novastack.iposca.cust.DiscountPlans;
-import org.novastack.iposca.cust.FixedDiscountPlan;
-import org.novastack.iposca.cust.FlexiDiscountPlan;
+import org.novastack.iposca.cust.plans.DiscountPlans;
+import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;

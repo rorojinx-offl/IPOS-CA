@@ -2,13 +2,12 @@ package org.novastack.iposca.cust.customer;
 
 import org.jooq.DSLContext;
 import org.jooq.TableField;
-import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.utils.db.JooqConnection;
 import schema.tables.records.CustomerDebtRecord;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
 import static schema.tables.CustomerDebt.CUSTOMER_DEBT;
 import static schema.tables.Customer.CUSTOMER;
 

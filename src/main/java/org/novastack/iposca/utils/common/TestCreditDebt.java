@@ -1,11 +1,10 @@
 package org.novastack.iposca.utils.common;
 
-import org.novastack.iposca.cust.Customer;
+import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerCharge;
 import org.novastack.iposca.cust.customer.CustomerDebt;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class TestCreditDebt {
     static void main() {

@@ -1,4 +1,4 @@
-package org.novastack.iposca.cust;
+package org.novastack.iposca.cust.plans;
 
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;

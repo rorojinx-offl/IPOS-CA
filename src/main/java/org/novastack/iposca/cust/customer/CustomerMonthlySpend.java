@@ -1,6 +1,7 @@
-package org.novastack.iposca.cust;
+package org.novastack.iposca.cust.customer;
 
 import org.jooq.DSLContext;
+import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.utils.db.JooqConnection;
 
 import java.time.YearMonth;

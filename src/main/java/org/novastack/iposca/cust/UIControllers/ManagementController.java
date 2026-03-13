@@ -14,9 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
-import org.novastack.iposca.cust.Customer;
+import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.utils.ui.CommonCalls;
-import org.novastack.iposca.utils.ui.ErrorController;
 
 import java.io.IOException;
 import java.net.URL;

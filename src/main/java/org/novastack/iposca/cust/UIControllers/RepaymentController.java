@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.novastack.iposca.cust.Customer;
+import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.customer.CustomerPayment;
 import org.novastack.iposca.utils.ui.CommonCalls;

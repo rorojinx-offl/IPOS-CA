@@ -1,7 +1,7 @@
 package org.novastack.iposca.utils.common;
 
-import org.novastack.iposca.cust.CustomerMonthlySpend;
-import org.novastack.iposca.cust.FlexiDiscountPlan;
+import org.novastack.iposca.cust.customer.CustomerMonthlySpend;
+import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 
 import java.time.YearMonth;
 

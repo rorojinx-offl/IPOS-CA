@@ -9,8 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
-import org.novastack.iposca.cust.DiscountPlans;
-import org.novastack.iposca.cust.FixedDiscountPlan;
+import org.novastack.iposca.cust.plans.DiscountPlans;
+import org.novastack.iposca.cust.plans.FixedDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.IValid;
 

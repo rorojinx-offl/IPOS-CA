@@ -1,14 +1,12 @@
-package org.novastack.iposca.cust;
+package org.novastack.iposca.cust.debt;
 
-import org.jooq.DSLContext;
+import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
-import org.novastack.iposca.utils.db.JooqConnection;
 import org.novastack.iposca.cust.customer.CustomerDebt;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
-import static schema.tables.CustomerDebt.CUSTOMER_DEBT;
 
 public class DebtAutomationService {
     public static void runDebtEvaluation() {

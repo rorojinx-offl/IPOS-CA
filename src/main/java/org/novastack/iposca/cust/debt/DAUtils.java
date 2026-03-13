@@ -1,11 +1,10 @@
-package org.novastack.iposca.cust;
+package org.novastack.iposca.cust.debt;
 
 import org.jooq.DSLContext;
 import org.novastack.iposca.cust.customer.CustomerDebt;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.utils.db.JooqConnection;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
 package org.novastack.iposca.utils.common;
 
-import org.novastack.iposca.cust.Customer;
 import org.novastack.iposca.cust.customer.CustomerDebt;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.customer.CustomerPayment;

@@ -1,11 +1,6 @@
 package org.novastack.iposca.utils.common;
 
-import org.novastack.iposca.cust.DAUtils;
-import org.novastack.iposca.cust.DebtAutomationService;
-
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
+import org.novastack.iposca.cust.debt.DebtAutomationService;
 
 public class TestDebtAutomation {
     static void main() {
