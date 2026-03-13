@@ -51,7 +51,7 @@
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#restoreAccount" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: LawnGreen;" text="Restore In-Default Account" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: LawnGreen;" text="Restore In-Default Account" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>
