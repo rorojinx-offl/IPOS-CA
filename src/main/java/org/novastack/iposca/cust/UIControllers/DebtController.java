@@ -64,6 +64,10 @@ public class DebtController implements Initializable {
     private TableColumn<CustomerDebt, LocalDate> statca;
 
     @FXML
+    private TableColumn<CustomerDebt, String> status;
+
+
+    @FXML
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
         new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
@@ -93,6 +97,7 @@ public class DebtController implements Initializable {
         customerID.setCellValueFactory(new PropertyValueFactory<CustomerDebt,Integer>("customerID"));
         name.setCellValueFactory(new PropertyValueFactory<CustomerDebt,String>("customerName"));
         credLimit.setCellValueFactory(new PropertyValueFactory<CustomerDebt,Float>("custCreditLimit"));
+        status.setCellValueFactory(new PropertyValueFactory<CustomerDebt, String>("custStatus"));
         balance.setCellValueFactory(new PropertyValueFactory<CustomerDebt,Float>("balance"));
         r1d.setCellValueFactory(new PropertyValueFactory<CustomerDebt,LocalDate>("date1Reminder"));
         r1s.setCellValueFactory(new PropertyValueFactory<CustomerDebt,String>("status1Reminder"));

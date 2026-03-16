@@ -29,10 +29,11 @@
             <TableColumn fx:id="name" editable="false" prefWidth="119.20000839233398" text="Name" />
             <TableColumn fx:id="credLimit" prefWidth="95.0" text="Credit Limit" />
             <TableColumn fx:id="balance" prefWidth="75.0" text="Balance" />
-            <TableColumn fx:id="r1d" prefWidth="120.0" text="1st Reminder Date" />
-            <TableColumn fx:id="r1s" prefWidth="134.0" text="1st Reminder Status" />
-            <TableColumn fx:id="r2d" prefWidth="125.0" text="2nd Reminder Date" />
-            <TableColumn fx:id="r2s" prefWidth="140.0" text="2nd Reminder Status" />
+            <TableColumn fx:id="status" prefWidth="102.0" text="Status" />
+            <TableColumn fx:id="r1d" prefWidth="132.0" text="1st Reminder Date" />
+            <TableColumn fx:id="r1s" prefWidth="145.0" text="1st Reminder Status" />
+            <TableColumn fx:id="r2d" prefWidth="132.0" text="2nd Reminder Date" />
+            <TableColumn fx:id="r2s" prefWidth="145.0" text="2nd Reminder Status" />
             <TableColumn fx:id="statca" prefWidth="130.0" text="Status Changed At" />
          </columns>
       </TableView>

@@ -15,6 +15,7 @@ public class CustomerDebt {
     private int customerID;
     private String customerName;
     private float custCreditLimit;
+    private String custStatus;
     private float balance;
     private String status1Reminder;
     private LocalDate date1Reminder;
@@ -32,10 +33,11 @@ public class CustomerDebt {
         this.statusChangedAt = statusChangedAt;
     }
 
-    public CustomerDebt(int customerID, String customerName, float credLim, float balance, String status1Reminder, LocalDate date1Reminder, String status2Reminder, LocalDate date2Reminder, LocalDate statusChangedAt) {
+    public CustomerDebt(int customerID, String customerName, float credLim, String status, float balance, String status1Reminder, LocalDate date1Reminder, String status2Reminder, LocalDate date2Reminder, LocalDate statusChangedAt) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.custCreditLimit = credLim;
+        this.custStatus = status;
         this.balance = balance;
         this.status1Reminder = status1Reminder;
         this.date1Reminder = date1Reminder;
@@ -131,10 +133,18 @@ public class CustomerDebt {
 
             float creditLimit = creditLimitRetr == null ? 0f : creditLimitRetr;
 
+            String custStatus = ctx.select(CUSTOMER.STATUS)
+                            .from(CUSTOMER_DEBT)
+                                    .join(CUSTOMER)
+                                            .on(CUSTOMER_DEBT.CUST_ID.eq(CUSTOMER.ID))
+                                                    .where(CUSTOMER_DEBT.CUST_ID.eq(CUSTOMER_DEBT.CUST_ID.getValue(record)))
+                                                            .fetchOne(CUSTOMER.STATUS);
+
             debts.add(new CustomerDebt(
                     CUSTOMER_DEBT.CUST_ID.getValue(record),
                     custName,
                     creditLimit,
+                    custStatus,
                     CUSTOMER_DEBT.BALANCE.getValue(record),
                     CUSTOMER_DEBT.STATUS_1_REMINDER.getValue(record),
                     parseDate(CUSTOMER_DEBT.DATE_1_REMINDER.getValue(record)),
@@ -184,5 +194,9 @@ public class CustomerDebt {
 
     public float getCustCreditLimit() {
         return custCreditLimit;
+    }
+
+    public String getCustStatus() {
+        return custStatus;
     }
 }
