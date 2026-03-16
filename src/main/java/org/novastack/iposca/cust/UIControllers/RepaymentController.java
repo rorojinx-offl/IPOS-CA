@@ -131,8 +131,8 @@ public class RepaymentController implements Initializable {
             crp.addRepayment(crp);
 
             Customer cus = new Customer().getCustomer(customerID);
-            if (cus.getStatus().equals(Customer.AccountStatus.SUSPENDED.name())) {
-                Customer.updateAccountStatus(customerID, Customer.AccountStatus.NORMAL.name());
+            if (cus.getStatus().equals(CustomerEnums.AccountStatus.SUSPENDED.name())) {
+                Customer.updateAccountStatus(customerID, CustomerEnums.AccountStatus.NORMAL.name());
             }
 
             returnToParent(event);

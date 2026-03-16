@@ -16,4 +16,12 @@ public class CustomerEnums {
     public enum CardType {
         VISA, MASTERCARD, AMEX, OTHER
     }
+
+    public enum AccountStatus {
+        NORMAL, SUSPENDED, IN_DEFAULT
+    }
+
+    public enum DiscountPlan {
+        FLEXIBLE, FIXED
+    }
 }

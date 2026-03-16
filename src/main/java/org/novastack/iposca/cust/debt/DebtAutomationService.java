@@ -29,12 +29,12 @@ public class DebtAutomationService {
             if (DAUtils.check2ndReminderExists(debt)) {
                 String secondDate = DAUtils.secondReminderPush(debt.getDate1Reminder());
                 CustomerDebt.setReminderDateStatus(dw.customerID(), CustomerEnums.ReminderType.SECOND, secondDate, CustomerEnums.ReminderStatus.DUE.name());
-                Customer.updateAccountStatus(dw.customerID(), Customer.AccountStatus.SUSPENDED.name());
+                Customer.updateAccountStatus(dw.customerID(), CustomerEnums.AccountStatus.SUSPENDED.name());
                 continue;
             }
 
             if (DAUtils.postSuspended(debt)) {
-                Customer.updateAccountStatus(dw.customerID(), Customer.AccountStatus.IN_DEFAULT.name());
+                Customer.updateAccountStatus(dw.customerID(), CustomerEnums.AccountStatus.IN_DEFAULT.name());
             }
         }
 

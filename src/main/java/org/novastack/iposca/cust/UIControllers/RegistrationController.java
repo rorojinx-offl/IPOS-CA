@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.plans.FixedDiscountPlan;
 import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
@@ -23,7 +24,7 @@ public class RegistrationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        discountPlan.getItems().addAll(Customer.DiscountPlan.FIXED.name(), Customer.DiscountPlan.FLEXIBLE.name());
+        discountPlan.getItems().addAll(CustomerEnums.DiscountPlan.FIXED.name(), CustomerEnums.DiscountPlan.FLEXIBLE.name());
     }
 
     @FXML
@@ -114,7 +115,7 @@ public class RegistrationController implements Initializable {
                     phone.getText(),
                     Float.parseFloat(credLimit.getText()),
                     discountPlan.getValue(),
-                    Customer.AccountStatus.NORMAL.name()
+                    CustomerEnums.AccountStatus.NORMAL.name()
             );
 
             try {
@@ -124,7 +125,7 @@ public class RegistrationController implements Initializable {
             }
 
             returnToParent(event);
-            if (discountPlan.getValue().equals(Customer.DiscountPlan.FIXED.name())) {
+            if (discountPlan.getValue().equals(CustomerEnums.DiscountPlan.FIXED.name())) {
                 FixedDiscountPlan fdp = new FixedDiscountPlan(customer.getLatestID(), 10);
                 fdp.addDiscount(fdp);
             } else {

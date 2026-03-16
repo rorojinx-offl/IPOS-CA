@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.plans.FixedDiscountPlan;
 import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
@@ -20,7 +21,7 @@ import java.io.IOException;
 public class EditController implements Initializable {
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle rb) {
-        discountPlan.getItems().addAll(Customer.DiscountPlan.FIXED.name(), Customer.DiscountPlan.FLEXIBLE.name());
+        discountPlan.getItems().addAll(CustomerEnums.DiscountPlan.FIXED.name(), CustomerEnums.DiscountPlan.FLEXIBLE.name());
     }
 
     private int id;
@@ -129,7 +130,7 @@ public class EditController implements Initializable {
                     phone.getText(),
                     Float.parseFloat(credLimit.getText()),
                     discountPlan.getValue(),
-                    Customer.AccountStatus.NORMAL.name()
+                    CustomerEnums.AccountStatus.NORMAL.name()
             );
 
             try {
@@ -138,13 +139,13 @@ public class EditController implements Initializable {
                 new CommonCalls().openErrorDialog(e.getMessage());
             }
 
-            if (!(checkDSChange(id)) && (discountPlan.getValue().equals(Customer.DiscountPlan.FLEXIBLE.name()))) {
+            if (!(checkDSChange(id)) && (discountPlan.getValue().equals(CustomerEnums.DiscountPlan.FLEXIBLE.name()))) {
                 FixedDiscountPlan fdp = new FixedDiscountPlan();
                 fdp.removeDiscount(id);
 
                 FlexiDiscountPlan fdp2 = new FlexiDiscountPlan(id, 0);
                 fdp2.addDiscount(fdp2);
-            } else if (!(checkDSChange(id)) && (discountPlan.getValue().equals(Customer.DiscountPlan.FIXED.name()))) {
+            } else if (!(checkDSChange(id)) && (discountPlan.getValue().equals(CustomerEnums.DiscountPlan.FIXED.name()))) {
                 FlexiDiscountPlan fdp = new FlexiDiscountPlan();
                 fdp.removeDiscount(id);
 
