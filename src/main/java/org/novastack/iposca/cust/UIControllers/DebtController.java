@@ -13,7 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
+import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerDebt;
+import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
@@ -90,6 +92,24 @@ public class DebtController implements Initializable {
         stage.setTitle("Customer");
         stage.setScene(new javafx.scene.Scene(root));
         stage.show();
+    }
+
+
+    @FXML
+    void manualAccountRestore(MouseEvent event) throws IOException {
+        if (customerTable.getSelectionModel().getSelectedItem() == null || !customerTable.getSelectionModel().getSelectedItem().getCustStatus().equals(CustomerEnums.AccountStatus.IN_DEFAULT.name())) {
+            new CommonCalls().openErrorDialog("Please select a customer whose account is in default!");
+            return;
+        }
+
+        boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to restore this customer back to normal?");
+        if (!ok) {
+            return;
+        }
+
+        Customer.updateAccountStatus(customerTable.getSelectionModel().getSelectedItem().getCustomerID(), CustomerEnums.AccountStatus.NORMAL.name());
+        CustomerDebt.deleteDebt(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
+        refreshTable();
     }
 
 

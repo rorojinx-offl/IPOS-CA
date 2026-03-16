@@ -156,6 +156,26 @@ public class CustomerDebt {
         return debts;
     }
 
+    public static void dryDeleteDebt(int customerID) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.update(CUSTOMER_DEBT)
+                .set(CUSTOMER_DEBT.BALANCE, 0f)
+                .set(CUSTOMER_DEBT.STATUS_1_REMINDER, CustomerEnums.ReminderStatus.NO_NEED.name())
+                .set(CUSTOMER_DEBT.DATE_1_REMINDER, (String) null)
+                .set(CUSTOMER_DEBT.STATUS_2_REMINDER, CustomerEnums.ReminderStatus.NO_NEED.name())
+                .set(CUSTOMER_DEBT.DATE_2_REMINDER, (String) null)
+                .set(CUSTOMER_DEBT.STATUS_CHANGED_AT, (String) null)
+                .where(CUSTOMER_DEBT.CUST_ID.eq(customerID))
+                .execute();
+    }
+
+    public static void deleteDebt(int customerID) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.deleteFrom(CUSTOMER_DEBT)
+                .where(CUSTOMER_DEBT.CUST_ID.eq(customerID))
+                .execute();
+    }
+
     private static LocalDate parseDate(String date) {
         return date == null ? null : LocalDate.parse(date);
     }

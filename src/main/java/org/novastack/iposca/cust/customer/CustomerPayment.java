@@ -3,8 +3,11 @@ package org.novastack.iposca.cust.customer;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 import org.novastack.iposca.utils.db.JooqConnection;
+import schema.tables.CustomerDebt;
+
 import static schema.tables.CustomerRepayment.CUSTOMER_REPAYMENT;
 import static schema.tables.CustomerDebt.CUSTOMER_DEBT;
+import static schema.tables.Customer.CUSTOMER;
 
 import java.time.LocalDate;
 
@@ -58,9 +61,19 @@ public class CustomerPayment {
 
     private void absolveDebt(int customerID) {
         DSLContext ctx = JooqConnection.getDSLContext();
-        ctx.deleteFrom(CUSTOMER_DEBT)
-                .where(CUSTOMER_DEBT.CUST_ID.eq(customerID))
-                .execute();
+        String custStatus = ctx.select(CUSTOMER.STATUS)
+                .from(CUSTOMER)
+                .where(CUSTOMER.ID.eq(customerID))
+                .fetchOneInto(String.class);
+
+        custStatus = custStatus == null ? "" : custStatus;
+
+        if (custStatus.equals(CustomerEnums.AccountStatus.IN_DEFAULT.name())) {
+            org.novastack.iposca.cust.customer.CustomerDebt.dryDeleteDebt(customerID);
+            return;
+        }
+
+        org.novastack.iposca.cust.customer.CustomerDebt.deleteDebt(customerID);
     }
 
     public int getCustomerID() {

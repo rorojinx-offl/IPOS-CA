@@ -17,10 +17,13 @@
          <children>
             <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" text="Debt Management">
                <font>
-                  <Font name="Agency FB" size="45.0" />
+                  <Font size="45.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #FF0000;" text="Back" />
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #FF0000;" text="Back">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font></Button>
          </children>
       </Pane>
       <TableView fx:id="customerTable" layoutX="14.0" layoutY="80.0" prefHeight="266.0" prefWidth="722.0">
@@ -52,7 +55,7 @@
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: LawnGreen;" text="Restore In-Default Account" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#manualAccountRestore" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: LawnGreen; -fx-border-radius: 25;" text="Restore In-Default Account" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>
