@@ -28,4 +28,20 @@ public class CommonCalls {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     }
+
+    public boolean openConfirmationDialog(String prompt) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/common/confirm.fxml"));
+        Parent root = loader.load();
+
+        ConfirmController controller = loader.getController();
+        controller.setPrompt(prompt);
+
+        stage.setTitle("Confirmation");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+
+        return controller.getResult();
+    }
 }
