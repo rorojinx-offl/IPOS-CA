@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,10 +14,10 @@
             <Image url="@assets/error.png" />
          </image>
       </ImageView>
-      <TextField fx:id="errorMsg" editable="false" layoutX="159.0" layoutY="88.0" prefHeight="106.0" prefWidth="306.0" />
-      <Label layoutX="159.0" layoutY="14.0" prefHeight="62.0" prefWidth="298.0" text="An error has occurred!!!!">
+      <TextArea fx:id="errorMsg" editable="false" layoutX="149.0" layoutY="79.0" prefHeight="106.0" prefWidth="306.0" wrapText="true" />
+      <Label layoutX="159.0" layoutY="25.0" text="An error has occurred!!!!">
          <font>
-            <Font size="27.0" />
+            <Font size="25.0" />
          </font>
       </Label>
    </children>
