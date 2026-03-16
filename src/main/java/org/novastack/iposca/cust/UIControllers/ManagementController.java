@@ -90,7 +90,12 @@ public class ManagementController implements Initializable {
         } catch (DataAccessException e) {
             new CommonCalls().openErrorDialog(e.getMessage());
         }
-        customerTable.getItems().removeAll(customerTable.getSelectionModel().getTableView().getItems());
+
+        boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to delete this customer?");
+        if (!ok) {
+            return;
+        }
+
         refreshTable();
     }
 
@@ -124,7 +129,7 @@ public class ManagementController implements Initializable {
         Customer customer = new Customer();
         try {
             ArrayList<Customer> list = customer.getAllCustomers();
-            customers.addAll(list);
+            customers.setAll(list);
             customerTable.setItems(customers);
         } catch (DataAccessException e) {
             try {

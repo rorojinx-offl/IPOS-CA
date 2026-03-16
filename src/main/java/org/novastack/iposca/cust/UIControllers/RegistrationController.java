@@ -108,6 +108,11 @@ public class RegistrationController implements Initializable {
         }
 
         if (allFieldsFilled) {
+            boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to register the customer?");
+            if (!ok) {
+                return;
+            }
+
             Customer customer = new Customer(
                     name.getText(),
                     email.getText(),

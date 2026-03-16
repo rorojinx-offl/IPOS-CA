@@ -122,6 +122,11 @@ public class EditController implements Initializable {
         }
 
         if (allFieldsFilled) {
+            boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to modify this customer?");
+            if (!ok) {
+                return;
+            }
+
             Customer customer = new Customer(
                     id,
                     name.getText(),

@@ -67,6 +67,11 @@ public class FDSController implements Initializable {
             return;
         }
 
+        boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to modify the discount rate?");
+        if (!ok) {
+            return;
+        }
+
         FixedDiscountPlan fdp = new FixedDiscountPlan(customerTable.getSelectionModel().getSelectedItem().getCustomerID(), nr);
         fdp.modifyRate(fdp);
         customerTable.getItems().removeAll(customerTable.getSelectionModel().getTableView().getItems());

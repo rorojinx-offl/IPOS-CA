@@ -86,8 +86,9 @@ public class RepaymentController implements Initializable {
             allFieldsFilled = false;
         }
 
-        if (IValid.checkCreditLimit(amount.getText()) && !amount.getText().isEmpty()) {
+        if (!IValid.checkCreditLimit(amount.getText()) && !amount.getText().isEmpty()) {
             amountWarning.setText("Amount format is invalid!");
+            allFieldsFilled = false;
         }
 
         if (methodChoice.getSelectionModel().isEmpty() || methodChoice.getSelectionModel().getSelectedItem() == null) {
@@ -118,6 +119,11 @@ public class RepaymentController implements Initializable {
         }
 
         if (allFieldsFilled) {
+            boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to clear the debt sum of £" + amount.getText() + "?");
+            if (!ok) {
+                return;
+            }
+
             CustomerPayment crp;
 
             if (methodChoice.getSelectionModel().getSelectedItem().equals(CustomerEnums.PaymentMethod.CASH.name())) {
