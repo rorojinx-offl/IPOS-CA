@@ -148,7 +148,7 @@ public class RepaymentController implements Initializable {
     @FXML
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/debtMgmt.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/debtMgmt.fxml", "Debt Management");
     }
 
     private void updateDynamicFields(String selection) {

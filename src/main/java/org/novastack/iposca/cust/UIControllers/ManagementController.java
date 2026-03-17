@@ -66,7 +66,7 @@ public class ManagementController implements Initializable {
     @FXML
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml", "Customer Portal");
     }
 
     @FXML
@@ -78,7 +78,7 @@ public class ManagementController implements Initializable {
         EditController controller = loader.getController();
         controller.setID(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
 
-        stage.setTitle("Customer");
+        stage.setTitle("Edit Customer: " + customerTable.getSelectionModel().getSelectedItem().getName());
         stage.setScene(new javafx.scene.Scene(root));
         stage.show();
     }
@@ -102,7 +102,7 @@ public class ManagementController implements Initializable {
     @FXML
     void setFixedDsc(MouseEvent event) throws IOException {
         Stage stage = (Stage) editButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/fixedDsc.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/fixedDsc.fxml", "Fixed Discount Plans");
     }
 
     @FXML
@@ -139,7 +139,7 @@ public class ManagementController implements Initializable {
             }
             Stage stage = (Stage) backButton.getScene().getWindow();
             try {
-                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
+                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml", "Customer Portal");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

@@ -72,7 +72,7 @@ public class DebtController implements Initializable {
     @FXML
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml", "Customer Portal");
     }
 
     @FXML
@@ -137,7 +137,7 @@ public class DebtController implements Initializable {
             }
             Stage stage = (Stage) backButton.getScene().getWindow();
             try {
-                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
+                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml", "Customer Portal");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

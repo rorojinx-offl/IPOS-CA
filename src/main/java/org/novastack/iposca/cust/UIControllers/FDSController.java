@@ -94,7 +94,7 @@ public class FDSController implements Initializable {
     @FXML
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) customerTable.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/custMgmt.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/custMgmt.fxml", "Customer Management");
     }
 
     private void refreshTable() {
@@ -116,7 +116,7 @@ public class FDSController implements Initializable {
             }
             Stage stage = (Stage) customerTable.getScene().getWindow();
             try {
-                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
+                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml", "Customer Portal");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

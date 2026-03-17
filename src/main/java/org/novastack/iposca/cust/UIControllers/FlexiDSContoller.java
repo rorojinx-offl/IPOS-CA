@@ -40,7 +40,7 @@ public class FlexiDSContoller implements Initializable {
             }
             Stage stage = (Stage) flexiTable.getScene().getWindow();
             try {
-                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml");
+                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml", "Customer Portal");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }

@@ -165,7 +165,7 @@ public class EditController implements Initializable {
     @FXML
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/custMgmt.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/custMgmt.fxml", "Customer Management");
 
     }
 

@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class CommonCalls {
-    public void traverse(Stage stage, String targetFXML) throws IOException {
+    public void traverse(Stage stage, String targetFXML, String title) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(targetFXML));
-        stage.setTitle(stage.getTitle());
+        stage.setTitle(title);
         stage.setScene(new javafx.scene.Scene(root));
         stage.show();
     }

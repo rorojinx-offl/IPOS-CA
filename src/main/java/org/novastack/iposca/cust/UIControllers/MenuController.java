@@ -33,19 +33,19 @@ public class MenuController implements Initializable {
     @FXML
     void registerCustomer(MouseEvent event) throws IOException {
         Stage stage = (Stage) regButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/custReg.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/custReg.fxml", "Customer Registration");
     }
 
     @FXML
     void manageCustomer(MouseEvent event) throws IOException {
         Stage stage = (Stage) regButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/custMgmt.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/custMgmt.fxml", "Customer Management");
     }
 
     @FXML
     void manageDebt(MouseEvent event) throws IOException {
         Stage stage = (Stage) debtButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/cust/debtMgmt.fxml");
+        new CommonCalls().traverse(stage, "/ui/cust/debtMgmt.fxml", "Debt Management");
     }
 
     @FXML
