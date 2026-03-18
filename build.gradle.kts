@@ -20,6 +20,7 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.51.2.0")
     implementation("org.jooq:jooq:3.20.11")
     implementation("org.openjfx:javafx:25.0.2")
+    implementation("net.sf.jasperreports:jasperreports:7.0.6")
     jooqCodegen("org.xerial:sqlite-jdbc:3.51.2.0") //Add SQLite to task's classpath
 }
 
