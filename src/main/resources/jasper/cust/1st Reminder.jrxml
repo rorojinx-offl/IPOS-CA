@@ -2,31 +2,54 @@
 <jasperReport name="1st Reminder" language="java" pageWidth="572" pageHeight="752" columnWidth="572" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="01a4030f-3115-4830-983c-f1293750da0e">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="M_NAME" class="java.lang.String"/>
+	<parameter name="LOGO" class="java.lang.Object"/>
+	<parameter name="M_ADDRESS" class="java.lang.String"/>
+	<parameter name="EMAIL" class="java.lang.String"/>
+	<parameter name="PHONE" class="java.lang.String"/>
+	<parameter name="C_NAME" class="java.lang.String"/>
+	<parameter name="C_ADDRESS" class="java.lang.String"/>
+	<parameter name="PREV_MONTH" class="java.time.Month"/>
+	<parameter name="NEW_DUE_DATE" class="java.time.LocalDate"/>
+	<parameter name="DEBT" class="java.lang.Float"/>
 	<query language="SQL"><![CDATA[]]></query>
 	<background splitType="Stretch"/>
 	<title height="119" splitType="Stretch">
-		<element kind="staticText" uuid="58d0a9f8-7ca9-4cd7-ad7f-e0708988300d" x="-8" y="0" width="570" height="79" fontName="Agency FB" fontSize="47.0" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[IPOS-CA Debt Reminder]]></text>
+		<element kind="textField" uuid="53ad0f6c-b999-433f-a435-f2538936dca4" x="-8" y="0" width="570" height="79" fontName="Agency FB" fontSize="36.0" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{M_NAME} + " Debt Reminder"]]></expression>
 		</element>
-		<element kind="staticText" uuid="c3f0e926-1722-4c38-8a5e-eae4350ca4a2" x="151" y="59" width="270" height="20" fontSize="14.0" hTextAlign="Center" vTextAlign="Middle">
-			<text><![CDATA[116 Rainbow Road, Erith, Kent, DA8 2EQ]]></text>
+		<element kind="textField" uuid="ec8a89bf-0973-4233-ad59-9f88b5802e1e" x="151" y="59" width="270" height="20" fontSize="14.0" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{M_ADDRESS}]]></expression>
 		</element>
-		<element kind="staticText" uuid="b98562fe-272f-4cfe-ad90-047c1f5b8a4a" x="205" y="79" width="162" height="20" fontSize="11.0">
-			<text><![CDATA[Email: merchant@iposca.com]]></text>
+		<element kind="textField" uuid="45106f78-5c80-4031-b1b1-6ff08f4bb907" x="205" y="79" width="162" height="20" fontSize="11.0">
+			<expression><![CDATA["Email: " + $P{EMAIL}]]></expression>
+		</element>
+		<element kind="image" uuid="f9b7cc47-36fb-4da9-923c-529b0d0a8600" x="470" y="10" width="79" height="79">
+			<expression><![CDATA[new java.io.ByteArrayInputStream((byte[]) $P{LOGO})]]></expression>
 		</element>
 	</title>
-	<pageHeader height="146" splitType="Stretch">
-		<element kind="staticText" uuid="2c6f2b20-0a68-4f9b-9492-1039a939d5e8" x="20" y="-10" width="520" height="96" fontSize="12.0">
-			<text><![CDATA[Dear Customer, you have outstanding debt to pay us. The balance sum is £2000. This is billed for March.
-Kind Regards, 
-Merchant]]></text>
+	<pageHeader height="211" splitType="Stretch">
+		<element kind="textField" uuid="5aaec570-d1f0-41db-bb14-4b025dc91752" x="10" y="1" width="140" height="98">
+			<expression><![CDATA[$P{C_NAME} + "\n" +
+$P{C_ADDRESS} + "\n" + 
+"Phone: " + $P{PHONE}]]></expression>
+		</element>
+		<element kind="textField" uuid="4d97a084-c2e4-4f50-b123-64a4ca521c47" x="10" y="111" width="560" height="100">
+			<expression><![CDATA["Dear " + $P{C_NAME} + ",\n\n"
++ "Our records indicate that an outstanding balance of £"
++ new java.text.DecimalFormat("0.00").format($P{DEBT})
++ " remains unpaid from " + $P{PREV_MONTH}.toString() + ".\n\n"
++ "We kindly request that this amount be settled by "
++ $P{NEW_DUE_DATE} + ".\n\n"
++ "If payment has already been made, please disregard this notice.\n\n"
++ "If you have any questions or require assistance, please do not hesitate to contact us.\n\n"]]></expression>
 		</element>
 	</pageHeader>
-	<columnHeader height="61" splitType="Stretch"/>
+	<columnHeader splitType="Stretch"/>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</detail>
-	<columnFooter height="45" splitType="Stretch"/>
-	<pageFooter height="54" splitType="Stretch"/>
-	<summary height="42" splitType="Stretch"/>
+	<columnFooter splitType="Stretch"/>
+	<pageFooter splitType="Stretch"/>
+	<summary splitType="Stretch"/>
 </jasperReport>
