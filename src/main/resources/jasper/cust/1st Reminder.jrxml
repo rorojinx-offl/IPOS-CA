@@ -15,7 +15,13 @@
 			<text><![CDATA[Email: merchant@iposca.com]]></text>
 		</element>
 	</title>
-	<pageHeader height="35" splitType="Stretch"/>
+	<pageHeader height="146" splitType="Stretch">
+		<element kind="staticText" uuid="2c6f2b20-0a68-4f9b-9492-1039a939d5e8" x="20" y="-10" width="520" height="96" fontSize="12.0">
+			<text><![CDATA[Dear Customer, you have outstanding debt to pay us. The balance sum is £2000. This is billed for March.
+Kind Regards, 
+Merchant]]></text>
+		</element>
+	</pageHeader>
 	<columnHeader height="61" splitType="Stretch"/>
 	<detail>
 		<band height="125" splitType="Stretch"/>
