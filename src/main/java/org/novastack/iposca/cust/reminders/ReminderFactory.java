@@ -1,6 +1,11 @@
 package org.novastack.iposca.cust.reminders;
 
+import net.sf.jasperreports.engine.*;
+
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,8 +15,20 @@ import java.util.Map;
 public class ReminderFactory {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMMM yyyy");
 
-    public static void generateReminder(ReminderInfo info, ReminderInfo.Merchant merchant, Path outputPath, Path templatePath) {
+    public static void generateReminder(ReminderInfo info, ReminderInfo.Merchant merchant, Path outputPath, Path templatePath) throws JRException, IOException {
+        InputStream jrxml = ReminderFactory.class.getResourceAsStream(templatePath.toString());
+        if (jrxml == null) {
+            throw new IOException("Resource not found: " + templatePath);
+        }
 
+        JasperReport reminder = JasperCompileManager.compileReport(jrxml);
+        Map<String, Object> params = buildParams(info, merchant);
+        JasperPrint print = JasperFillManager.fillReport(reminder, params, new JREmptyDataSource(1));
+
+
+        Files.createDirectories(outputPath.getParent());
+
+        JasperExportManager.exportReportToPdfFile(print, outputPath.toString());
     }
 
     private static Map<String, Object> buildParams(ReminderInfo info, ReminderInfo.Merchant merchant) {
