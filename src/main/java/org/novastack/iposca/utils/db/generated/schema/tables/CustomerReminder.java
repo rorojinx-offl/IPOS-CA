@@ -161,11 +161,6 @@ public class CustomerReminder extends TableImpl<CustomerReminderRecord> {
     }
 
     @Override
-    public List<UniqueKey<CustomerReminderRecord>> getUniqueKeys() {
-        return Arrays.asList(Keys.CUSTOMER_REMINDER__UK_CUSTOMER_REMINDER_1_50385510, Keys.CUSTOMER_REMINDER__UK_CUSTOMER_REMINDER_2_10542865);
-    }
-
-    @Override
     public List<ForeignKey<CustomerReminderRecord, ?>> getReferences() {
         return Arrays.asList(Keys.CUSTOMER_REMINDER__FK_CUSTOMER_REMINDER_PK_CUSTOMER);
     }

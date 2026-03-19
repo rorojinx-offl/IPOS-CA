@@ -11,12 +11,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerDebt;
 import org.novastack.iposca.cust.customer.CustomerEnums;
+import org.novastack.iposca.cust.customer.CustomerReminder;
 import org.novastack.iposca.cust.reminders.ReminderFactory;
 import org.novastack.iposca.cust.reminders.ReminderInfo;
 import org.novastack.iposca.utils.common.TestReminderGen;
@@ -117,8 +119,12 @@ public class DebtController implements Initializable {
         if (cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.DUE.name()) && cd.getDate1Reminder() != null) {
             type = CustomerEnums.ReminderType.FIRST;
         }
-        if (cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.SENT.name()) && (cd.getStatus2Reminder() == null || !cd.getStatus2Reminder().equals(CustomerEnums.ReminderStatus.DUE.name()))) {
+        if (cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.SENT.name()) && (cd.getStatus2Reminder() == null || cd.getStatus2Reminder().equals(CustomerEnums.ReminderStatus.NO_NEED.name()))) {
             new CommonCalls().openErrorDialog("This customer does not need a reminder at this time!");
+            return;
+        }
+        if (cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.SENT.name()) && cd.getStatus2Reminder().equals(CustomerEnums.ReminderStatus.SENT.name())) {
+            new CommonCalls().openErrorDialog("All reminders for this month have already been sent to this customer!");
             return;
         }
         if (cd.getDate2Reminder() != null && cd.getStatus2Reminder().equals(CustomerEnums.ReminderStatus.DUE.name()) && cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.SENT.name())) {
@@ -141,6 +147,22 @@ public class DebtController implements Initializable {
         int remNumber = type.equals(CustomerEnums.ReminderType.FIRST) ? 1 : 2;
         Path pdf = Path.of("generated-reports", "debt-reminder"+ remNumber +"-"+ cd.getCustomerID() +".pdf");
         ReminderFactory.generateReminder(info, merchant, type, pdf, jrxml);
+
+        switch (type) {
+            case FIRST -> {
+                CustomerDebt.setReminderDateStatus(cd.getCustomerID(), CustomerEnums.ReminderType.FIRST, cd.getDate1Reminder().toString(), CustomerEnums.ReminderStatus.SENT.name());
+                CustomerReminder cr = new CustomerReminder(cd.getCustomerID(),info.getIssueMonthYear().getMonth(),type,LocalDate.now());
+                cr.recordReminder(cr);
+                refreshTable();
+            }
+            case SECOND -> {
+                CustomerDebt.setReminderDateStatus(cd.getCustomerID(), CustomerEnums.ReminderType.SECOND, cd.getDate2Reminder().toString(), CustomerEnums.ReminderStatus.SENT.name());
+                CustomerReminder cr = new CustomerReminder(cd.getCustomerID(),info.getIssueMonthYear().getMonth(),type,LocalDate.now());
+                cr.recordReminder(cr);
+                refreshTable();
+            }
+            default -> new CommonCalls().openErrorDialog("Error: Type is null!");
+        }
     }
 
 
@@ -159,6 +181,17 @@ public class DebtController implements Initializable {
         Customer.updateAccountStatus(customerTable.getSelectionModel().getSelectedItem().getCustomerID(), CustomerEnums.AccountStatus.NORMAL.name());
         CustomerDebt.deleteDebt(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
         refreshTable();
+    }
+
+    @FXML
+    void viewReminders(MouseEvent event) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/cust/reminderHistory.fxml"));
+        Parent root = loader.load();
+        stage.setTitle("View Reminder Generation History");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
 
     private byte[] loadLogo() throws IOException {

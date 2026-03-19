@@ -27,12 +27,8 @@ public class Test {
             {
                 add(new TableSchema.Column("ID", "INTEGER", true, true,null));
                 add(new TableSchema.Column("CUST_ID", "INTEGER", false, true,null));
-                add(new TableSchema.Column("BILLING_MONTH", "TEXT", false, true,new ArrayList<>() {{
-                    add(new ColumnConstraint.Unique());
-                }}));
-                add(new TableSchema.Column("REMINDER_TYPE", "TEXT", false, true,new ArrayList<>() {{
-                    add(new ColumnConstraint.Unique());
-                }}));
+                add(new TableSchema.Column("BILLING_MONTH", "TEXT", false, true,null));
+                add(new TableSchema.Column("REMINDER_TYPE", "TEXT", false, true,null));
                 add(new TableSchema.Column("GENERATED_DATE", "TEXT", false, true,null));
                 add(new TableSchema.ForeignKey("CUST_ID", "customer", "ID", true, true));
             }
