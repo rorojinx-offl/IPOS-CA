@@ -16,7 +16,7 @@
    <children>
       <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Orange;">
          <children>
-            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" text="Customer Management">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="750.0" text="Customer Management">
                <font>
                   <Font name="Agency FB" size="45.0" />
                </font>
