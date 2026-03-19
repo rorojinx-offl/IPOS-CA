@@ -1,4 +1,4 @@
-package org.novastack.iposca.cust;
+package org.novastack.iposca;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ public class UIMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/ui/cust/debtMgmt.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ui/sales/salesMenu.fxml"));
         stage.setTitle("Customer");
         stage.setScene(new Scene(root));
         stage.show();

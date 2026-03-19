@@ -64,5 +64,5 @@ javafx {
 }
 
 application {
-    mainClass.set("org.novastack.iposca.cust.UIMain")
+    mainClass.set("org.novastack.iposca.UIMain")
 }
