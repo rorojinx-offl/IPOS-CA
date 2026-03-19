@@ -60,7 +60,7 @@
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Yellow;" text="Generate Reminders" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#generateReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Yellow;" text="Generate Reminders" GridPane.columnIndex="1">
                <font>
                   <Font size="29.0" />
                </font>

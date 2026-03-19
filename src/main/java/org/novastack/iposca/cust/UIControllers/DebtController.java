@@ -12,14 +12,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerDebt;
 import org.novastack.iposca.cust.customer.CustomerEnums;
+import org.novastack.iposca.cust.reminders.ReminderFactory;
+import org.novastack.iposca.cust.reminders.ReminderInfo;
+import org.novastack.iposca.utils.common.TestReminderGen;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -94,6 +100,49 @@ public class DebtController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    void generateReminders(MouseEvent event) throws IOException, JRException {
+        CustomerDebt cd = customerTable.getSelectionModel().getSelectedItem();
+        if (cd == null) {
+            new CommonCalls().openErrorDialog("Please select a customer");
+            return;
+        }
+
+
+        CustomerEnums.ReminderType type = null;
+        if (cd.getStatus1Reminder() == null || cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.NO_NEED.name())) {
+            new CommonCalls().openErrorDialog("This customer does not need a reminder at this time!");
+            return;
+        }
+        if (cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.DUE.name()) && cd.getDate1Reminder() != null) {
+            type = CustomerEnums.ReminderType.FIRST;
+        }
+        if (cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.SENT.name()) && (cd.getStatus2Reminder() == null || !cd.getStatus2Reminder().equals(CustomerEnums.ReminderStatus.DUE.name()))) {
+            new CommonCalls().openErrorDialog("This customer does not need a reminder at this time!");
+            return;
+        }
+        if (cd.getDate2Reminder() != null && cd.getStatus2Reminder().equals(CustomerEnums.ReminderStatus.DUE.name()) && cd.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.SENT.name())) {
+            type = CustomerEnums.ReminderType.SECOND;
+        }
+
+        if (type == null) {
+            new CommonCalls().openErrorDialog("Error: Type is null!");
+            return;
+        }
+
+        ReminderInfo info = ReminderInfo.setReminderInfo(cd, type);
+        ReminderInfo.Merchant merchant = new ReminderInfo.Merchant(
+                "T-Pharma",
+                "123 Test Street, Test Town, Testshire, TE1 1ST",
+                "test@tpharma.com",
+                loadLogo());
+
+        Path jrxml = Path.of("/jasper/cust/reminder.jrxml");
+        int remNumber = type.equals(CustomerEnums.ReminderType.FIRST) ? 1 : 2;
+        Path pdf = Path.of("generated-reports", "debt-reminder"+ remNumber +"-"+ cd.getCustomerID() +".pdf");
+        ReminderFactory.generateReminder(info, merchant, type, pdf, jrxml);
+    }
+
 
     @FXML
     void manualAccountRestore(MouseEvent event) throws IOException {
@@ -110,6 +159,15 @@ public class DebtController implements Initializable {
         Customer.updateAccountStatus(customerTable.getSelectionModel().getSelectedItem().getCustomerID(), CustomerEnums.AccountStatus.NORMAL.name());
         CustomerDebt.deleteDebt(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
         refreshTable();
+    }
+
+    private byte[] loadLogo() throws IOException {
+        try (InputStream in = TestReminderGen.class.getResourceAsStream("/ui/cust/assets/debt.png")) {
+            if (in == null) {
+                throw new IOException("Resource not found");
+            }
+            return in.readAllBytes();
+        }
     }
 
 
