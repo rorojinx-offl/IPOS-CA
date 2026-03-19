@@ -1,6 +1,7 @@
 package org.novastack.iposca.cust.reminders;
 
 import net.sf.jasperreports.engine.*;
+import org.novastack.iposca.cust.customer.CustomerEnums;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -15,14 +16,14 @@ import java.util.Map;
 public class ReminderFactory {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd MMMM yyyy");
 
-    public static void generateReminder(ReminderInfo info, ReminderInfo.Merchant merchant, Path outputPath, Path templatePath) throws JRException, IOException {
+    public static void generateReminder(ReminderInfo info, ReminderInfo.Merchant merchant, CustomerEnums.ReminderType type, Path outputPath, Path templatePath) throws JRException, IOException {
         InputStream jrxml = ReminderFactory.class.getResourceAsStream(templatePath.toString());
         if (jrxml == null) {
             throw new IOException("Resource not found: " + templatePath);
         }
 
         JasperReport reminder = JasperCompileManager.compileReport(jrxml);
-        Map<String, Object> params = buildParams(info, merchant);
+        Map<String, Object> params = buildParams(info, merchant, type);
         JasperPrint print = JasperFillManager.fillReport(reminder, params, new JREmptyDataSource(1));
 
 
@@ -31,7 +32,7 @@ public class ReminderFactory {
         JasperExportManager.exportReportToPdfFile(print, outputPath.toString());
     }
 
-    private static Map<String, Object> buildParams(ReminderInfo info, ReminderInfo.Merchant merchant) {
+    private static Map<String, Object> buildParams(ReminderInfo info, ReminderInfo.Merchant merchant, CustomerEnums.ReminderType type) {
         Map<String, Object> params = new HashMap<>();
 
         params.put("M_NAME", merchant.name());
@@ -47,6 +48,7 @@ public class ReminderFactory {
         params.put("PREV_MONTH", info.getIssueMonthYear().getMonth());
         params.put("NEW_DUE_DATE", formatDate(info.getNewDueDate()));
         params.put("DEBT", info.getDebt());
+        params.put("REM_TYPE", type.name());
 
         return params;
     }

@@ -1,5 +1,6 @@
 package org.novastack.iposca.utils.common;
 
+import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.reminders.ReminderFactory;
 import org.novastack.iposca.cust.reminders.ReminderInfo;
 
@@ -27,10 +28,10 @@ public class TestReminderGen {
                     "test@tpharma.com",
                     loadLogo());
 
-            Path jrxml = Path.of("/jasper/cust/1stReminder.jrxml");
+            Path jrxml = Path.of("/jasper/cust/reminder.jrxml");
             Path pdf = Path.of("generated-reports", "debt-reminder1-455.pdf");
 
-            ReminderFactory.generateReminder(info, merchant, pdf, jrxml);
+            ReminderFactory.generateReminder(info, merchant, CustomerEnums.ReminderType.FIRST,pdf, jrxml);
             System.out.println("Reminder generated successfully at: " + pdf.toAbsolutePath());
         } catch (Exception e) {
             e.printStackTrace();

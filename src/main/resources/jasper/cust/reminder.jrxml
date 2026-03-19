@@ -12,6 +12,7 @@
 	<parameter name="PREV_MONTH" class="java.time.Month"/>
 	<parameter name="NEW_DUE_DATE" class="java.lang.String"/>
 	<parameter name="DEBT" class="java.lang.Float"/>
+	<parameter name="REM_TYPE" class="java.lang.String"/>
 	<query language="SQL"><![CDATA[]]></query>
 	<background splitType="Stretch"/>
 	<title height="119" splitType="Stretch">
@@ -21,20 +22,20 @@
 		<element kind="textField" uuid="ec8a89bf-0973-4233-ad59-9f88b5802e1e" x="151" y="59" width="270" height="20" fontSize="14.0" textAdjust="ScaleFont" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{M_ADDRESS}]]></expression>
 		</element>
-		<element kind="textField" uuid="45106f78-5c80-4031-b1b1-6ff08f4bb907" x="205" y="79" width="162" height="20" fontSize="11.0">
+		<element kind="textField" uuid="45106f78-5c80-4031-b1b1-6ff08f4bb907" x="205" y="79" width="162" height="20" fontSize="11.0" textAdjust="ScaleFont">
 			<expression><![CDATA["Email: " + $P{EMAIL}]]></expression>
 		</element>
 		<element kind="image" uuid="f9b7cc47-36fb-4da9-923c-529b0d0a8600" x="490" y="10" width="79" height="79">
 			<expression><![CDATA[$P{LOGO}]]></expression>
 		</element>
 	</title>
-	<pageHeader height="211" splitType="Stretch">
-		<element kind="textField" uuid="5aaec570-d1f0-41db-bb14-4b025dc91752" x="10" y="1" width="140" height="98">
+	<pageHeader height="253" splitType="Stretch">
+		<element kind="textField" uuid="5aaec570-d1f0-41db-bb14-4b025dc91752" x="10" y="1" width="140" height="98" textAdjust="ScaleFont">
 			<expression><![CDATA[$P{C_NAME} + "\n" +
 $P{C_ADDRESS} + "\n" + 
 "Phone: " + $P{PHONE}]]></expression>
 		</element>
-		<element kind="textField" uuid="4d97a084-c2e4-4f50-b123-64a4ca521c47" x="10" y="111" width="560" height="100">
+		<element kind="textField" uuid="4d97a084-c2e4-4f50-b123-64a4ca521c47" x="10" y="150" width="560" height="100">
 			<expression><![CDATA["Dear " + $P{C_NAME} + ",\n\n"
 + "Our records indicate that an outstanding balance of £"
 + new java.text.DecimalFormat("0.00").format($P{DEBT})
@@ -43,6 +44,9 @@ $P{C_ADDRESS} + "\n" +
 + $P{NEW_DUE_DATE} + ".\n\n"
 + "If payment has already been made, please disregard this notice.\n\n"
 + "If you have any questions or require assistance, please do not hesitate to contact us.\n\n"]]></expression>
+		</element>
+		<element kind="textField" uuid="60d507a7-f335-4d41-b2b1-5379af441390" x="150" y="110" width="300" height="20" fontSize="13.0" textAdjust="ScaleFont" bold="true" italic="true" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{REM_TYPE} + " REMINDER"]]></expression>
 		</element>
 	</pageHeader>
 	<columnHeader splitType="Stretch"/>
