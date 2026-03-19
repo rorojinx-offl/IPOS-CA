@@ -2,10 +2,13 @@ package org.novastack.iposca.cust.UIControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
@@ -46,9 +49,24 @@ public class FlexiDSContoller implements Initializable {
             }
         }
 
+        FilteredList<DiscountPlans> filteredData = new FilteredList<>(planHolders, c -> true);
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredData.setPredicate(holder -> {
+                if (newVal == null || newVal.isEmpty()) {return true;}
+                String filter = newVal.toLowerCase();
+                return holder.getCustomerName().toLowerCase().contains(filter);
+            });
+        });
+
+        SortedList<DiscountPlans> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(flexiTable.comparatorProperty());
+        flexiTable.setItems(sortedData);
     }
 
     private ObservableList<DiscountPlans> planHolders = FXCollections.observableArrayList();
+
+    @FXML
+    private TextField searchField;
 
     @FXML
     private TableColumn<FlexiDiscountPlan, Integer> id;

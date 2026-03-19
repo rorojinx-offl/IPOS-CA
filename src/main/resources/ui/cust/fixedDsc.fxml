@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="606.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.FDSController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.FDSController">
    <children>
       <Pane prefHeight="44.0" prefWidth="379.0" style="-fx-background-color: Orange;">
          <children>
@@ -29,25 +29,26 @@
             </ImageView>
          </children>
       </Pane>
-      <TableView fx:id="customerTable" layoutX="33.0" layoutY="63.0" prefHeight="285.0" prefWidth="313.0">
+      <TableView fx:id="customerTable" layoutX="33.0" layoutY="91.0" prefHeight="285.0" prefWidth="313.0">
          <columns>
             <TableColumn fx:id="customerID" prefWidth="42.39999485015869" text="ID" visible="false" />
             <TableColumn fx:id="name" editable="false" prefWidth="204.00002765655518" text="Name" />
             <TableColumn fx:id="rate" minWidth="0.0" prefWidth="107.9999938964844" text="Rate" />
          </columns>
       </TableView>
-      <Button layoutX="67.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#selectRate" prefHeight="38.0" prefWidth="244.0" style="-fx-background-color: GoldenRod;" text="Edit Rate for Selected Customer">
+      <Button layoutX="67.0" layoutY="430.0" mnemonicParsing="false" onMouseClicked="#selectRate" prefHeight="38.0" prefWidth="244.0" style="-fx-background-color: GoldenRod;" text="Edit Rate for Selected Customer">
          <font>
             <Font size="13.0" />
          </font>
       </Button>
-      <Button layoutX="82.0" layoutY="536.0" mnemonicParsing="false" onMouseClicked="#allRate" prefHeight="44.0" prefWidth="214.0" style="-fx-background-color: Aquamarine;" text="Edit Rate for All">
+      <Button layoutX="82.0" layoutY="556.0" mnemonicParsing="false" onMouseClicked="#allRate" prefHeight="44.0" prefWidth="214.0" style="-fx-background-color: Aquamarine;" text="Edit Rate for All">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Spinner fx:id="rateSpinner" editable="true" layoutX="101.0" layoutY="480.0" prefHeight="38.0" prefWidth="176.0" />
-      <Separator layoutY="463.0" prefHeight="7.0" prefWidth="379.0" />
-      <TextField fx:id="newRate" layoutX="101.0" layoutY="357.0" prefHeight="26.0" prefWidth="176.0" />
+      <Spinner fx:id="rateSpinner" editable="true" layoutX="101.0" layoutY="501.0" prefHeight="38.0" prefWidth="176.0" />
+      <Separator layoutY="479.0" prefHeight="7.0" prefWidth="379.0" />
+      <TextField fx:id="newRate" layoutX="102.0" layoutY="393.0" prefHeight="26.0" prefWidth="176.0" />
+      <TextField fx:id="searchField" layoutX="52.0" layoutY="56.0" prefHeight="26.0" prefWidth="275.0" promptText="Search By Name..." />
    </children>
 </AnchorPane>

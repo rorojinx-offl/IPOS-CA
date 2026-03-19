@@ -2,6 +2,8 @@ package org.novastack.iposca.cust.UIControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
+import org.novastack.iposca.cust.customer.CustomerDebt;
 import org.novastack.iposca.cust.plans.DiscountPlans;
 import org.novastack.iposca.cust.plans.FixedDiscountPlan;
 import org.novastack.iposca.utils.ui.CommonCalls;
@@ -24,9 +27,26 @@ public class FDSController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         refreshTable();
         rateSpinner.setValueFactory(rateValueFactory);
+
+        FilteredList<DiscountPlans> filteredData = new FilteredList<>(planHolders, c -> true);
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredData.setPredicate(holder -> {
+                if (newVal == null || newVal.isEmpty()) {return true;}
+                String filter = newVal.toLowerCase();
+                return holder.getCustomerName().toLowerCase().contains(filter);
+            });
+        });
+
+        SortedList<DiscountPlans> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
+        customerTable.setItems(sortedData);
     }
 
     ObservableList<DiscountPlans> planHolders = FXCollections.observableArrayList();
+
+    @FXML
+    private TextField searchField;
+
 
     @FXML
     private TableColumn<FixedDiscountPlan, Integer> customerID;

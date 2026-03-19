@@ -49,6 +49,10 @@ public class MenuController implements Initializable {
     }
 
     @FXML
+    void generateStatements(MouseEvent event) {
+    }
+
+    @FXML
     void highlight(MouseEvent event) {
         VBox option = (VBox) event.getSource();
         Label childLabel = (Label) option.getChildren().get(1);

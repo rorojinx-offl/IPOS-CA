@@ -2,6 +2,8 @@ package org.novastack.iposca.cust.UIControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
@@ -36,12 +39,29 @@ public class DebtController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         refreshTable();
+
+        FilteredList<CustomerDebt> filteredData = new FilteredList<>(debtors, c -> true);
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredData.setPredicate(debtor -> {
+                if (newVal == null || newVal.isEmpty()) {return true;}
+                String filter = newVal.toLowerCase();
+                return debtor.getCustomerName().toLowerCase().contains(filter);
+            });
+        });
+
+        SortedList<CustomerDebt> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
+        customerTable.setItems(sortedData);
     }
 
     ObservableList<CustomerDebt> debtors = FXCollections.observableArrayList();
 
     @FXML
     private Button backButton;
+
+    @FXML
+    private TextField searchField;
+
 
     @FXML
     private TableColumn<CustomerDebt, Float> balance;

@@ -2,15 +2,19 @@ package org.novastack.iposca.cust.UIControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.customer.CustomerReminder;
+import org.novastack.iposca.cust.plans.DiscountPlans;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
@@ -47,9 +51,25 @@ public class RHController implements Initializable {
                 throw new RuntimeException(ex);
             }
         }
+
+        FilteredList<CustomerReminder> filteredData = new FilteredList<>(reminders, c -> true);
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredData.setPredicate(reminder -> {
+                if (newVal == null || newVal.isEmpty()) {return true;}
+                String filter = newVal.toLowerCase();
+                return reminder.getCustomerName().toLowerCase().contains(filter);
+            });
+        });
+
+        SortedList<CustomerReminder> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(remTable.comparatorProperty());
+        remTable.setItems(sortedData);
     }
 
     private final ObservableList<CustomerReminder> reminders = FXCollections.observableArrayList();
+
+    @FXML
+    private TextField searchField;
 
     @FXML
     private TableColumn<CustomerReminder, Month> billingMonth;
