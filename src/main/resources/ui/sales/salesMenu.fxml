@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="311.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.sales.UIControllers.MenuController">
+   <children>
+      <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Red;">
+         <children>
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" text="Sales Portal" textAlignment="CENTER">
+               <font>
+                  <Font name="Agency FB" size="45.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <VBox fx:id="acButton" alignment="CENTER" layoutX="82.0" layoutY="91.0" onMouseClicked="#accountSale" onMouseEntered="#highlight" onMouseExited="#restoreCol">
+         <children>
+            <ImageView fitHeight="178.0" fitWidth="237.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../sales/assets/card.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" text="Make Sale to Account Holder" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Separator layoutX="372.0" layoutY="71.0" orientation="VERTICAL" prefHeight="240.0" prefWidth="0.0" />
+      <VBox fx:id="ocButton" alignment="CENTER" layoutX="447.0" layoutY="91.0" onMouseClicked="#occasionalSale" onMouseEntered="#highlight" onMouseExited="#restoreCol">
+         <children>
+            <ImageView fitHeight="178.0" fitWidth="237.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../sales/assets/people.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" text="Make Sale to Occasional Customer" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
