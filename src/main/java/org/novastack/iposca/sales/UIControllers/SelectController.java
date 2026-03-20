@@ -4,19 +4,23 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.exceptions.InvalidOperation;
+import org.novastack.iposca.sales.SaleService;
 import org.novastack.iposca.stock.Stock;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SelectController implements Initializable {
@@ -29,6 +33,8 @@ public class SelectController implements Initializable {
 
     @FXML
     private Button backButton;
+
+    private Customer customer;
 
     @FXML
     private TableView<SaleLine> cart;
@@ -60,6 +66,11 @@ public class SelectController implements Initializable {
     private final ObservableList<Stock> allProducts = FXCollections.observableArrayList();
     private final ObservableList<SaleLine> cartItems = FXCollections.observableArrayList();
 
+    public void setCustomer(Customer cust) {
+        customer = cust;
+        System.out.println(customer.getName());
+    }
+
     @FXML
     void addToCart(MouseEvent event) throws IOException {
         Stock product = searchResults.getSelectionModel().getSelectedItem();
@@ -90,8 +101,43 @@ public class SelectController implements Initializable {
     }
 
     @FXML
-    void returnToParent(MouseEvent event) {
+    void cardPayment(MouseEvent event) {
 
+    }
+
+    @FXML
+    void creditPayment(MouseEvent event) throws IOException {
+        SaleService.SaleDraft draft = null;
+
+        try {
+            draft = collectCart();
+        } catch (Exception e) {
+            new CommonCalls().openErrorDialog(e.getMessage());
+            return;
+        }
+
+        if (customer == null) {
+            new CommonCalls().openErrorDialog("Unable to map customer to order!");
+            returnToParent(event);
+            return;
+        }
+
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/creditPay.fxml"));
+        Parent root = loader.load();
+
+        CreditController controller = loader.getController();
+        controller.receiver(draft, customer);
+
+        stage.setTitle("Pay with Merchant Credits");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    void returnToParent(MouseEvent event) throws IOException {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/sales/salesAccount.fxml", "Sale for Account Holder");
     }
 
     private void loadProducts() {
@@ -212,5 +258,34 @@ public class SelectController implements Initializable {
                 setGraphic(empty ? null : removeButton);
             }
         });
+    }
+
+    private SaleService.SaleDraft collectCart() throws InvalidOperation {
+        if (cart.getItems().isEmpty() || cartItems.isEmpty()) {
+            throw new InvalidOperation("You cannot place an order without any items in the cart!");
+        }
+
+        List<SaleService.SaleItem> itemsTemp = cartItems.stream().map(line ->
+                new SaleService.SaleItem(
+                        null,
+                        null,
+                        line.getProduct().getId(),
+                        line.getQuantity(),
+                        (float) line.getUnitPrice(),
+                        (float) line.getSubtotal()
+                )).toList();
+
+        ArrayList<SaleService.SaleItem> items = new ArrayList<>(itemsTemp);
+        float total = (float) collectOrderTotal();
+
+        return new SaleService.SaleDraft(customer.getCustomerID(), items, total);
+    }
+
+    private double collectOrderTotal() {
+        double total = 0.0;
+        for (SaleLine item : cartItems) {
+            total += item.getSubtotal();
+        }
+        return total;
     }
 }
