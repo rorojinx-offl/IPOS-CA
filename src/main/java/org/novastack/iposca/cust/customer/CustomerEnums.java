@@ -10,7 +10,7 @@ public class CustomerEnums {
     }
 
     public enum PaymentMethod {
-        CASH, CARD
+        CASH, CARD, CREDITS
     }
 
     public enum CardType {
