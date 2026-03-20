@@ -2,8 +2,12 @@ package org.novastack.iposca.sales.UIControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -12,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
+import org.novastack.iposca.cust.UIControllers.EditController;
 import org.novastack.iposca.cust.UIControllers.ManagementController;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.utils.ui.CommonCalls;
@@ -23,6 +28,19 @@ public class ASController implements Initializable {
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle rb) {
         refreshTable();
+
+        FilteredList<Customer> filteredData = new FilteredList<>(customers, c -> true);
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            filteredData.setPredicate(customer -> {
+                if (newVal == null || newVal.isEmpty()) {return true;}
+                String filter = newVal.toLowerCase();
+                return customer.getName().toLowerCase().contains(filter);
+            });
+        });
+
+        SortedList<Customer> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(customerTable.comparatorProperty());
+        customerTable.setItems(sortedData);
     }
 
     ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -61,13 +79,23 @@ public class ASController implements Initializable {
     private TableColumn<Customer, String> status;
 
     @FXML
-    void returnToParent(MouseEvent event) {
-
+    void returnToParent(MouseEvent event) throws IOException {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/sales/salesMenu.fxml", "Sales");
     }
 
     @FXML
-    void selectItems(MouseEvent event) {
+    void selectItems(MouseEvent event) throws IOException {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/selectItems.fxml"));
+        Parent root = loader.load();
 
+        SelectController controller = loader.getController();
+        controller.setCustomer(customerTable.getSelectionModel().getSelectedItem());
+
+        stage.setTitle("Select Items");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.show();
     }
 
     private void refreshTable() {
@@ -93,7 +121,7 @@ public class ASController implements Initializable {
             }
             Stage stage = (Stage) backButton.getScene().getWindow();
             try {
-                new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml", "Customer Portal");
+                new CommonCalls().traverse(stage, "/ui/sales/salesMenu.fxml", "Sales");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
