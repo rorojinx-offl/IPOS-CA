@@ -29,6 +29,7 @@ import org.jooq.impl.TableImpl;
 
 import schema.DefaultSchema;
 import schema.Keys;
+import schema.tables.Card.CardPath;
 import schema.tables.CustomerCharge.CustomerChargePath;
 import schema.tables.CustomerDebt.CustomerDebtPath;
 import schema.tables.CustomerMonthlySpend.CustomerMonthlySpendPath;
@@ -37,6 +38,7 @@ import schema.tables.CustomerRepayment.CustomerRepaymentPath;
 import schema.tables.CustomerStatement.CustomerStatementPath;
 import schema.tables.FixedDsc.FixedDscPath;
 import schema.tables.FlexiDsc.FlexiDscPath;
+import schema.tables.Sale.SalePath;
 import schema.tables.records.CustomerRecord;
 
 
@@ -173,6 +175,18 @@ public class Customer extends TableImpl<CustomerRecord> {
         return Keys.CUSTOMER__PK_CUSTOMER;
     }
 
+    private transient CardPath _card;
+
+    /**
+     * Get the implicit to-many join path to the <code>card</code> table
+     */
+    public CardPath card() {
+        if (_card == null)
+            _card = new CardPath(this, null, Keys.CARD__FK_CARD_PK_CUSTOMER.getInverseKey());
+
+        return _card;
+    }
+
     private transient CustomerChargePath _customerCharge;
 
     /**
@@ -273,6 +287,18 @@ public class Customer extends TableImpl<CustomerRecord> {
             _flexiDsc = new FlexiDscPath(this, null, Keys.FLEXI_DSC__FK_FLEXI_DSC_PK_CUSTOMER.getInverseKey());
 
         return _flexiDsc;
+    }
+
+    private transient SalePath _sale;
+
+    /**
+     * Get the implicit to-many join path to the <code>sale</code> table
+     */
+    public SalePath sale() {
+        if (_sale == null)
+            _sale = new SalePath(this, null, Keys.SALE__FK_SALE_PK_CUSTOMER.getInverseKey());
+
+        return _sale;
     }
 
     @Override

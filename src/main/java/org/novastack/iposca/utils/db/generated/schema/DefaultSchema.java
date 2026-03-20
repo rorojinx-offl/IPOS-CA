@@ -12,6 +12,7 @@ import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 
+import schema.tables.Card;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
@@ -21,6 +22,9 @@ import schema.tables.CustomerRepayment;
 import schema.tables.CustomerStatement;
 import schema.tables.FixedDsc;
 import schema.tables.FlexiDsc;
+import schema.tables.Sale;
+import schema.tables.SaleItem;
+import schema.tables.Stock;
 
 
 /**
@@ -35,6 +39,11 @@ public class DefaultSchema extends SchemaImpl {
      * The reference instance of <code>DEFAULT_SCHEMA</code>
      */
     public static final DefaultSchema DEFAULT_SCHEMA = new DefaultSchema();
+
+    /**
+     * The table <code>card</code>.
+     */
+    public final Card CARD = Card.CARD;
 
     /**
      * The table <code>customer</code>.
@@ -82,6 +91,21 @@ public class DefaultSchema extends SchemaImpl {
     public final FlexiDsc FLEXI_DSC = FlexiDsc.FLEXI_DSC;
 
     /**
+     * The table <code>sale</code>.
+     */
+    public final Sale SALE = Sale.SALE;
+
+    /**
+     * The table <code>sale_item</code>.
+     */
+    public final SaleItem SALE_ITEM = SaleItem.SALE_ITEM;
+
+    /**
+     * The table <code>stock</code>.
+     */
+    public final Stock STOCK = Stock.STOCK;
+
+    /**
      * No further instances allowed
      */
     private DefaultSchema() {
@@ -97,6 +121,7 @@ public class DefaultSchema extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
+            Card.CARD,
             Customer.CUSTOMER,
             CustomerCharge.CUSTOMER_CHARGE,
             CustomerDebt.CUSTOMER_DEBT,
@@ -105,7 +130,10 @@ public class DefaultSchema extends SchemaImpl {
             CustomerRepayment.CUSTOMER_REPAYMENT,
             CustomerStatement.CUSTOMER_STATEMENT,
             FixedDsc.FIXED_DSC,
-            FlexiDsc.FLEXI_DSC
+            FlexiDsc.FLEXI_DSC,
+            Sale.SALE,
+            SaleItem.SALE_ITEM,
+            Stock.STOCK
         );
     }
 }

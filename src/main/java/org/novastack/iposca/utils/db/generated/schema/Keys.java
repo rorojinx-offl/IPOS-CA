@@ -11,6 +11,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.QOM.ForeignKeyRule;
 
+import schema.tables.Card;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
@@ -20,6 +21,10 @@ import schema.tables.CustomerRepayment;
 import schema.tables.CustomerStatement;
 import schema.tables.FixedDsc;
 import schema.tables.FlexiDsc;
+import schema.tables.Sale;
+import schema.tables.SaleItem;
+import schema.tables.Stock;
+import schema.tables.records.CardRecord;
 import schema.tables.records.CustomerChargeRecord;
 import schema.tables.records.CustomerDebtRecord;
 import schema.tables.records.CustomerMonthlySpendRecord;
@@ -29,6 +34,9 @@ import schema.tables.records.CustomerRepaymentRecord;
 import schema.tables.records.CustomerStatementRecord;
 import schema.tables.records.FixedDscRecord;
 import schema.tables.records.FlexiDscRecord;
+import schema.tables.records.SaleItemRecord;
+import schema.tables.records.SaleRecord;
+import schema.tables.records.StockRecord;
 
 
 /**
@@ -42,6 +50,7 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<CardRecord> CARD__PK_CARD = Internal.createUniqueKey(Card.CARD, DSL.name("pk_card"), new TableField[] { Card.CARD.ID }, true);
     public static final UniqueKey<CustomerRecord> CUSTOMER__PK_CUSTOMER = Internal.createUniqueKey(Customer.CUSTOMER, DSL.name("pk_customer"), new TableField[] { Customer.CUSTOMER.ID }, true);
     public static final UniqueKey<CustomerChargeRecord> CUSTOMER_CHARGE__PK_CUSTOMER_CHARGE = Internal.createUniqueKey(CustomerCharge.CUSTOMER_CHARGE, DSL.name("pk_customer_charge"), new TableField[] { CustomerCharge.CUSTOMER_CHARGE.CRG_ID }, true);
     public static final UniqueKey<CustomerDebtRecord> CUSTOMER_DEBT__PK_CUSTOMER_DEBT = Internal.createUniqueKey(CustomerDebt.CUSTOMER_DEBT, DSL.name("pk_customer_debt"), new TableField[] { CustomerDebt.CUSTOMER_DEBT.CUST_ID }, true);
@@ -52,11 +61,15 @@ public class Keys {
     public static final UniqueKey<CustomerStatementRecord> CUSTOMER_STATEMENT__UK_CUSTOMER_STATEMENT_1_82051957 = Internal.createUniqueKey(CustomerStatement.CUSTOMER_STATEMENT, DSL.name("uk_customer_statement_1_82051957"), new TableField[] { CustomerStatement.CUSTOMER_STATEMENT.BILLING_MONTH }, true);
     public static final UniqueKey<FixedDscRecord> FIXED_DSC__PK_FIXED_DSC = Internal.createUniqueKey(FixedDsc.FIXED_DSC, DSL.name("pk_fixed_dsc"), new TableField[] { FixedDsc.FIXED_DSC.CUST_ID }, true);
     public static final UniqueKey<FlexiDscRecord> FLEXI_DSC__PK_FLEXI_DSC = Internal.createUniqueKey(FlexiDsc.FLEXI_DSC, DSL.name("pk_flexi_dsc"), new TableField[] { FlexiDsc.FLEXI_DSC.CUST_ID }, true);
+    public static final UniqueKey<SaleRecord> SALE__PK_SALE = Internal.createUniqueKey(Sale.SALE, DSL.name("pk_sale"), new TableField[] { Sale.SALE.ID }, true);
+    public static final UniqueKey<SaleItemRecord> SALE_ITEM__PK_SALE_ITEM = Internal.createUniqueKey(SaleItem.SALE_ITEM, DSL.name("pk_sale_item"), new TableField[] { SaleItem.SALE_ITEM.ID }, true);
+    public static final UniqueKey<StockRecord> STOCK__PK_STOCK = Internal.createUniqueKey(Stock.STOCK, DSL.name("pk_stock"), new TableField[] { Stock.STOCK.ITEM_ID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<CardRecord, CustomerRecord> CARD__FK_CARD_PK_CUSTOMER = Internal.createForeignKey(Card.CARD, DSL.name("fk_card_pk_customer"), new TableField[] { Card.CARD.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<CustomerChargeRecord, CustomerRecord> CUSTOMER_CHARGE__FK_CUSTOMER_CHARGE_PK_CUSTOMER = Internal.createForeignKey(CustomerCharge.CUSTOMER_CHARGE, DSL.name("fk_customer_charge_pk_customer"), new TableField[] { CustomerCharge.CUSTOMER_CHARGE.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<CustomerDebtRecord, CustomerRecord> CUSTOMER_DEBT__FK_CUSTOMER_DEBT_PK_CUSTOMER = Internal.createForeignKey(CustomerDebt.CUSTOMER_DEBT, DSL.name("fk_customer_debt_pk_customer"), new TableField[] { CustomerDebt.CUSTOMER_DEBT.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<CustomerMonthlySpendRecord, CustomerRecord> CUSTOMER_MONTHLY_SPEND__FK_CUSTOMER_MONTHLY_SPEND_PK_CUSTOMER = Internal.createForeignKey(CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND, DSL.name("fk_customer_monthly_spend_pk_customer"), new TableField[] { CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
@@ -65,4 +78,8 @@ public class Keys {
     public static final ForeignKey<CustomerStatementRecord, CustomerRecord> CUSTOMER_STATEMENT__FK_CUSTOMER_STATEMENT_PK_CUSTOMER = Internal.createForeignKey(CustomerStatement.CUSTOMER_STATEMENT, DSL.name("fk_customer_statement_pk_customer"), new TableField[] { CustomerStatement.CUSTOMER_STATEMENT.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<FixedDscRecord, CustomerRecord> FIXED_DSC__FK_FIXED_DSC_PK_CUSTOMER = Internal.createForeignKey(FixedDsc.FIXED_DSC, DSL.name("fk_fixed_dsc_pk_customer"), new TableField[] { FixedDsc.FIXED_DSC.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<FlexiDscRecord, CustomerRecord> FLEXI_DSC__FK_FLEXI_DSC_PK_CUSTOMER = Internal.createForeignKey(FlexiDsc.FLEXI_DSC, DSL.name("fk_flexi_dsc_pk_customer"), new TableField[] { FlexiDsc.FLEXI_DSC.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
+    public static final ForeignKey<SaleRecord, CardRecord> SALE__FK_SALE_PK_CARD = Internal.createForeignKey(Sale.SALE, DSL.name("fk_sale_pk_card"), new TableField[] { Sale.SALE.CARD_ID }, Keys.CARD__PK_CARD, new TableField[] { Card.CARD.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
+    public static final ForeignKey<SaleRecord, CustomerRecord> SALE__FK_SALE_PK_CUSTOMER = Internal.createForeignKey(Sale.SALE, DSL.name("fk_sale_pk_customer"), new TableField[] { Sale.SALE.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
+    public static final ForeignKey<SaleItemRecord, SaleRecord> SALE_ITEM__FK_SALE_ITEM_PK_SALE = Internal.createForeignKey(SaleItem.SALE_ITEM, DSL.name("fk_sale_item_pk_sale"), new TableField[] { SaleItem.SALE_ITEM.SALE_ID }, Keys.SALE__PK_SALE, new TableField[] { Sale.SALE.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
+    public static final ForeignKey<SaleItemRecord, StockRecord> SALE_ITEM__FK_SALE_ITEM_PK_STOCK = Internal.createForeignKey(SaleItem.SALE_ITEM, DSL.name("fk_sale_item_pk_stock"), new TableField[] { SaleItem.SALE_ITEM.PRODUCT_ID }, Keys.STOCK__PK_STOCK, new TableField[] { Stock.STOCK.ITEM_ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
 }

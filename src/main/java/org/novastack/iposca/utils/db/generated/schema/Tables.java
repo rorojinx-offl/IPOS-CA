@@ -4,6 +4,7 @@
 package schema;
 
 
+import schema.tables.Card;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
@@ -13,6 +14,9 @@ import schema.tables.CustomerRepayment;
 import schema.tables.CustomerStatement;
 import schema.tables.FixedDsc;
 import schema.tables.FlexiDsc;
+import schema.tables.Sale;
+import schema.tables.SaleItem;
+import schema.tables.Stock;
 
 
 /**
@@ -20,6 +24,11 @@ import schema.tables.FlexiDsc;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
+
+    /**
+     * The table <code>card</code>.
+     */
+    public static final Card CARD = Card.CARD;
 
     /**
      * The table <code>customer</code>.
@@ -65,4 +74,19 @@ public class Tables {
      * The table <code>flexi_dsc</code>.
      */
     public static final FlexiDsc FLEXI_DSC = FlexiDsc.FLEXI_DSC;
+
+    /**
+     * The table <code>sale</code>.
+     */
+    public static final Sale SALE = Sale.SALE;
+
+    /**
+     * The table <code>sale_item</code>.
+     */
+    public static final SaleItem SALE_ITEM = SaleItem.SALE_ITEM;
+
+    /**
+     * The table <code>stock</code>.
+     */
+    public static final Stock STOCK = Stock.STOCK;
 }
