@@ -1,6 +1,5 @@
-package org.novastack.iposca.utils.common;
+package org.novastack.iposca.utils.db.spawn;
 
-import org.novastack.iposca.utils.db.ColumnConstraint;
 import org.novastack.iposca.utils.db.SQLiteConnection;
 import org.novastack.iposca.utils.db.DDLEngine;
 import org.novastack.iposca.utils.db.TableSchema;
@@ -9,7 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Test {
+public class CustomerReminder {
     static void main() {
         Connection conn = new SQLiteConnection().getConnection();
 
