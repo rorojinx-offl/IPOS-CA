@@ -6,7 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import org.novastack.iposca.utils.ui.CommonCalls;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,8 +19,16 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    void accountSale(MouseEvent event) {
+    private VBox acButton;
 
+    @FXML
+    private VBox ocButton;
+
+
+    @FXML
+    void accountSale(MouseEvent event) throws IOException {
+        Stage stage = (Stage) acButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/sales/salesAccount.fxml", "Sale for Account Holder");
     }
 
 
