@@ -31,7 +31,6 @@ import org.jooq.impl.TableImpl;
 
 import schema.DefaultSchema;
 import schema.Keys;
-import schema.tables.Card.CardPath;
 import schema.tables.Customer.CustomerPath;
 import schema.tables.SaleItem.SaleItemPath;
 import schema.tables.records.SaleRecord;
@@ -69,14 +68,29 @@ public class Sale extends TableImpl<SaleRecord> {
     public final TableField<SaleRecord, Integer> CUST_ID = createField(DSL.name("CUST_ID"), SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>sale.CARD_ID</code>.
-     */
-    public final TableField<SaleRecord, Integer> CARD_ID = createField(DSL.name("CARD_ID"), SQLDataType.INTEGER, this, "");
-
-    /**
      * The column <code>sale.PAYMENT_METHOD</code>.
      */
     public final TableField<SaleRecord, String> PAYMENT_METHOD = createField(DSL.name("PAYMENT_METHOD"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>sale.CARD_VENDOR</code>.
+     */
+    public final TableField<SaleRecord, String> CARD_VENDOR = createField(DSL.name("CARD_VENDOR"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>sale.CARD_FIRST_4</code>.
+     */
+    public final TableField<SaleRecord, String> CARD_FIRST_4 = createField(DSL.name("CARD_FIRST_4"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>sale.CARD_LAST_4</code>.
+     */
+    public final TableField<SaleRecord, String> CARD_LAST_4 = createField(DSL.name("CARD_LAST_4"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>sale.CARD_EXP</code>.
+     */
+    public final TableField<SaleRecord, String> CARD_EXP = createField(DSL.name("CARD_EXP"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>sale.SALE_DATE_TIME</code>.
@@ -162,19 +176,7 @@ public class Sale extends TableImpl<SaleRecord> {
 
     @Override
     public List<ForeignKey<SaleRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.SALE__FK_SALE_PK_CARD, Keys.SALE__FK_SALE_PK_CUSTOMER);
-    }
-
-    private transient CardPath _card;
-
-    /**
-     * Get the implicit join path to the <code>card</code> table.
-     */
-    public CardPath card() {
-        if (_card == null)
-            _card = new CardPath(this, Keys.SALE__FK_SALE_PK_CARD, null);
-
-        return _card;
+        return Arrays.asList(Keys.SALE__FK_SALE_PK_CUSTOMER);
     }
 
     private transient CustomerPath _customer;

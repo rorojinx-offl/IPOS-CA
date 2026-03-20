@@ -29,7 +29,6 @@ import org.jooq.impl.TableImpl;
 
 import schema.DefaultSchema;
 import schema.Keys;
-import schema.tables.Card.CardPath;
 import schema.tables.CustomerCharge.CustomerChargePath;
 import schema.tables.CustomerDebt.CustomerDebtPath;
 import schema.tables.CustomerMonthlySpend.CustomerMonthlySpendPath;
@@ -173,18 +172,6 @@ public class Customer extends TableImpl<CustomerRecord> {
     @Override
     public UniqueKey<CustomerRecord> getPrimaryKey() {
         return Keys.CUSTOMER__PK_CUSTOMER;
-    }
-
-    private transient CardPath _card;
-
-    /**
-     * Get the implicit to-many join path to the <code>card</code> table
-     */
-    public CardPath card() {
-        if (_card == null)
-            _card = new CardPath(this, null, Keys.CARD__FK_CARD_PK_CUSTOMER.getInverseKey());
-
-        return _card;
     }
 
     private transient CustomerChargePath _customerCharge;

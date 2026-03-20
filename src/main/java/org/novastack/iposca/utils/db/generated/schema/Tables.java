@@ -4,7 +4,6 @@
 package schema;
 
 
-import schema.tables.Card;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
@@ -24,11 +23,6 @@ import schema.tables.Stock;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
-
-    /**
-     * The table <code>card</code>.
-     */
-    public static final Card CARD = Card.CARD;
 
     /**
      * The table <code>customer</code>.

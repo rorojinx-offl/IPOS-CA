@@ -47,59 +47,101 @@ public class SaleRecord extends UpdatableRecordImpl<SaleRecord> {
     }
 
     /**
-     * Setter for <code>sale.CARD_ID</code>.
-     */
-    public void setCardId(Integer value) {
-        set(2, value);
-    }
-
-    /**
-     * Getter for <code>sale.CARD_ID</code>.
-     */
-    public Integer getCardId() {
-        return (Integer) get(2);
-    }
-
-    /**
      * Setter for <code>sale.PAYMENT_METHOD</code>.
      */
     public void setPaymentMethod(String value) {
-        set(3, value);
+        set(2, value);
     }
 
     /**
      * Getter for <code>sale.PAYMENT_METHOD</code>.
      */
     public String getPaymentMethod() {
+        return (String) get(2);
+    }
+
+    /**
+     * Setter for <code>sale.CARD_VENDOR</code>.
+     */
+    public void setCardVendor(String value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>sale.CARD_VENDOR</code>.
+     */
+    public String getCardVendor() {
         return (String) get(3);
+    }
+
+    /**
+     * Setter for <code>sale.CARD_FIRST_4</code>.
+     */
+    public void setCardFirst_4(String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>sale.CARD_FIRST_4</code>.
+     */
+    public String getCardFirst_4() {
+        return (String) get(4);
+    }
+
+    /**
+     * Setter for <code>sale.CARD_LAST_4</code>.
+     */
+    public void setCardLast_4(String value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>sale.CARD_LAST_4</code>.
+     */
+    public String getCardLast_4() {
+        return (String) get(5);
+    }
+
+    /**
+     * Setter for <code>sale.CARD_EXP</code>.
+     */
+    public void setCardExp(String value) {
+        set(6, value);
+    }
+
+    /**
+     * Getter for <code>sale.CARD_EXP</code>.
+     */
+    public String getCardExp() {
+        return (String) get(6);
     }
 
     /**
      * Setter for <code>sale.SALE_DATE_TIME</code>.
      */
     public void setSaleDateTime(String value) {
-        set(4, value);
+        set(7, value);
     }
 
     /**
      * Getter for <code>sale.SALE_DATE_TIME</code>.
      */
     public String getSaleDateTime() {
-        return (String) get(4);
+        return (String) get(7);
     }
 
     /**
      * Setter for <code>sale.AMOUNT</code>.
      */
     public void setAmount(Float value) {
-        set(5, value);
+        set(8, value);
     }
 
     /**
      * Getter for <code>sale.AMOUNT</code>.
      */
     public Float getAmount() {
-        return (Float) get(5);
+        return (Float) get(8);
     }
 
     // -------------------------------------------------------------------------
@@ -125,13 +167,16 @@ public class SaleRecord extends UpdatableRecordImpl<SaleRecord> {
     /**
      * Create a detached, initialised SaleRecord
      */
-    public SaleRecord(Integer id, Integer custId, Integer cardId, String paymentMethod, String saleDateTime, Float amount) {
+    public SaleRecord(Integer id, Integer custId, String paymentMethod, String cardVendor, String cardFirst_4, String cardLast_4, String cardExp, String saleDateTime, Float amount) {
         super(Sale.SALE);
 
         setId(id);
         setCustId(custId);
-        setCardId(cardId);
         setPaymentMethod(paymentMethod);
+        setCardVendor(cardVendor);
+        setCardFirst_4(cardFirst_4);
+        setCardLast_4(cardLast_4);
+        setCardExp(cardExp);
         setSaleDateTime(saleDateTime);
         setAmount(amount);
         resetTouchedOnNotNull();

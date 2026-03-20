@@ -26,12 +26,14 @@ public class Sale {
             {
                 add(new TableSchema.Column("ID", "INTEGER", true, true,null));
                 add(new TableSchema.Column("CUST_ID", "INTEGER", false, false,null));
-                add(new TableSchema.Column("CARD_ID", "INTEGER", false, false,null));
                 add(new TableSchema.Column("PAYMENT_METHOD", "TEXT", false, true,null));
+                add(new TableSchema.Column("CARD_VENDOR", "TEXT", false, false,null));
+                add(new TableSchema.Column("CARD_FIRST_4", "TEXT", false, false,null));
+                add(new TableSchema.Column("CARD_LAST_4", "TEXT", false, false,null));
+                add(new TableSchema.Column("CARD_EXP", "TEXT", false, false,null));
                 add(new TableSchema.Column("SALE_DATE_TIME", "TEXT", false, true,null));
                 add(new TableSchema.Column("AMOUNT", "REAL", false, true,null));
                 add(new TableSchema.ForeignKey("CUST_ID", "customer", "ID", true, true));
-                add(new TableSchema.ForeignKey("CARD_ID", "card", "ID", true, true));
             }
         };
     }
