@@ -5,20 +5,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.exceptions.InvalidOperation;
+import org.novastack.iposca.sales.PaymentService;
 import org.novastack.iposca.sales.SaleService;
 import org.novastack.iposca.stock.Stock;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -122,16 +123,38 @@ public class SelectController implements Initializable {
             return;
         }
 
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/creditPay.fxml"));
-        Parent root = loader.load();
+       try {
+           PaymentService.processCreditPayment(draft, customer);
+       } catch (Exception e) {
+           new CommonCalls().openErrorDialog(e.getMessage());
+           return;
+       }
 
-        CreditController controller = loader.getController();
-        controller.receiver(draft, customer);
+        SaleService.Sale sale = new SaleService.Sale(
+                null,
+                customer.getCustomerID(),
+                CustomerEnums.PaymentMethod.CREDITS.name(),
+                null,
+                null,
+                null,
+                null,
+                LocalDateTime.now(),
+                draft.totalAmount()
+        );
+       int saleID = SaleService.recordSale(sale);
+       for (SaleService.SaleItem item : draft.items()) {
+           SaleService.recordSaleItem(new SaleService.SaleItem(
+                   null,
+                   saleID,
+                   item.productID(),
+                   item.quantity(),
+                   item.price(),
+                   item.subtotal()
+           ));
+       }
 
-        stage.setTitle("Pay with Merchant Credits");
-        stage.setScene(new javafx.scene.Scene(root));
-        stage.show();
+       Stage stage = (Stage) backButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/sales/success.fxml", "Success");
     }
 
     @FXML
