@@ -32,7 +32,7 @@ public class SaleService {
                 .set(SALE.CARD_FIRST_4, sale.cardFirst4())
                 .set(SALE.CARD_LAST_4, sale.cardLast4())
                 .set(SALE.CARD_EXP, parseYearMonth(sale.cardExp()))
-                .set(SALE.SALE_DATE_TIME, parseDateTime(sale.saleDateTime()))
+                .set(SALE.SALE_DATE_TIME, parseDateTime(sale.saleDateTime().withSecond(0).withNano(0)))
                 .set(SALE.AMOUNT, sale.saleAmount())
                 .returning(SALE.ID).fetchOne().getId();
     }
