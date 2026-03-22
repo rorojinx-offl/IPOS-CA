@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
+import org.novastack.iposca.cust.customer.CustomerMonthlySpend;
+import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.exceptions.InvalidOperation;
 import org.novastack.iposca.sales.PaymentService;
 import org.novastack.iposca.sales.SaleService;
@@ -20,6 +22,7 @@ import org.novastack.iposca.utils.ui.CommonCalls;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -151,6 +154,8 @@ public class SelectController implements Initializable {
                    item.price(),
                    item.subtotal()
            ));
+
+           SaleService.checkFlexiRateChange(customer, draft.totalAmount());
        }
 
        Stage stage = (Stage) backButton.getScene().getWindow();

@@ -1,6 +1,10 @@
 package org.novastack.iposca.sales;
 
 import org.jooq.DSLContext;
+import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.cust.customer.CustomerEnums;
+import org.novastack.iposca.cust.customer.CustomerMonthlySpend;
+import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.utils.db.JooqConnection;
 import static schema.tables.Sale.SALE;
 import static schema.tables.SaleItem.SALE_ITEM;
@@ -39,6 +43,21 @@ public class SaleService {
                 .set(SALE_ITEM.PRICE, saleItem.price())
                 .set(SALE_ITEM.SUBTOTAL, saleItem.subtotal())
                 .execute();
+    }
+
+    public static void checkFlexiRateChange(Customer customer, float transactionAmount) {
+        if (customer.getDiscountPlan().equals(CustomerEnums.DiscountPlan.FLEXIBLE.name())) {
+            int id = customer.getCustomerID();
+            CustomerMonthlySpend cms = new CustomerMonthlySpend(id, YearMonth.now(), transactionAmount);
+            cms.recordSpend(cms);
+
+            //Check if the new spend rate warrants a change in the flexi rate
+            CustomerMonthlySpend.FlexiRateChange fxc = cms.warrantsRateChange(id);
+            if (fxc.needChange()) {
+                FlexiDiscountPlan fdp = new FlexiDiscountPlan(id, fxc.rate());
+                fdp.modifyRate(fdp);
+            }
+        }
     }
 
     private static String parseDateTime(LocalDateTime dateTime) {
