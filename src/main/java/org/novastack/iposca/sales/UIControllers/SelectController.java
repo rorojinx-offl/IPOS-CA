@@ -5,7 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -68,11 +70,19 @@ public class SelectController implements Initializable {
     private Label total;
 
     private final ObservableList<Stock> allProducts = FXCollections.observableArrayList();
-    private final ObservableList<SaleLine> cartItems = FXCollections.observableArrayList();
+    private ObservableList<SaleLine> cartItems = FXCollections.observableArrayList();
 
     public void setCustomer(Customer cust) {
         customer = cust;
-        System.out.println(customer.getName());
+    }
+
+    public void cartCallback(SaleService.Callback cb) {
+        if (cb != null) {
+            customer = cb.customer();
+            cartItems = cb.cartSession();
+            cart.setItems(cartItems);
+            updateTotals();
+        }
     }
 
     @FXML
@@ -105,8 +115,32 @@ public class SelectController implements Initializable {
     }
 
     @FXML
-    void cardPayment(MouseEvent event) {
+    void cardPayment(MouseEvent event) throws IOException {
+        SaleService.SaleDraft draft = null;
 
+        try {
+            draft = collectCart();
+        } catch (Exception e) {
+            new CommonCalls().openErrorDialog(e.getMessage());
+            return;
+        }
+
+        if (customer == null) {
+            new CommonCalls().openErrorDialog("Unable to map customer to order!");
+            returnToParent(event);
+            return;
+        }
+
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/cardPay.fxml"));
+        Parent root = loader.load();
+
+        CardController controller = loader.getController();
+        controller.receive(customer, draft, cartItems);
+
+        stage.setTitle("Pay with a Card");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.show();
     }
 
     @FXML
@@ -154,12 +188,11 @@ public class SelectController implements Initializable {
                    item.price(),
                    item.subtotal()
            ));
-
-           SaleService.checkFlexiRateChange(customer, draft.totalAmount());
        }
+       SaleService.checkFlexiRateChange(customer, draft.totalAmount());
 
        Stage stage = (Stage) backButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/sales/success.fxml", "Success");
+       new CommonCalls().traverse(stage, "/ui/sales/success.fxml", "Success");
     }
 
     @FXML

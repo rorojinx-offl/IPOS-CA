@@ -1,10 +1,12 @@
 package org.novastack.iposca.sales;
 
+import javafx.collections.ObservableList;
 import org.jooq.DSLContext;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.customer.CustomerMonthlySpend;
 import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
+import org.novastack.iposca.sales.UIControllers.SaleLine;
 import org.novastack.iposca.utils.db.JooqConnection;
 import static schema.tables.Sale.SALE;
 import static schema.tables.SaleItem.SALE_ITEM;
@@ -19,6 +21,7 @@ public class SaleService {
     public record SaleItem(Integer saleItemID, Integer saleID, int productID, int quantity, float price, float subtotal) {}
     public record SaleDraft(Integer customerID, ArrayList<SaleItem> items, float totalAmount) {}
     public record SaleAggregate(Sale sale, ArrayList<SaleItem> items) {}
+    public record Callback(Customer customer, ObservableList<SaleLine> cartSession) {}
 
     public static int recordSale(Sale sale) {
         DSLContext ctx = JooqConnection.getDSLContext();
