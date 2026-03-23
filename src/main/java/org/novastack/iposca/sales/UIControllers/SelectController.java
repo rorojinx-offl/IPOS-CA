@@ -197,8 +197,43 @@ public class SelectController implements Initializable {
     }
 
     @FXML
-    void cashPayment(MouseEvent event) {
+    void cashPayment(MouseEvent event) throws IOException {
+        SaleService.SaleDraft draft = null;
 
+        try {
+            draft = collectCart();
+        } catch (Exception e) {
+            new CommonCalls().openErrorDialog(e.getMessage());
+            return;
+        }
+
+        boolean ok = new CommonCalls().openConfirmationDialog("Has the cash been paid?");
+        if (!ok) {
+            return;
+        }
+
+        SaleService.Sale sale = new SaleService.Sale(
+                null,
+                null,
+                CustomerEnums.PaymentMethod.CASH.name(),
+                null,
+                null,
+                null,
+                null,
+                LocalDateTime.now(),
+                draft.totalAmount()
+        );
+        int saleID = SaleService.recordSale(sale);
+        for (SaleService.SaleItem item : draft.items()) {
+            SaleService.recordSaleItem(new SaleService.SaleItem(
+                    null,
+                    saleID,
+                    item.productID(),
+                    item.quantity(),
+                    item.price(),
+                    item.subtotal()
+            ));
+        }
     }
 
     @FXML
@@ -215,6 +250,11 @@ public class SelectController implements Initializable {
         if (customer == null) {
             new CommonCalls().openErrorDialog("Unable to map customer to order!");
             returnToParent(event);
+            return;
+        }
+
+        boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to charge credits?");
+        if (!ok) {
             return;
         }
 
