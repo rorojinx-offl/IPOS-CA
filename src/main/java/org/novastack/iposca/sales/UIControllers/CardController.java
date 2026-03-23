@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.novastack.iposca.cust.UIControllers.EditController;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.sales.SaleService;
@@ -29,17 +28,21 @@ public class CardController implements Initializable {
     private Customer customer;
     private SaleService.SaleDraft draft;
     private ObservableList<SaleLine> cartSession;
+    private SaleService.CartMode cartMode;
 
 
-    public void receive(Customer cust, SaleService.SaleDraft sd, ObservableList<SaleLine> cs) {
+    public void receive(Customer cust, SaleService.SaleDraft sd, ObservableList<SaleLine> cs, SaleService.CartMode mode) {
         customer = cust;
         draft = sd;
         cartSession = cs;
+        cartMode = mode;
     }
 
     public SaleService.Callback checkCallback() {
-        if (customer != null && cartSession != null) {
-            return new SaleService.Callback(customer, cartSession);
+        Customer customer = cartMode == SaleService.CartMode.MEMBER ? this.customer : null;
+
+        if (cartSession != null && cartMode != null) {
+            return new SaleService.Callback(customer, cartSession, cartMode);
         } else {
             return null;
         }
@@ -89,14 +92,14 @@ public class CardController implements Initializable {
                 return;
             }
 
-            if (customer == null || draft == null) {
+            if (cartMode == SaleService.CartMode.MEMBER && (customer == null || draft == null)) {
                 new CommonCalls().openErrorDialog("Unable to parse customer or order!");
                 Stage stage = (Stage) backButton.getScene().getWindow();
                 new CommonCalls().traverse(stage, "/ui/sales/salesAccount.fxml", "Sale for Account Holder");
                 return;
             }
 
-            if (!customer.getStatus().equals(CustomerEnums.AccountStatus.NORMAL.name())) {
+            if (cartMode == SaleService.CartMode.MEMBER && !customer.getStatus().equals(CustomerEnums.AccountStatus.NORMAL.name())) {
                 new CommonCalls().openErrorDialog("Customer is not authorised to make payments!");
                 return;
             }
@@ -104,9 +107,11 @@ public class CardController implements Initializable {
             String first4 = cardNo.getText().substring(0, 4);
             String last4 = cardNo.getText().substring(cardNo.getText().length() - 4);
 
+            Integer customerID = cartMode == SaleService.CartMode.MEMBER ? customer.getCustomerID() : null;
+
             SaleService.Sale sale = new SaleService.Sale(
                     null,
-                    customer.getCustomerID(),
+                    customerID,
                     CustomerEnums.PaymentMethod.CARD.name(),
                     vendor.getValue(),
                     first4,
@@ -126,7 +131,7 @@ public class CardController implements Initializable {
                         item.subtotal()
                 ));
             }
-            SaleService.checkFlexiRateChange(customer, draft.totalAmount());
+            if (cartMode == SaleService.CartMode.MEMBER) SaleService.checkFlexiRateChange(customer, draft.totalAmount());
 
             Stage stage = (Stage) backButton.getScene().getWindow();
             new CommonCalls().traverse(stage, "/ui/sales/success.fxml", "Success");

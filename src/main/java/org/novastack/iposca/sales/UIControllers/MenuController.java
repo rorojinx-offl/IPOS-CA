@@ -1,12 +1,15 @@
 package org.novastack.iposca.sales.UIControllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.novastack.iposca.sales.SaleService;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
@@ -33,8 +36,17 @@ public class MenuController implements Initializable {
 
 
     @FXML
-    void occasionalSale(MouseEvent event) {
+    void occasionalSale(MouseEvent event) throws IOException {
+        Stage stage = (Stage) ocButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/selectItems.fxml"));
+        Parent root = loader.load();
 
+        SelectController controller = loader.getController();
+        controller.receive(null, SaleService.CartMode.GUEST);
+
+        stage.setTitle("Select Items");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.show();
     }
 
     @FXML

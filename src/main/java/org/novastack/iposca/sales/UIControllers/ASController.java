@@ -16,9 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
-import org.novastack.iposca.cust.UIControllers.EditController;
-import org.novastack.iposca.cust.UIControllers.ManagementController;
 import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.sales.SaleService;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
@@ -91,7 +90,7 @@ public class ASController implements Initializable {
         Parent root = loader.load();
 
         SelectController controller = loader.getController();
-        controller.setCustomer(customerTable.getSelectionModel().getSelectedItem());
+        controller.receive(customerTable.getSelectionModel().getSelectedItem(), SaleService.CartMode.MEMBER);
 
         stage.setTitle("Select Items");
         stage.setScene(new javafx.scene.Scene(root));

@@ -21,7 +21,10 @@ public class SaleService {
     public record SaleItem(Integer saleItemID, Integer saleID, int productID, int quantity, float price, float subtotal) {}
     public record SaleDraft(Integer customerID, ArrayList<SaleItem> items, float totalAmount) {}
     public record SaleAggregate(Sale sale, ArrayList<SaleItem> items) {}
-    public record Callback(Customer customer, ObservableList<SaleLine> cartSession) {}
+    public record Callback(Customer customer, ObservableList<SaleLine> cartSession, CartMode mode) {}
+    public enum CartMode {
+        MEMBER, GUEST
+    }
 
     public static int recordSale(Sale sale) {
         DSLContext ctx = JooqConnection.getDSLContext();

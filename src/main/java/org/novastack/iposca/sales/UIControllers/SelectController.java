@@ -10,11 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
-import org.novastack.iposca.cust.customer.CustomerMonthlySpend;
-import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.exceptions.InvalidOperation;
 import org.novastack.iposca.sales.PaymentService;
 import org.novastack.iposca.sales.SaleService;
@@ -24,7 +23,6 @@ import org.novastack.iposca.utils.ui.CommonCalls;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,6 +30,13 @@ import java.util.ResourceBundle;
 public class SelectController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        memberButtons.setManaged(false);
+        guestButtons.setManaged(false);
+        cardButtonGuest.setManaged(false);
+        cardButtonMember.setManaged(false);
+        cashButton.setManaged(false);
+        credButton.setManaged(false);
+
         loadProducts();
         setupSearch();
         setupCartTable();
@@ -43,7 +48,25 @@ public class SelectController implements Initializable {
     private Customer customer;
 
     @FXML
+    private Button cardButtonGuest;
+
+    @FXML
+    private Button cardButtonMember;
+
+    @FXML
     private TableView<SaleLine> cart;
+
+    @FXML
+    private Button cashButton;
+
+    @FXML
+    private Button credButton;
+
+    @FXML
+    private GridPane guestButtons;
+
+    @FXML
+    private GridPane memberButtons;
 
     @FXML
     private TableColumn<SaleLine, Number> price;
@@ -71,15 +94,45 @@ public class SelectController implements Initializable {
 
     private final ObservableList<Stock> allProducts = FXCollections.observableArrayList();
     private ObservableList<SaleLine> cartItems = FXCollections.observableArrayList();
+    private SaleService.CartMode currentMode;
 
-    public void setCustomer(Customer cust) {
-        customer = cust;
+    public void receive(Customer cust, SaleService.CartMode mode) {
+        switch (mode) {
+            case MEMBER -> {
+                customer = cust;
+                currentMode = mode;
+
+                memberButtons.setVisible(true);
+                memberButtons.setManaged(true);
+
+                cardButtonMember.setVisible(true);
+                cardButtonMember.setManaged(true);
+                credButton.setVisible(true);
+                credButton.setManaged(true);
+
+            }
+            case GUEST -> {
+                customer = null;
+                currentMode = mode;
+
+                guestButtons.setVisible(true);
+                guestButtons.setManaged(true);
+
+                cardButtonGuest.setVisible(true);
+                cardButtonGuest.setManaged(true);
+                cashButton.setVisible(true);
+                cashButton.setManaged(true);
+            }
+        }
     }
 
     public void cartCallback(SaleService.Callback cb) {
         if (cb != null) {
             customer = cb.customer();
             cartItems = cb.cartSession();
+            currentMode = cb.mode();
+            receive(customer, currentMode);
+
             cart.setItems(cartItems);
             updateTotals();
         }
@@ -125,7 +178,7 @@ public class SelectController implements Initializable {
             return;
         }
 
-        if (customer == null) {
+        if (currentMode == SaleService.CartMode.MEMBER && customer == null) {
             new CommonCalls().openErrorDialog("Unable to map customer to order!");
             returnToParent(event);
             return;
@@ -136,11 +189,16 @@ public class SelectController implements Initializable {
         Parent root = loader.load();
 
         CardController controller = loader.getController();
-        controller.receive(customer, draft, cartItems);
+        controller.receive(customer, draft, cartItems, currentMode);
 
         stage.setTitle("Pay with a Card");
         stage.setScene(new javafx.scene.Scene(root));
         stage.show();
+    }
+
+    @FXML
+    void cashPayment(MouseEvent event) {
+
     }
 
     @FXML
@@ -338,8 +396,9 @@ public class SelectController implements Initializable {
 
         ArrayList<SaleService.SaleItem> items = new ArrayList<>(itemsTemp);
         float total = (float) collectOrderTotal();
+        Integer customerID = currentMode == SaleService.CartMode.MEMBER ? customer.getCustomerID() : null;
 
-        return new SaleService.SaleDraft(customer.getCustomerID(), items, total);
+        return new SaleService.SaleDraft(customerID, items, total);
     }
 
     private double collectOrderTotal() {

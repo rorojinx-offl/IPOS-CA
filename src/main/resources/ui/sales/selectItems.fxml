@@ -26,7 +26,7 @@
             <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: DeepSkyBlue;" text="Back" />
          </children>
       </Pane>
-      <GridPane layoutX="127.0" layoutY="738.0" prefHeight="92.0" prefWidth="676.0">
+      <GridPane fx:id="memberButtons" layoutX="127.0" layoutY="738.0" prefHeight="92.0" prefWidth="676.0" visible="false">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -35,12 +35,12 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#creditPayment" prefHeight="92.0" prefWidth="721.0" style="-fx-background-color: Tomato;" text="Credit Payment">
+            <Button fx:id="credButton" mnemonicParsing="false" onMouseClicked="#creditPayment" prefHeight="92.0" prefWidth="721.0" style="-fx-background-color: Tomato;" text="Credit Payment">
                <font>
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#cardPayment" prefHeight="92.0" prefWidth="721.0" style="-fx-background-color: SteelBlue;" text="Card Payment" GridPane.columnIndex="1">
+            <Button fx:id="cardButtonMember" mnemonicParsing="false" onMouseClicked="#cardPayment" prefHeight="92.0" prefWidth="721.0" style="-fx-background-color: SteelBlue;" text="Card Payment" GridPane.columnIndex="1">
                <font>
                   <Font size="29.0" />
                </font>
@@ -72,5 +72,26 @@
             </Label>
          </children>
       </HBox>
+      <GridPane fx:id="guestButtons" layoutX="127.0" layoutY="738.0" prefHeight="92.0" prefWidth="676.0" visible="false">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button fx:id="cashButton" mnemonicParsing="false" onMouseClicked="#cashPayment" prefHeight="92.0" prefWidth="721.0" style="-fx-background-color: Tomato;" text="Cash Payment">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+            <Button fx:id="cardButtonGuest" mnemonicParsing="false" onMouseClicked="#cardPayment" prefHeight="92.0" prefWidth="721.0" style="-fx-background-color: SteelBlue;" text="Card Payment" GridPane.columnIndex="1">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>
