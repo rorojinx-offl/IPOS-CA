@@ -189,7 +189,7 @@ public class SelectController implements Initializable {
         Parent root = loader.load();
 
         CardController controller = loader.getController();
-        controller.receive(customer, draft, cartItems, currentMode);
+        controller.receive(customer, draft, cartItems, currentMode, draft.totalAmount());
 
         stage.setTitle("Pay with a Card");
         stage.setScene(new javafx.scene.Scene(root));
@@ -234,6 +234,17 @@ public class SelectController implements Initializable {
                     item.subtotal()
             ));
         }
+
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/success.fxml"));
+        Parent root = loader.load();
+
+        SuccessController controller = loader.getController();
+        controller.receive(cartItems, null, SaleService.CartMode.GUEST, draft.totalAmount());
+
+        stage.setTitle("Payment Successful");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.show();
     }
 
     @FXML
@@ -289,8 +300,16 @@ public class SelectController implements Initializable {
        }
        SaleService.checkFlexiRateChange(customer, draft.totalAmount());
 
-       Stage stage = (Stage) backButton.getScene().getWindow();
-       new CommonCalls().traverse(stage, "/ui/sales/success.fxml", "Success");
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/success.fxml"));
+        Parent root = loader.load();
+
+        SuccessController controller = loader.getController();
+        controller.receive(cartItems, customer, SaleService.CartMode.MEMBER, draft.totalAmount());
+
+        stage.setTitle("Payment Successful");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.show();
     }
 
     @FXML

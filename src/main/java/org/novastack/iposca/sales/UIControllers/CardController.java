@@ -29,13 +29,15 @@ public class CardController implements Initializable {
     private SaleService.SaleDraft draft;
     private ObservableList<SaleLine> cartSession;
     private SaleService.CartMode cartMode;
+    private float total;
 
 
-    public void receive(Customer cust, SaleService.SaleDraft sd, ObservableList<SaleLine> cs, SaleService.CartMode mode) {
+    public void receive(Customer cust, SaleService.SaleDraft sd, ObservableList<SaleLine> cs, SaleService.CartMode mode, float total) {
         customer = cust;
         draft = sd;
         cartSession = cs;
         cartMode = mode;
+        this.total = total;
     }
 
     public SaleService.Callback checkCallback() {
@@ -134,7 +136,15 @@ public class CardController implements Initializable {
             if (cartMode == SaleService.CartMode.MEMBER) SaleService.checkFlexiRateChange(customer, draft.totalAmount());
 
             Stage stage = (Stage) backButton.getScene().getWindow();
-            new CommonCalls().traverse(stage, "/ui/sales/success.fxml", "Success");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/success.fxml"));
+            Parent root = loader.load();
+
+            SuccessController controller = loader.getController();
+            controller.receive(cartSession, customer, cartMode, draft.totalAmount());
+
+            stage.setTitle("Payment Successful");
+            stage.setScene(new javafx.scene.Scene(root));
+            stage.show();
         }
     }
 
