@@ -295,8 +295,10 @@ public class SelectController implements Initializable {
 
     @FXML
     void returnToParent(MouseEvent event) throws IOException {
+        String fxmlPath = currentMode == SaleService.CartMode.MEMBER ? "/ui/sales/salesAccount.fxml" : "/ui/sales/salesMenu.fxml";
+
         Stage stage = (Stage) backButton.getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/sales/salesAccount.fxml", "Sale for Account Holder");
+        new CommonCalls().traverse(stage, fxmlPath, "Sale for Account Holder");
     }
 
     private void loadProducts() {
