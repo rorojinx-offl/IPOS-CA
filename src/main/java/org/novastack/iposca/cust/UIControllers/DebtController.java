@@ -214,7 +214,7 @@ public class DebtController implements Initializable {
         stage.showAndWait();
     }
 
-    private byte[] loadLogo() throws IOException {
+    public static byte[] loadLogo() throws IOException {
         try (InputStream in = TestReminderGen.class.getResourceAsStream("/ui/cust/assets/debt.png")) {
             if (in == null) {
                 throw new IOException("Resource not found");
