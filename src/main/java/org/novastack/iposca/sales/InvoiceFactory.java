@@ -37,7 +37,13 @@ public class InvoiceFactory {
         Map<String, Object> params = buildParams(data.items(), data.customer(), data.cartMode(), merchant, data.totalAmount());
         JasperPrint print = JasperFillManager.fillReport(reminder, params, new JREmptyDataSource(1));
         Files.createDirectories(Path.of("generated-reports"));
-        Path pdf = Path.of("generated-reports", "invoice-" + LocalDate.now().toString() + "-" + data.customer().getName() + ".pdf");
+
+        Path pdf;
+        if (data.cartMode() == SaleService.CartMode.GUEST && data.customer() == null) {
+            pdf = Path.of("generated-reports", "invoice-" + LocalDate.now().toString() + ".pdf");
+        } else {
+            pdf = Path.of("generated-reports", "invoice-" + LocalDate.now().toString() + "-" + data.customer().getName() + ".pdf");
+        }
         JasperExportManager.exportReportToPdfFile(print, pdf.toString());
         openPDF(pdf.toFile());
     }
@@ -48,7 +54,7 @@ public class InvoiceFactory {
                 return buildParamsForCust(items, customer, merchant, totalAmount);
             }
             case GUEST -> {
-                return buildParamsForGuest(items, merchant);
+                return buildParamsForGuest(items, merchant, totalAmount);
             }
             default -> throw new IllegalArgumentException("Invalid cart mode!");
         }
@@ -74,8 +80,21 @@ public class InvoiceFactory {
         return params;
     }
 
-    private static Map<String, Object> buildParamsForGuest(ArrayList<InvoiceItems> items, ReminderInfo.Merchant merchant) {
-        return new HashMap<>();
+    private static Map<String, Object> buildParamsForGuest(ArrayList<InvoiceItems> items, ReminderInfo.Merchant merchant, float totalAmount) {
+        Map<String, Object> params = new HashMap<>();
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(items);
+
+        params.put("M_NAME", merchant.name());
+        params.put("M_ADDRESS", merchant.address());
+        params.put("EMAIL", merchant.email());
+        if (merchant.logo() != null) {
+            params.put("LOGO", new ByteArrayInputStream(merchant.logo()));
+        }
+
+        params.put("TOTAL", totalAmount);
+        params.put("ITEM_DATA_SOURCE", dataSource);
+
+        return params;
     }
 
     private static void openPDF(File pdfFile) throws IOException, UnsupportedOperationException {
