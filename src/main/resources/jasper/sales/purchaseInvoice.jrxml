@@ -67,6 +67,9 @@
 $P{C_ADDRESS} + "\n" + 
 "Phone: " + $P{PHONE}]]></expression>
 		</element>
+		<element kind="staticText" uuid="2ecc9a0e-6699-4ff7-9602-abce0f3e894d" x="161" y="10" width="430" height="70" fontSize="31.0" underline="true" bold="true" italic="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Member Purchase Invoice]]></text>
+		</element>
 	</pageHeader>
 	<detail>
 		<band height="218" splitType="Stretch">
