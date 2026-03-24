@@ -6,7 +6,7 @@ public class Stock {
     private float price;
     private int quantity;
 
-    public Stock(int id, String name, float price, int quantity) {
+    public Stock(String name) {
         this.id = id;
         this.name = name;
         this.price = price;
