@@ -33,6 +33,11 @@ public class Stock {
         return inventory;
     }
 
+    public static String getProductName(int productID) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        return ctx.selectFrom(STOCK).where(STOCK.ITEM_ID.eq(productID)).fetchOne().getValue(STOCK.NAME);
+    }
+
     public int getId() {
         return id;
     }
