@@ -3,9 +3,12 @@ package org.novastack.iposca.cust.debt;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.customer.CustomerDebt;
+import org.novastack.iposca.cust.statement.StatementInfo;
+import org.novastack.iposca.cust.statement.StatementService;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.YearMonth;
 import java.util.ArrayList;
 
 public class DebtAutomationService {
@@ -19,6 +22,8 @@ public class DebtAutomationService {
                 String firstDate = DAUtils.firstReminderPush(date);
                 CustomerDebt.setReminderDateStatus(dw.customerID(), CustomerEnums.ReminderType.FIRST, firstDate, CustomerEnums.ReminderStatus.DUE.name());
             }
+
+            StatementService.trackMonthlyDebt(dw.customerID(), YearMonth.now(), dw.balance());
         }
     }
 
