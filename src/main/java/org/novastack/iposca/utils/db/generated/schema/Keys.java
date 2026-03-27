@@ -14,6 +14,7 @@ import org.jooq.impl.QOM.ForeignKeyRule;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
+import schema.tables.CustomerMonthlyBalance;
 import schema.tables.CustomerMonthlySpend;
 import schema.tables.CustomerReminder;
 import schema.tables.CustomerRepayment;
@@ -25,6 +26,7 @@ import schema.tables.SaleItem;
 import schema.tables.Stock;
 import schema.tables.records.CustomerChargeRecord;
 import schema.tables.records.CustomerDebtRecord;
+import schema.tables.records.CustomerMonthlyBalanceRecord;
 import schema.tables.records.CustomerMonthlySpendRecord;
 import schema.tables.records.CustomerRecord;
 import schema.tables.records.CustomerReminderRecord;
@@ -51,6 +53,8 @@ public class Keys {
     public static final UniqueKey<CustomerRecord> CUSTOMER__PK_CUSTOMER = Internal.createUniqueKey(Customer.CUSTOMER, DSL.name("pk_customer"), new TableField[] { Customer.CUSTOMER.ID }, true);
     public static final UniqueKey<CustomerChargeRecord> CUSTOMER_CHARGE__PK_CUSTOMER_CHARGE = Internal.createUniqueKey(CustomerCharge.CUSTOMER_CHARGE, DSL.name("pk_customer_charge"), new TableField[] { CustomerCharge.CUSTOMER_CHARGE.CRG_ID }, true);
     public static final UniqueKey<CustomerDebtRecord> CUSTOMER_DEBT__PK_CUSTOMER_DEBT = Internal.createUniqueKey(CustomerDebt.CUSTOMER_DEBT, DSL.name("pk_customer_debt"), new TableField[] { CustomerDebt.CUSTOMER_DEBT.CUST_ID }, true);
+    public static final UniqueKey<CustomerMonthlyBalanceRecord> CUSTOMER_MONTHLY_BALANCE__UK_CUSTOMER_MONTHLY_BALANCE_1_30298427 = Internal.createUniqueKey(CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE, DSL.name("uk_customer_monthly_balance_1_30298427"), new TableField[] { CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE.CUST_ID }, true);
+    public static final UniqueKey<CustomerMonthlyBalanceRecord> CUSTOMER_MONTHLY_BALANCE__UK_CUSTOMER_MONTHLY_BALANCE_2_115416246 = Internal.createUniqueKey(CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE, DSL.name("uk_customer_monthly_balance_2_115416246"), new TableField[] { CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE.MONTH_YEAR }, true);
     public static final UniqueKey<CustomerMonthlySpendRecord> CUSTOMER_MONTHLY_SPEND__PK_CUSTOMER_MONTHLY_SPEND = Internal.createUniqueKey(CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND, DSL.name("pk_customer_monthly_spend"), new TableField[] { CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND.CUST_ID, CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND.MONTH_YEAR }, true);
     public static final UniqueKey<CustomerReminderRecord> CUSTOMER_REMINDER__PK_CUSTOMER_REMINDER = Internal.createUniqueKey(CustomerReminder.CUSTOMER_REMINDER, DSL.name("pk_customer_reminder"), new TableField[] { CustomerReminder.CUSTOMER_REMINDER.ID }, true);
     public static final UniqueKey<CustomerRepaymentRecord> CUSTOMER_REPAYMENT__PK_CUSTOMER_REPAYMENT = Internal.createUniqueKey(CustomerRepayment.CUSTOMER_REPAYMENT, DSL.name("pk_customer_repayment"), new TableField[] { CustomerRepayment.CUSTOMER_REPAYMENT.ID }, true);
@@ -68,6 +72,7 @@ public class Keys {
 
     public static final ForeignKey<CustomerChargeRecord, CustomerRecord> CUSTOMER_CHARGE__FK_CUSTOMER_CHARGE_PK_CUSTOMER = Internal.createForeignKey(CustomerCharge.CUSTOMER_CHARGE, DSL.name("fk_customer_charge_pk_customer"), new TableField[] { CustomerCharge.CUSTOMER_CHARGE.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<CustomerDebtRecord, CustomerRecord> CUSTOMER_DEBT__FK_CUSTOMER_DEBT_PK_CUSTOMER = Internal.createForeignKey(CustomerDebt.CUSTOMER_DEBT, DSL.name("fk_customer_debt_pk_customer"), new TableField[] { CustomerDebt.CUSTOMER_DEBT.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
+    public static final ForeignKey<CustomerMonthlyBalanceRecord, CustomerRecord> CUSTOMER_MONTHLY_BALANCE__FK_CUSTOMER_MONTHLY_BALANCE_PK_CUSTOMER = Internal.createForeignKey(CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE, DSL.name("fk_customer_monthly_balance_pk_customer"), new TableField[] { CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<CustomerMonthlySpendRecord, CustomerRecord> CUSTOMER_MONTHLY_SPEND__FK_CUSTOMER_MONTHLY_SPEND_PK_CUSTOMER = Internal.createForeignKey(CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND, DSL.name("fk_customer_monthly_spend_pk_customer"), new TableField[] { CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<CustomerReminderRecord, CustomerRecord> CUSTOMER_REMINDER__FK_CUSTOMER_REMINDER_PK_CUSTOMER = Internal.createForeignKey(CustomerReminder.CUSTOMER_REMINDER, DSL.name("fk_customer_reminder_pk_customer"), new TableField[] { CustomerReminder.CUSTOMER_REMINDER.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);
     public static final ForeignKey<CustomerRepaymentRecord, CustomerRecord> CUSTOMER_REPAYMENT__FK_CUSTOMER_REPAYMENT_PK_CUSTOMER = Internal.createForeignKey(CustomerRepayment.CUSTOMER_REPAYMENT, DSL.name("fk_customer_repayment_pk_customer"), new TableField[] { CustomerRepayment.CUSTOMER_REPAYMENT.CUST_ID }, Keys.CUSTOMER__PK_CUSTOMER, new TableField[] { Customer.CUSTOMER.ID }, true, ForeignKeyRule.CASCADE, ForeignKeyRule.CASCADE);

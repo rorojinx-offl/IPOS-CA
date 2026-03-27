@@ -31,6 +31,7 @@ import schema.DefaultSchema;
 import schema.Keys;
 import schema.tables.CustomerCharge.CustomerChargePath;
 import schema.tables.CustomerDebt.CustomerDebtPath;
+import schema.tables.CustomerMonthlyBalance.CustomerMonthlyBalancePath;
 import schema.tables.CustomerMonthlySpend.CustomerMonthlySpendPath;
 import schema.tables.CustomerReminder.CustomerReminderPath;
 import schema.tables.CustomerRepayment.CustomerRepaymentPath;
@@ -198,6 +199,19 @@ public class Customer extends TableImpl<CustomerRecord> {
             _customerDebt = new CustomerDebtPath(this, null, Keys.CUSTOMER_DEBT__FK_CUSTOMER_DEBT_PK_CUSTOMER.getInverseKey());
 
         return _customerDebt;
+    }
+
+    private transient CustomerMonthlyBalancePath _customerMonthlyBalance;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>customer_monthly_balance</code> table
+     */
+    public CustomerMonthlyBalancePath customerMonthlyBalance() {
+        if (_customerMonthlyBalance == null)
+            _customerMonthlyBalance = new CustomerMonthlyBalancePath(this, null, Keys.CUSTOMER_MONTHLY_BALANCE__FK_CUSTOMER_MONTHLY_BALANCE_PK_CUSTOMER.getInverseKey());
+
+        return _customerMonthlyBalance;
     }
 
     private transient CustomerMonthlySpendPath _customerMonthlySpend;

@@ -7,6 +7,7 @@ package schema;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
+import schema.tables.CustomerMonthlyBalance;
 import schema.tables.CustomerMonthlySpend;
 import schema.tables.CustomerReminder;
 import schema.tables.CustomerRepayment;
@@ -38,6 +39,11 @@ public class Tables {
      * The table <code>customer_debt</code>.
      */
     public static final CustomerDebt CUSTOMER_DEBT = CustomerDebt.CUSTOMER_DEBT;
+
+    /**
+     * The table <code>customer_monthly_balance</code>.
+     */
+    public static final CustomerMonthlyBalance CUSTOMER_MONTHLY_BALANCE = CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE;
 
     /**
      * The table <code>customer_monthly_spend</code>.
