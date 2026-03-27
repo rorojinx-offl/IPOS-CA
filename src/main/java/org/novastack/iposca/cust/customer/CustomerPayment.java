@@ -2,6 +2,8 @@ package org.novastack.iposca.cust.customer;
 
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
+import org.novastack.iposca.cust.statement.StatementInfo;
+import org.novastack.iposca.cust.statement.StatementService;
 import org.novastack.iposca.utils.db.JooqConnection;
 import schema.tables.CustomerDebt;
 
@@ -10,6 +12,7 @@ import static schema.tables.CustomerDebt.CUSTOMER_DEBT;
 import static schema.tables.Customer.CUSTOMER;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 public class CustomerPayment {
     private int customerID;
@@ -74,6 +77,7 @@ public class CustomerPayment {
         }
 
         org.novastack.iposca.cust.customer.CustomerDebt.deleteDebt(customerID);
+        StatementService.deleteMonthData(customerID, YearMonth.now().minusMonths(1));
     }
 
     public int getCustomerID() {
