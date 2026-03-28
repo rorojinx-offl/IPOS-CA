@@ -8,10 +8,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.cust.statement.StatementService;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -28,6 +32,9 @@ public class MenuController implements Initializable {
 
     @FXML
     private VBox manageButton;
+
+    @FXML
+    private VBox statementButton;
 
 
     @FXML
@@ -49,7 +56,21 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    void generateStatements(MouseEvent event) {
+    void generateStatements(MouseEvent event) throws IOException {
+        LocalDate now = LocalDate.now();
+        ArrayList<Customer> custs = StatementService.getEligibleCustomers();
+
+        if (!now.isAfter(now.withDayOfMonth(5)) && !now.isBefore(now.withDayOfMonth(15))) {
+            if (custs.isEmpty()) {
+                new CommonCalls().openErrorDialog("No eligible customers found!");
+                return;
+            }
+
+            Stage stage = (Stage) statementButton.getScene().getWindow();
+            new CommonCalls().traverse(stage, "/ui/cust/custStm.fxml", "Customer Statements");
+        } else {
+            new CommonCalls().openErrorDialog("Statements cannot be generated at this time!");
+        }
     }
 
     @FXML
