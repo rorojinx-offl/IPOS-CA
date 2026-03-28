@@ -33,9 +33,9 @@ public class InvoiceFactory {
                 "test@tpharma.com",
                 DebtController.loadLogo());
 
-        JasperReport reminder = JasperCompileManager.compileReport(jrxml);
+        JasperReport invoice = JasperCompileManager.compileReport(jrxml);
         Map<String, Object> params = buildParams(data.items(), data.customer(), data.cartMode(), merchant, data.totalAmount());
-        JasperPrint print = JasperFillManager.fillReport(reminder, params, new JREmptyDataSource(1));
+        JasperPrint print = JasperFillManager.fillReport(invoice, params, new JREmptyDataSource(1));
         Files.createDirectories(Path.of("generated-reports"));
 
         Path pdf;
