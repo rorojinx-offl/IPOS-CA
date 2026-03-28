@@ -17,6 +17,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.28")
     implementation("org.xerial:sqlite-jdbc:3.51.2.0")
     implementation("org.jooq:jooq:3.20.11")
+    implementation("io.javalin:javalin:7.1.0")
     jooqCodegen("org.xerial:sqlite-jdbc:3.51.2.0") //Add SQLite to task's classpath
 }
 
