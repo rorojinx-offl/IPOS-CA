@@ -31,6 +31,18 @@ public class StatementService {
                 .execute();
     }
 
+    public static ArrayList<Customer> getEligibleCustomers() {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ArrayList<Customer> customers = new ArrayList<>();
+        ctx.select(CUSTOMER_MONTHLY_BALANCE.CUST_ID)
+                .from(CUSTOMER_MONTHLY_BALANCE)
+                .where(CUSTOMER_MONTHLY_BALANCE.BALANCE_DUE.greaterThan(0f))
+                .and(CUSTOMER_MONTHLY_BALANCE.MONTH_YEAR.eq(YearMonth.now().toString()))
+                .fetch().forEach(record -> customers.add(new Customer().getCustomer(CUSTOMER_MONTHLY_BALANCE.CUST_ID.getValue(record))));
+
+        return customers;
+    }
+
     public static StatementInfo buildStatementData(int custID, YearMonth month) {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.selectFrom(CUSTOMER_MONTHLY_BALANCE)
