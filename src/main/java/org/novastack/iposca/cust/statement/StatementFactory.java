@@ -1,0 +1,59 @@
+package org.novastack.iposca.cust.statement;
+
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.novastack.iposca.cust.UIControllers.DebtController;
+import org.novastack.iposca.cust.reminders.ReminderInfo;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.YearMonth;
+import java.util.HashMap;
+import java.util.Map;
+
+public class StatementFactory {
+    public static void generateStatement(StatementService.StatementInfo info, YearMonth month) throws IOException, JRException {
+        InputStream jrxml = StatementFactory.class.getResourceAsStream("/jasper/cust/statement.jrxml");
+        if (jrxml == null) {
+            throw new IOException("Resource not found!");
+        }
+
+        ReminderInfo.Merchant merchant = new ReminderInfo.Merchant(
+                "T-Pharma",
+                "123 Test Street, Test Town, Testshire, TE1 1ST",
+                "test@tpharma.com",
+                DebtController.loadLogo());
+
+        JasperReport statement = JasperCompileManager.compileReport(jrxml);
+        Map<String, Object> params = buildParams(info, month, merchant);
+        JasperPrint print = JasperFillManager.fillReport(statement, params, new JREmptyDataSource(1));
+        Files.createDirectories(Path.of("generated-reports"));
+
+        Path pdf = Path.of("generated-reports", "statement-" + month.toString() + "-" + info.customer().getName() + ".pdf");
+        JasperExportManager.exportReportToPdfFile(print, pdf.toString());
+    }
+
+    private static Map<String, Object> buildParams(StatementService.StatementInfo info, YearMonth month, ReminderInfo.Merchant merchant) {
+        Map<String, Object> params = new HashMap<>();
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(info.items());
+
+        params.put("M_NAME", merchant.name());
+        params.put("M_ADDRESS", merchant.address());
+        params.put("EMAIL", merchant.email());
+        if (merchant.logo() != null) {
+            params.put("LOGO", new ByteArrayInputStream(merchant.logo()));
+        }
+
+        params.put("C_NAME", info.customer().getName());
+        params.put("C_ADDRESS", info.customer().getAddress());
+        params.put("PHONE", info.customer().getPhone());
+        params.put("BALANCE", info.balance());
+        params.put("ITEM_DATA_SOURCE", dataSource);
+        params.put("BILLING_PERIOD", month);
+
+        return params;
+    }
+}
