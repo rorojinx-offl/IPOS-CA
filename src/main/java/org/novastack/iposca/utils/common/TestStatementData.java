@@ -1,6 +1,5 @@
 package org.novastack.iposca.utils.common;
 
-import org.novastack.iposca.cust.statement.StatementInfo;
 import org.novastack.iposca.cust.statement.StatementItems;
 import org.novastack.iposca.cust.statement.StatementService;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 public class TestStatementData {
     static void main() {
         //StatementService.trackMonthlyDebt(1, YearMonth.now().minusMonths(1), 1000f);
-        StatementInfo info = StatementService.buildStatementData(1, YearMonth.now());
+        StatementService.StatementInfo info = StatementService.buildStatementData(1, YearMonth.now());
 
         if (info == null) {
             System.out.println("No data found!");
@@ -22,7 +21,7 @@ public class TestStatementData {
                 Billing Month: %s
                 Balance: %f
                 Items: %s
-                """, info.getCustomer().getName(), info.getBillingMonth().toString(), info.getBalance(), csv(info.getItems()));
+                """, info.customer().getName(), info.billingMonth().toString(), info.balance(), csv(info.items()));
     }
 
     public static String csv(ArrayList<StatementItems> list) {
