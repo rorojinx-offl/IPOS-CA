@@ -90,6 +90,11 @@ public class ManagementController implements Initializable {
 
     @FXML
     void editCustomer(MouseEvent event) throws IOException {
+        if (customerTable.getSelectionModel().getSelectedItem() == null) {
+            new CommonCalls().openErrorDialog("Please select a customer!");
+            return;
+        }
+
         Stage stage = (Stage) editButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/cust/custEdit.fxml"));
         Parent root = loader.load();
@@ -104,6 +109,11 @@ public class ManagementController implements Initializable {
 
     @FXML
     void delCustomer(MouseEvent event) throws IOException {
+        if (customerTable.getSelectionModel().getSelectedItem() == null) {
+            new CommonCalls().openErrorDialog("Please select a customer!");
+            return;
+        }
+
         try {
             new Customer().deleteCustomer(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
         } catch (DataAccessException e) {
