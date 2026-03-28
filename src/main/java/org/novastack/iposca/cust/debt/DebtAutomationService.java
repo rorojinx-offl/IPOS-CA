@@ -3,7 +3,6 @@ package org.novastack.iposca.cust.debt;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.customer.CustomerDebt;
-import org.novastack.iposca.cust.statement.StatementInfo;
 import org.novastack.iposca.cust.statement.StatementService;
 
 import java.time.LocalDate;

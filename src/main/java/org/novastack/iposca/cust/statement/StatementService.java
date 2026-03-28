@@ -14,6 +14,8 @@ import java.util.Map;
 import static schema.tables.CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE;
 
 public class StatementService {
+    public record StatementInfo(Customer customer, YearMonth billingMonth, float balance, ArrayList<StatementItems> items) {}
+
     public static void trackMonthlyDebt(int custID, YearMonth month, float balance) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.insertInto(CUSTOMER_MONTHLY_BALANCE)
