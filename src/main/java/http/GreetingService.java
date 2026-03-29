@@ -1,7 +1,12 @@
 package http;
 
 public class GreetingService {
-    static void main() {
-        System.out.println("Hello World!");
+    public record GreetingRequest(String name) {}
+
+    public static String greet(String name) {
+        if (name == null || name.isBlank()) {
+            return "Hello, stranger";
+        }
+        return "Hello, " + name;
     }
 }
