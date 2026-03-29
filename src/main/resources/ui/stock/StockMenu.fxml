@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" />
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: purple;">
+         <children>
+            <Label alignment="CENTER" layoutX="264.0" layoutY="31.0" text="Stock Menu" textFill="WHITE" />
+            <Button layoutX="50.0" layoutY="27.0" mnemonicParsing="false" text="Back" />
+         </children></Pane>
+      <Button layoutX="62.0" layoutY="222.0" mnemonicParsing="false" text="See all stock" />
+      <Button layoutX="307.0" layoutY="223.0" mnemonicParsing="false" text="Order Stock" />
+      <Button layoutX="120.0" layoutY="309.0" mnemonicParsing="false" text="Delete Stock" />
+      <Button layoutX="349.0" layoutY="310.0" mnemonicParsing="false" text="Check for low stock warning" />
+      <Button layoutX="147.0" layoutY="156.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="83.0" text="Add stock" />
+   </children>
+</AnchorPane>
