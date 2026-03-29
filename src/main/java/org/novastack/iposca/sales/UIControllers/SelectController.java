@@ -92,6 +92,9 @@ public class SelectController implements Initializable {
     @FXML
     private Label total;
 
+    @FXML
+    private Label vtotal;
+
     private final ObservableList<Stock> allProducts = FXCollections.observableArrayList();
     private ObservableList<SaleLine> cartItems = FXCollections.observableArrayList();
     private SaleService.CartMode currentMode;
@@ -354,8 +357,10 @@ public class SelectController implements Initializable {
     private void updateTotals() {
         double subtotal = cartItems.stream().mapToDouble(SaleLine::getSubtotal).sum();
         double total = subtotal;
+        double vat = total * 1.2;
 
-        this.total.setText(String.format("Total: £%.2f", total));
+        this.total.setText(String.format("Total: £%.2f    ", total));
+        this.vtotal.setText(String.format("Total with VAT: £%.2f", vat)); //Adjust for UK's national VAT rate of 20%
     }
 
     private void setupSearchResults() {
@@ -467,6 +472,6 @@ public class SelectController implements Initializable {
         for (SaleLine item : cartItems) {
             total += item.getSubtotal();
         }
-        return total;
+        return total * 1.2; //Adjust for UK's national VAT rate of 20%
     }
 }

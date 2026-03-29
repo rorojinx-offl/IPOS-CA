@@ -70,6 +70,11 @@
                   <Font size="33.0" />
                </font>
             </Label>
+            <Label fx:id="vtotal">
+               <font>
+                  <Font size="33.0" />
+               </font>
+            </Label>
          </children>
       </HBox>
       <GridPane fx:id="guestButtons" layoutX="127.0" layoutY="738.0" prefHeight="92.0" prefWidth="676.0" visible="false">
