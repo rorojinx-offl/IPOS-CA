@@ -15,6 +15,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("ch.qos.logback:logback-classic:1.5.28")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.1")
     implementation("org.xerial:sqlite-jdbc:3.51.2.0")
     implementation("org.jooq:jooq:3.20.11")
     implementation("io.javalin:javalin:7.1.0")
@@ -31,7 +32,7 @@ jooq {
     configuration {
         jdbc {
             driver = "org.sqlite.JDBC"
-            url = "jdbc:sqlite:${projectDir}/test.db"
+            url = "jdbc:sqlite:${projectDir}/http.db"
             user = ""
             password = ""
         }
@@ -47,8 +48,8 @@ jooq {
             }
 
             target {
-                packageName = "experimental.database.generated"
-                directory = "src/main/java/experimental/database/generated"
+                packageName = "schema"
+                directory = "src/main/java/db/generated"
             }
         }
     }
