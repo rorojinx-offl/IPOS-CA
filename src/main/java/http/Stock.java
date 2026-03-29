@@ -2,6 +2,9 @@ package http;
 
 import db.JooqConnection;
 import org.jooq.DSLContext;
+
+import java.util.ArrayList;
+
 import static schema.tables.Stock.STOCK;
 
 public class Stock {
@@ -31,6 +34,20 @@ public class Stock {
         } else {
             return 404;
         }
+    }
+
+    public static ArrayList<Stock> getAllStock() {
+        ArrayList<Stock> inventory = new ArrayList<>();
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.selectFrom(STOCK).where(STOCK.QUANTITY.gt(0)).fetch().forEach(record -> {
+            inventory.add(new Stock(
+                    STOCK.ID.getValue(record),
+                    STOCK.NAME.getValue(record),
+                    STOCK.COST.getValue(record),
+                    STOCK.QUANTITY.getValue(record)
+            ));
+        });
+        return inventory;
     }
 
     public int getId() {

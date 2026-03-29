@@ -33,6 +33,10 @@ public class Server {
                             "status", status
                             ));
                 });
+
+                config.routes.get("/stock/all", ctx -> {
+                    ctx.json(Stock.getAllStock());
+                });
             });
         }).start(8088);
 
