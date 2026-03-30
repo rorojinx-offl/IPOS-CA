@@ -4,6 +4,8 @@ import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.utils.db.JooqConnection;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import static org.jooq.impl.DSL.max;
@@ -41,6 +43,7 @@ public class User {
 
     public void addUser(User user) throws DataAccessException {
         DSLContext ctx = JooqConnection.getDSLContext();
+        String createdAt = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         ctx.insertInto(USERS)
                 .set(USERS.USERNAME, user.getUsername())
                 .set(USERS.PASSWORD, user.getPassword())
@@ -48,6 +51,7 @@ public class User {
                 .set(USERS.ROLE, user.getRole())
                 .set(USERS.IS_ACTIVE, user.getIsActive())
                 .set(USERS.FAILED_ATTEMPTS, user.getFailedAttempts())
+                .set(USERS.CREATED_AT, createdAt)
                 .execute();
     }
 
