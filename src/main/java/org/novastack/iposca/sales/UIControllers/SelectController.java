@@ -14,6 +14,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
+import org.novastack.iposca.cust.plans.FixedDiscountPlan;
+import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.exceptions.InvalidOperation;
 import org.novastack.iposca.sales.PaymentService;
 import org.novastack.iposca.sales.SaleService;
@@ -94,6 +96,9 @@ public class SelectController implements Initializable {
 
     @FXML
     private Label vtotal;
+
+    @FXML
+    private Label dtotal;
 
     private final ObservableList<Stock> allProducts = FXCollections.observableArrayList();
     private ObservableList<SaleLine> cartItems = FXCollections.observableArrayList();
@@ -272,12 +277,12 @@ public class SelectController implements Initializable {
             return;
         }
 
-       try {
-           PaymentService.processCreditPayment(draft, customer);
-       } catch (Exception e) {
-           new CommonCalls().openErrorDialog(e.getMessage());
-           return;
-       }
+        try {
+            PaymentService.processCreditPayment(draft, customer);
+        } catch (Exception e) {
+            new CommonCalls().openErrorDialog(e.getMessage());
+            return;
+        }
 
         SaleService.Sale sale = new SaleService.Sale(
                 null,
@@ -290,18 +295,18 @@ public class SelectController implements Initializable {
                 LocalDateTime.now(),
                 draft.totalAmount()
         );
-       int saleID = SaleService.recordSale(sale);
-       for (SaleService.SaleItem item : draft.items()) {
-           SaleService.recordSaleItem(new SaleService.SaleItem(
-                   null,
-                   saleID,
-                   item.productID(),
-                   item.quantity(),
-                   item.price(),
-                   item.subtotal()
-           ));
-       }
-       SaleService.checkFlexiRateChange(customer, draft.totalAmount());
+        int saleID = SaleService.recordSale(sale);
+        for (SaleService.SaleItem item : draft.items()) {
+            SaleService.recordSaleItem(new SaleService.SaleItem(
+                    null,
+                    saleID,
+                    item.productID(),
+                    item.quantity(),
+                    item.price(),
+                    item.subtotal()
+            ));
+        }
+        SaleService.checkFlexiRateChange(customer, draft.totalAmount());
 
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/success.fxml"));
@@ -332,7 +337,9 @@ public class SelectController implements Initializable {
         FilteredList<Stock> filteredData = new FilteredList<>(allProducts, p -> true);
         searchField.textProperty().addListener((obs, oldVal, newVal) -> {
             filteredData.setPredicate(product -> {
-                if (newVal == null || newVal.isEmpty()) {return true;}
+                if (newVal == null || newVal.isEmpty()) {
+                    return true;
+                }
                 String filter = newVal.toLowerCase();
                 return product.getName().toLowerCase().contains(filter);
             });
@@ -359,8 +366,25 @@ public class SelectController implements Initializable {
         double total = subtotal;
         double vat = total * 1.2;
 
-        this.total.setText(String.format("Total: £%.2f    ", total));
-        this.vtotal.setText(String.format("Total with VAT: £%.2f", vat)); //Adjust for UK's national VAT rate of 20%
+        this.total.setText(String.format("Total: £%.2f  ", total));
+        this.vtotal.setText(String.format("Total with VAT: £%.2f  ", vat)); //Adjust for UK's national VAT rate of 20%
+
+        if (currentMode == SaleService.CartMode.MEMBER && customer != null) {
+            int rate;
+            if (customer.getDiscountPlan().equals(CustomerEnums.DiscountPlan.FIXED.name())) {
+                rate = new FixedDiscountPlan().getCurrentDiscountRate(customer.getCustomerID());
+            } else {
+                rate = new FlexiDiscountPlan().getCurrentDiscountRate(customer.getCustomerID());
+                if (rate == 0) {
+                    return;
+                }
+            }
+
+            double multiplier = 1.0 - (rate / 100.0);
+            double discount = vat * multiplier;
+
+            this.dtotal.setText(String.format("Grand Total After Discounts (%d%%): £%.2f", rate, discount));
+        }
     }
 
     private void setupSearchResults() {
@@ -397,7 +421,8 @@ public class SelectController implements Initializable {
 
     private void setupColQuantitySpinner() {
         quantity.setCellFactory(col -> new TableCell<>() {
-            private final Spinner<Integer> spinner = new Spinner<>(1,999, 1);
+            private final Spinner<Integer> spinner = new Spinner<>(1, 999, 1);
+
             {
                 spinner.setEditable(true);
                 spinner.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -427,6 +452,7 @@ public class SelectController implements Initializable {
     private void setupColRemove() {
         remove.setCellFactory(col -> new TableCell<>() {
             private final Button removeButton = new Button("Remove");
+
             {
                 removeButton.setOnAction(event -> {
                     if (getIndex() >= 0 && getIndex() < getTableView().getItems().size()) {
@@ -472,6 +498,22 @@ public class SelectController implements Initializable {
         for (SaleLine item : cartItems) {
             total += item.getSubtotal();
         }
-        return total * 1.2; //Adjust for UK's national VAT rate of 20%
+        total = total * 1.2; //Adjust for UK's national VAT rate of 20%
+
+        if (currentMode == SaleService.CartMode.MEMBER && customer != null) {
+            int rate;
+            if (customer.getDiscountPlan().equals(CustomerEnums.DiscountPlan.FIXED.name())) {
+                rate = new FixedDiscountPlan().getCurrentDiscountRate(customer.getCustomerID());
+            } else {
+                rate = new FlexiDiscountPlan().getCurrentDiscountRate(customer.getCustomerID());
+                if (rate == 0) {
+                    return total;
+                }
+            }
+
+            double multiplier = 1.0 - (rate / 100.0);
+            return total * multiplier;
+        }
+        return total;
     }
 }
