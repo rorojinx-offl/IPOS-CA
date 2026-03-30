@@ -13,26 +13,57 @@ public class TurnoverData {
 
     public TurnoverData() {}
 
-    public LocalDate getReportPeriodStart() { return reportPeriodStart; }
-    public void setReportPeriodStart(LocalDate reportPeriodStart) { this.reportPeriodStart = reportPeriodStart; }
+    public TurnoverData(float totalSalesAmount, int totalSalesCount, float totalOrdersPlacedValue) {
+        this.totalSalesAmount = totalSalesAmount;
+        this.totalSalesCount = totalSalesCount;
+        this.totalOrdersPlacedValue = totalOrdersPlacedValue;
+    }
 
-    public LocalDate getReportPeriodEnd() { return reportPeriodEnd; }
-    public void setReportPeriodEnd(LocalDate reportPeriodEnd) { this.reportPeriodEnd = reportPeriodEnd; }
+    public LocalDate getReportPeriodStart() {
+        return reportPeriodStart;
+    }
 
-    public float getTotalSalesAmount() { return totalSalesAmount; }
-    public void setTotalSalesAmount(float totalSalesAmount) { this.totalSalesAmount = totalSalesAmount; }
+    public void setReportPeriodStart(LocalDate reportPeriodStart) {
+        this.reportPeriodStart = reportPeriodStart;
+    }
 
-    public int getTotalSalesCount() { return totalSalesCount; }
-    public void setTotalSalesCount(int totalSalesCount) { this.totalSalesCount = totalSalesCount; }
+    public float getTotalSalesAmount() {
+        return totalSalesAmount;
+    }
 
-    public float getTotalOrdersPlacedValue() { return totalOrdersPlacedValue; }
-    public void setTotalOrdersPlacedValue(float totalOrdersPlacedValue) { this.totalOrdersPlacedValue = totalOrdersPlacedValue; }
+    public void setTotalSalesAmount(float totalSalesAmount) {
+        this.totalSalesAmount = totalSalesAmount;
+    }
 
-    public String getGeneratedBy() { return generatedBy; }
-    public void setGeneratedBy(String generatedBy) { this.generatedBy = generatedBy; }
+    public int getTotalSalesCount() {
+        return totalSalesCount;
+    }
 
-    public LocalDate getGeneratedTimestamp() { return generatedTimestamp; }
-    public void setGeneratedTimestamp(LocalDate generatedTimestamp) { this.generatedTimestamp = generatedTimestamp; }
+    public void setTotalSalesCount(int totalSalesCount) {
+        this.totalSalesCount = totalSalesCount;
+    }
 
+    public float getTotalOrdersPlacedValue() {
+        return totalOrdersPlacedValue;
+    }
 
+    public void setTotalOrdersPlacedValue(float totalOrdersPlacedValue) {
+        this.totalOrdersPlacedValue = totalOrdersPlacedValue;
+    }
+
+    public String getGeneratedBy() {
+        return generatedBy;
+    }
+
+    public void setGeneratedBy(String generatedBy) {
+        this.generatedBy = generatedBy;
+    }
+
+    public LocalDate getGeneratedTimestamp() {
+        return generatedTimestamp;
+    }
+
+    public void setGeneratedTimestamp(LocalDate generatedTimestamp) {
+        this.generatedTimestamp = generatedTimestamp;
+    }
 }
