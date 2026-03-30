@@ -66,9 +66,13 @@ public class LoginPageController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/order/loggedIn.fxml"));
             Parent root = loader.load();
 
+            LoggedInController controller = loader.getController();
+            controller.setLoggedInUsername(foundUser.getUsername());
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
+
 
         } else {
             showAlert("Login Failed", "Invalid username or password.");
