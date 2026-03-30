@@ -14,7 +14,7 @@ public class TestJooq {
     public static void main(String[] args) {
         DSLContext ctx = JooqConnection.getDSLContext();
 
-        createItem(ctx, "Paracetomal", 50f, 300);
+        createItem(ctx, "Paracetamol", 50f, 300);
         createItem(ctx, "Aspirin", 40f, 500);
 
         System.out.println(getAllStock());
