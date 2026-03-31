@@ -23,6 +23,11 @@ public class TestJooq {
         deleteItem(ctx, 2);
 
     }
+
+    private enum ProductType {
+        IPOS, NON_IPOS
+    }
+
     public static int createItem(DSLContext ctx, String name, float bulkCost, int quantity) {
         return ctx.insertInto(STOCK_TABLE)
                 .set(STOCK_TABLE.NAME, name)
