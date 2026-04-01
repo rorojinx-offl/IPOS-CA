@@ -35,8 +35,14 @@
             </Label>
          </children>
       </VBox>
-      <ListView fx:id="lowStockList" layoutX="37.0" layoutY="97.0" prefHeight="308.0" prefWidth="349.0" />
-      <Button layoutX="159.0" layoutY="420.0" mnemonicParsing="false" text="Order low stock" />
-      <Button layoutX="156.0" layoutY="455.0" mnemonicParsing="false" text="Generate Report" />
+      <ListView fx:id="lowStockList" layoutX="38.0" layoutY="97.0" prefHeight="279.0" prefWidth="349.0" />
+      <Button layoutX="110.0" layoutY="388.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="206.0" style="-fx-background-color: Purple;" text="Order Low Stock" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
+      <Button layoutX="111.0" layoutY="441.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="204.0" style="-fx-background-color: Purple;" text="Generate Report" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font></Button>
    </children>
 </AnchorPane>

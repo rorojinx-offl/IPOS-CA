@@ -1,11 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.EditController">
    <children>
-      <Pane layoutX="4.0" layoutY="8.0" prefHeight="71.0" prefWidth="592.0" />
+      <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: #eca7ec;">
+         <children>
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" text="Add Non IPOS Stock">
+               <font>
+                  <Font name="Agency FB" size="45.0" />
+               </font>
+            </Label>
+            <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: Purple;" text="Back" textFill="WHITE" />
+         </children>
+      </Pane>
+      <HBox layoutX="22.0" layoutY="101.0">
+         <children>
+            <Label text="Name">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="name" />
+            <Label fx:id="nameWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="139.0">
+         <children>
+            <Label text="Package Type">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="email" />
+            <Label fx:id="emailWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="173.0">
+         <children>
+            <Label text="Units">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="addressWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="213.0">
+         <children>
+            <Label text="Units in a pack">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="phone" />
+            <Label fx:id="phoneWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="250.0">
+         <children>
+            <Label text="Bulk cost">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="credLimit" />
+            <Label fx:id="credLimitWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Button layoutX="22.0" layoutY="363.0" mnemonicParsing="false" onMouseClicked="#editUser" prefHeight="80.0" prefWidth="706.0" style="-fx-background-color: Purple;" text="Submit" textFill="WHITE">
+         <font>
+            <Font size="62.0" />
+         </font>
+      </Button>
+      <HBox layoutX="21.0" layoutY="285.0">
+         <children>
+            <Label text="Quantity">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="credLimit1" />
+            <Label fx:id="credLimitWarning1" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="20.0" layoutY="317.0">
+         <children>
+            <Label text="Stock Limit">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="credLimit11" />
+            <Label fx:id="credLimitWarning11" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <TextField fx:id="address" layoutX="68.0" layoutY="173.0" />
    </children>
 </AnchorPane>
