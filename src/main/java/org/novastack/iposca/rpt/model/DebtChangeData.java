@@ -17,5 +17,87 @@ public class DebtChangeData {
 
     public DebtChangeData() {}
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public float getOpeningAggregateDebt() {
+        return openingAggregateDebt;
+    }
+
+    public void setOpeningAggregateDebt(float openingAggregateDebt) {
+        this.openingAggregateDebt = openingAggregateDebt;
+    }
+
+    public float getPaymentsReceived() {
+        return paymentsReceived;
+    }
+
+    public void setPaymentsReceived(float paymentsReceived) {
+        this.paymentsReceived = paymentsReceived;
+    }
+
+    public float getNewDebtAccrued() {
+        return newDebtAccrued;
+    }
+
+    public void setNewDebtAccrued(float newDebtAccrued) {
+        this.newDebtAccrued = newDebtAccrued;
+    }
+
+    public float getClosingAggregateDebt() {
+        return closingAggregateDebt;
+    }
+
+    public void setClosingAggregateDebt(float closingAggregateDebt) {
+        this.closingAggregateDebt = closingAggregateDebt;
+    }
+
+    public int getTotalDebtorsCount() {
+        return totalDebtorsCount;
+    }
+
+    public void setTotalDebtorsCount(int totalDebtorsCount) {
+        this.totalDebtorsCount = totalDebtorsCount;
+    }
+
+    public int getTotalPaymentsCount() {
+        return totalPaymentsCount;
+    }
+
+    public void setTotalPaymentsCount(int totalPaymentsCount) {
+        this.totalPaymentsCount = totalPaymentsCount;
+    }
+
+    public int getTotalCreditSalesCount() {
+        return totalCreditSalesCount;
+    }
+
+    public void setTotalCreditSalesCount(int totalCreditSalesCount) {
+        this.totalCreditSalesCount = totalCreditSalesCount;
+    }
+
+    public String getGeneratedBy() {
+        return generatedBy;
+    }
+
+    public void setGeneratedBy(String generatedBy) {
+        this.generatedBy = generatedBy;
+    }
+
+    public LocalDate getGeneratedTimestamp() {
+        return generatedTimestamp;
+    }
+
+    public void setGeneratedTimestamp(LocalDate generatedTimestamp) {
+        this.generatedTimestamp = generatedTimestamp;
+    }
 }
