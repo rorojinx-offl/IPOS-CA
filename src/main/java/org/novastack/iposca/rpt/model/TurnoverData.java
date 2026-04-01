@@ -66,4 +66,12 @@ public class TurnoverData {
     public void setGeneratedTimestamp(LocalDate generatedTimestamp) {
         this.generatedTimestamp = generatedTimestamp;
     }
+
+    public LocalDate getReportPeriodEnd() {
+        return reportPeriodEnd;
+    }
+
+    public void setReportPeriodEnd(LocalDate reportPeriodEnd) {
+        this.reportPeriodEnd = reportPeriodEnd;
+    }
 }

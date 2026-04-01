@@ -21,6 +21,10 @@ public class DebtChangeData {
         return startDate;
     }
 
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
     public LocalDate getEndDate() {
         return endDate;
     }
