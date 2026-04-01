@@ -25,6 +25,7 @@ public class StockTable {
             {
                 add(new TableSchema.Column("ITEM_ID", "INTEGER", true, true,null));
                 add(new TableSchema.Column("NAME", "TEXT", false, true,null));
+                add(new TableSchema.Column("PRODUCT_TYPE", "TEXT", false, true,null));
                 add(new TableSchema.Column("PACKAGE_TYPE", "TEXT", false, true,null));
                 add(new TableSchema.Column("UNITS", "TEXT", false, true,null));
                 add(new TableSchema.Column("UNITS_IN_A_PACK", "INTEGER", false, true,null));
@@ -32,6 +33,7 @@ public class StockTable {
                 add(new TableSchema.Column("QUANTITY", "INTEGER", false, false,new ArrayList<>(){{
                     add(new ColumnConstraint.Default("0"));
                 }}));
+                add(new TableSchema.Column("STOCK_LIMIT", "INTEGER", false, true,null));
             }
         };
     }

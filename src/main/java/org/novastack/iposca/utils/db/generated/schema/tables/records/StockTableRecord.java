@@ -47,31 +47,101 @@ public class StockTableRecord extends UpdatableRecordImpl<StockTableRecord> {
     }
 
     /**
+     * Setter for <code>stock_table.PRODUCT_TYPE</code>.
+     */
+    public void setProductType(String value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>stock_table.PRODUCT_TYPE</code>.
+     */
+    public String getProductType() {
+        return (String) get(2);
+    }
+
+    /**
+     * Setter for <code>stock_table.PACKAGE_TYPE</code>.
+     */
+    public void setPackageType(String value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>stock_table.PACKAGE_TYPE</code>.
+     */
+    public String getPackageType() {
+        return (String) get(3);
+    }
+
+    /**
+     * Setter for <code>stock_table.UNITS</code>.
+     */
+    public void setUnits(String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>stock_table.UNITS</code>.
+     */
+    public String getUnits() {
+        return (String) get(4);
+    }
+
+    /**
+     * Setter for <code>stock_table.UNITS_IN_A_PACK</code>.
+     */
+    public void setUnitsInAPack(Integer value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>stock_table.UNITS_IN_A_PACK</code>.
+     */
+    public Integer getUnitsInAPack() {
+        return (Integer) get(5);
+    }
+
+    /**
      * Setter for <code>stock_table.BULK_COST</code>.
      */
     public void setBulkCost(Float value) {
-        set(2, value);
+        set(6, value);
     }
 
     /**
      * Getter for <code>stock_table.BULK_COST</code>.
      */
     public Float getBulkCost() {
-        return (Float) get(2);
+        return (Float) get(6);
     }
 
     /**
      * Setter for <code>stock_table.QUANTITY</code>.
      */
     public void setQuantity(Integer value) {
-        set(3, value);
+        set(7, value);
     }
 
     /**
      * Getter for <code>stock_table.QUANTITY</code>.
      */
     public Integer getQuantity() {
-        return (Integer) get(3);
+        return (Integer) get(7);
+    }
+
+    /**
+     * Setter for <code>stock_table.STOCK_LIMIT</code>.
+     */
+    public void setStockLimit(Integer value) {
+        set(8, value);
+    }
+
+    /**
+     * Getter for <code>stock_table.STOCK_LIMIT</code>.
+     */
+    public Integer getStockLimit() {
+        return (Integer) get(8);
     }
 
     // -------------------------------------------------------------------------
@@ -97,13 +167,18 @@ public class StockTableRecord extends UpdatableRecordImpl<StockTableRecord> {
     /**
      * Create a detached, initialised StockTableRecord
      */
-    public StockTableRecord(Integer itemId, String name, Float bulkCost, Integer quantity) {
+    public StockTableRecord(Integer itemId, String name, String productType, String packageType, String units, Integer unitsInAPack, Float bulkCost, Integer quantity, Integer stockLimit) {
         super(StockTable.STOCK_TABLE);
 
         setItemId(itemId);
         setName(name);
+        setProductType(productType);
+        setPackageType(packageType);
+        setUnits(units);
+        setUnitsInAPack(unitsInAPack);
         setBulkCost(bulkCost);
         setQuantity(quantity);
+        setStockLimit(stockLimit);
         resetTouchedOnNotNull();
     }
 }

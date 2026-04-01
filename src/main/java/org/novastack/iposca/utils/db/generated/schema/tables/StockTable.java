@@ -60,6 +60,26 @@ public class StockTable extends TableImpl<StockTableRecord> {
     public final TableField<StockTableRecord, String> NAME = createField(DSL.name("NAME"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
+     * The column <code>stock_table.PRODUCT_TYPE</code>.
+     */
+    public final TableField<StockTableRecord, String> PRODUCT_TYPE = createField(DSL.name("PRODUCT_TYPE"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>stock_table.PACKAGE_TYPE</code>.
+     */
+    public final TableField<StockTableRecord, String> PACKAGE_TYPE = createField(DSL.name("PACKAGE_TYPE"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>stock_table.UNITS</code>.
+     */
+    public final TableField<StockTableRecord, String> UNITS = createField(DSL.name("UNITS"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>stock_table.UNITS_IN_A_PACK</code>.
+     */
+    public final TableField<StockTableRecord, Integer> UNITS_IN_A_PACK = createField(DSL.name("UNITS_IN_A_PACK"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
      * The column <code>stock_table.BULK_COST</code>.
      */
     public final TableField<StockTableRecord, Float> BULK_COST = createField(DSL.name("BULK_COST"), SQLDataType.REAL.nullable(false), this, "");
@@ -68,6 +88,11 @@ public class StockTable extends TableImpl<StockTableRecord> {
      * The column <code>stock_table.QUANTITY</code>.
      */
     public final TableField<StockTableRecord, Integer> QUANTITY = createField(DSL.name("QUANTITY"), SQLDataType.INTEGER.defaultValue(DSL.field(DSL.raw("0"), SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>stock_table.STOCK_LIMIT</code>.
+     */
+    public final TableField<StockTableRecord, Integer> STOCK_LIMIT = createField(DSL.name("STOCK_LIMIT"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private StockTable(Name alias, Table<StockTableRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

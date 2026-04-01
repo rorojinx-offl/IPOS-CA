@@ -31,6 +31,8 @@
             <columns>
                 <TableColumn fx:id="customerID" prefWidth="42.39999485015869" text="ID" visible="false" />
                 <TableColumn fx:id="name" editable="false" prefWidth="240.0" text="Name" />
+            <TableColumn prefWidth="75.0" text="Product Type" />
+            <TableColumn prefWidth="75.0" text="Package Type" />
                 <TableColumn fx:id="balance" prefWidth="240.0" text="Bulk Cost" />
                 <TableColumn fx:id="status" prefWidth="240.0" text="Quantity" />
             </columns>
