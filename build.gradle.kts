@@ -10,6 +10,9 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://jaspersoft.jfrog.io/jaspersoft/jaspersoft-repo")
+    }
 }
 
 dependencies {
