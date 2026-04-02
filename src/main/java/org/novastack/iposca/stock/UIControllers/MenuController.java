@@ -9,7 +9,12 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import org.novastack.iposca.stock.Stock;
+import org.novastack.iposca.stock.report.LowStockBean;
+import org.novastack.iposca.stock.report.LowStockReportFactory;
+import org.novastack.iposca.utils.ui.CommonCalls;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -58,6 +63,53 @@ public class MenuController implements Initializable {
 
     @FXML
     void restoreCol(MouseEvent event) {
+    }
+
+    @FXML
+    void genReport(MouseEvent event) throws IOException {
+        ArrayList<Stock> list = new ArrayList<>(lowStockObservableList);
+        ArrayList<LowStockBean> beans = new ArrayList<>();
+
+        for (Stock stock : list){
+            beans.add(new LowStockBean(
+                    stock.getId(),
+                    stock.getName(),
+                    stock.getQuantity(),
+                    stock.getStockLimit(),
+                    calculateMinOrder(stock)
+                    ));
+        }
+
+        LowStockReportFactory.Merchant merchant = new LowStockReportFactory.Merchant(
+                "Meow Pharma",
+                "67 Test Avenue, Test Town, Testshire, TE1 1ST",
+                "hetal@mpharma.co.uk",
+                loadLogo()
+        );
+
+        LowStockReportFactory.ReportData reportData = new LowStockReportFactory.ReportData(beans, merchant);
+
+        try {
+            LowStockReportFactory.generateLowStockReport(reportData);
+        } catch(Exception e) {
+            new CommonCalls().openErrorDialog(e.getMessage());
+        }
+    }
+
+    private int calculateMinOrder(Stock stock) {
+        double multiplier = 1.1;
+        double x = stock.getStockLimit() * multiplier;
+        double difference = x - stock.getQuantity();
+        return Math.toIntExact(Math.round(difference));
+    }
+
+    private byte[] loadLogo() throws IOException {
+        try (InputStream in = MenuController.class.getResourceAsStream("/ui/stock/stockManagement.jpeg")) {
+            if (in == null) {
+                throw new IOException("Unable to load image from file");
+            }
+            return in.readAllBytes();
+        }
     }
 }
 

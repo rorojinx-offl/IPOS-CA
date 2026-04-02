@@ -33,6 +33,8 @@ public class TestJooq {
 
 
 
+
+
     }
 
     private enum ProductType {

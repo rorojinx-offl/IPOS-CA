@@ -1,0 +1,148 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="Blank_Letter_Landscape" language="java" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c623ab70-3321-4bc9-a1c3-a41367724ec0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<dataset name="Dataset1" uuid="26f0b7ba-1fdd-4757-b9f3-acef83a18bf0">
+		<query language="sql"><![CDATA[]]></query>
+		<field name="itemID" class="java.lang.Integer"/>
+		<field name="name" class="java.lang.String"/>
+		<field name="availableQuantity" class="java.lang.Integer"/>
+		<field name="stockLimit" class="java.lang.Integer"/>
+		<field name="minOrderQty" class="java.lang.Integer"/>
+	</dataset>
+	<parameter name="M_NAME" class="java.lang.String"/>
+	<parameter name="M_ADDRESS" class="java.lang.String"/>
+	<parameter name="EMAIL" class="java.lang.String"/>
+	<parameter name="ITEM_DATA_SOURCE" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="LOGO" class="java.io.InputStream"/>
+	<parameter name="GENERATED" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<background splitType="Stretch"/>
+	<title height="99" splitType="Stretch">
+		<element kind="textField" uuid="1f9fb75b-e284-4710-8ea1-3862d71d7e42" x="91" y="-10" width="570" height="50" fontName="SansSerif" fontSize="36.0" textAdjust="ScaleFont" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{M_NAME} + " Low Stock Report"]]></expression>
+		</element>
+		<element kind="textField" uuid="8f77920d-8dbb-4e43-94f9-9798b8fc3432" x="241" y="40" width="270" height="20" fontSize="14.0" textAdjust="ScaleFont" hTextAlign="Center" vTextAlign="Middle">
+			<expression><![CDATA[$P{M_ADDRESS}]]></expression>
+		</element>
+		<element kind="textField" uuid="41e319d6-7d30-4f2e-abdb-43b93a16bd8b" x="295" y="60" width="162" height="20" fontSize="11.0" textAdjust="ScaleFont" hTextAlign="Center">
+			<expression><![CDATA["Email: " + $P{EMAIL}]]></expression>
+		</element>
+		<element kind="image" uuid="3314cc8e-f729-4499-bafd-a55f842d2620" x="660" y="-10" width="79" height="79">
+			<expression><![CDATA[$P{LOGO}]]></expression>
+		</element>
+	</title>
+	<pageHeader splitType="Stretch"/>
+	<detail>
+		<band height="218" splitType="Stretch">
+			<element kind="component" uuid="ced77e29-ee8e-42f8-878e-bed657af4e65" positionType="Float" x="191" y="30" width="370" height="60">
+				<component kind="table">
+					<datasetRun uuid="43d2a0cb-70cc-4b35-8249-cd0faadb17bd" subDataset="Dataset1">
+						<dataSourceExpression><![CDATA[$P{ITEM_DATA_SOURCE}]]></dataSourceExpression>
+					</datasetRun>
+					<column kind="single" uuid="fd40089c-4bec-498a-b7c5-e31f37b9a139" width="60">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="30ce63ce-dff8-44ea-81d7-414f222c4a78" x="0" y="0" width="60" height="30" hTextAlign="Center">
+								<text><![CDATA[Product ID]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="36ac5fc2-211b-4a25-94e1-fc7db6dc02ea" x="0" y="0" width="60" height="30" textAdjust="ScaleFont">
+								<expression><![CDATA[$F{itemID}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+					</column>
+					<column kind="single" uuid="ce9480f9-ce55-4037-a57b-6ac29ff567a5" width="110">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="4a473e3a-ca2a-470e-8090-8b1b2fc58844" x="0" y="0" width="110" height="30" hTextAlign="Center">
+								<text><![CDATA[Name]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="7fe57503-83f9-4bc0-8684-5ca33b967a33" x="0" y="0" width="110" height="30" textAdjust="ScaleFont" hTextAlign="Center">
+								<expression><![CDATA[$F{name}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+					</column>
+					<column kind="single" uuid="8107b9eb-4c15-4a43-9d19-060a2ceb6f35" width="60">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="6ffa9d8f-0028-4009-90ed-0d662738bcfb" x="0" y="0" width="60" height="30" hTextAlign="Center">
+								<text><![CDATA[Availability, packs]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="2ab81522-f22a-45b3-9591-2896f062a8c0" x="0" y="0" width="60" height="30" textAdjust="ScaleFont" hTextAlign="Center" vTextAlign="Top">
+								<expression><![CDATA[$F{availableQuantity}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+					</column>
+					<column kind="single" uuid="83768fa1-03a3-4462-8046-2d46927abe7c" width="70">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="b4caa93f-a469-43a6-98df-33fe1398fe47" x="0" y="0" width="70" height="30" hTextAlign="Center">
+								<text><![CDATA[Stock Limit, packs]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="c3694135-2414-413c-aa29-26895fa660cd" x="0" y="0" width="70" height="30" textAdjust="ScaleFont" hTextAlign="Center">
+								<expression><![CDATA[$F{stockLimit}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+					</column>
+					<column kind="single" uuid="83addc82-9a61-4361-99f3-46ce206defc8" width="70">
+						<columnHeader height="30" rowSpan="1" style="Table_CH">
+							<element kind="staticText" uuid="c451ef4e-ecc2-4510-ab91-67e31eb6722c" x="0" y="0" width="70" height="30">
+								<text><![CDATA[Recommended Min Order]]></text>
+							</element>
+						</columnHeader>
+						<detailCell height="30" style="Table_TD">
+							<element kind="textField" uuid="d9797cd1-f536-4995-913f-72866f4d48ce" x="0" y="0" width="70" height="30" textAdjust="ScaleFont" hTextAlign="Center">
+								<expression><![CDATA[$F{minOrderQty}]]></expression>
+							</element>
+						</detailCell>
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+					</column>
+				</component>
+				<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+				<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+				<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+			</element>
+			<element kind="textField" uuid="8f2f4a91-1f1d-4d17-bf8d-a67480e75095" x="290" y="0" width="210" height="20" fontSize="12.0" textAdjust="ScaleFont">
+				<expression><![CDATA["Generated At: " + $P{GENERATED}]]></expression>
+			</element>
+		</band>
+	</detail>
+	<columnFooter height="45" splitType="Stretch"/>
+	<pageFooter height="54" splitType="Stretch"/>
+	<summary height="42" splitType="Stretch"/>
+</jasperReport>
