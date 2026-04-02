@@ -25,6 +25,7 @@ import schema.tables.FlexiDsc;
 import schema.tables.Sale;
 import schema.tables.SaleItem;
 import schema.tables.Stock;
+import schema.tables.User;
 
 
 /**
@@ -106,6 +107,11 @@ public class DefaultSchema extends SchemaImpl {
     public final Stock STOCK = Stock.STOCK;
 
     /**
+     * The table <code>user</code>.
+     */
+    public final User USER = User.USER;
+
+    /**
      * No further instances allowed
      */
     private DefaultSchema() {
@@ -133,7 +139,8 @@ public class DefaultSchema extends SchemaImpl {
             FlexiDsc.FLEXI_DSC,
             Sale.SALE,
             SaleItem.SALE_ITEM,
-            Stock.STOCK
+            Stock.STOCK,
+            User.USER
         );
     }
 }

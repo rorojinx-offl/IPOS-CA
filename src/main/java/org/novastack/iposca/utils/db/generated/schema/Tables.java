@@ -17,6 +17,7 @@ import schema.tables.FlexiDsc;
 import schema.tables.Sale;
 import schema.tables.SaleItem;
 import schema.tables.Stock;
+import schema.tables.User;
 
 
 /**
@@ -89,4 +90,9 @@ public class Tables {
      * The table <code>stock</code>.
      */
     public static final Stock STOCK = Stock.STOCK;
+
+    /**
+     * The table <code>user</code>.
+     */
+    public static final User USER = User.USER;
 }
