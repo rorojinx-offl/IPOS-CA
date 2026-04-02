@@ -77,6 +77,38 @@ public class ReportFactory {
         openPDF(new File(filename));
     }
 
+    public static void generateStockReport(List<StockItem> items, String currentUser) throws IOException, JRException {
+        InputStream jrxml = ReportFactory.class.getResourceAsStream("/jasper/rpt/stockReport.jrxml");
+        if (jrxml == null) {
+            throw new IOException("Report template not found: stockReport.jrxml");
+        }
+
+        JasperReport report = JasperCompileManager.compileReport(jrxml);
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(items);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("GENERATED_BY", currentUser);
+        params.put("GENERATED_TIMESTAMP", LocalDate.now().toString());
+
+        int totalUnits = items.stream().mapToInt(StockItem::getQuantity).sum();
+        float totalValue = (float) items.stream().mapToDouble(StockItem::getTotalStockValue).sum();
+        float totalVat = (float) items.stream().mapToDouble(StockItem::getVatAmount).sum();
+
+        params.put("TOTAL_ITEMS", items.size());
+        params.put("TOTAL_UNITS", totalUnits);
+        params.put("TOTAL_VALUE", totalValue);
+        params.put("TOTAL_VAT", totalVat);
+
+        JasperPrint print = JasperFillManager.fillReport(report, params, dataSource);
+
+        Files.createDirectories(Path.of(REPORT_DIR));
+        String filename = REPORT_DIR + "/stock_report_" + LocalDate.now() + "_" + currentUser + ".pdf";
+        JasperExportManager.exportReportToPdfFile(print, filename);
+
+        openPDF(new File(filename));
+    }
+
     private static void openPDF(File pdfFile) throws IOException {
         if (!Desktop.isDesktopSupported()) {
             throw new IOException("Desktop is not supported");
