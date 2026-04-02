@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="debtReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+    <parameter name="PERIOD_START" class="java.lang.String"/>
+    <parameter name="PERIOD_END" class="java.lang.String"/>
+    <parameter name="OPENING_DEBT" class="java.lang.Float"/>
+    <parameter name="PAYMENTS_RECEIVED" class="java.lang.Float"/>
+    <parameter name="NEW_DEBT_ACCRUED" class="java.lang.Float"/>
+    <parameter name="CLOSING_DEBT" class="java.lang.Float"/>
+    <parameter name="TOTAL_DEBTORS" class="java.lang.Integer"/>
+    <parameter name="TOTAL_PAYMENTS_COUNT" class="java.lang.Integer"/>
+    <parameter name="TOTAL_CREDIT_SALES" class="java.lang.Integer"/>
+    <parameter name="GENERATED_BY" class="java.lang.String"/>
+    <parameter name="GENERATED_TIMESTAMP" class="java.lang.String"/>
+
+    <title>
+        <band height="80">
+            <staticText>
+                <reportElement x="0" y="20" width="555" height="30"/>
+                <textElement>
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Aggregated Debt Change Report]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <detail>
+        <band height="280">
+            <staticText>
+                <reportElement x="0" y="20" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Period:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="150" y="20" width="200" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{PERIOD_START} + " to " + $P{PERIOD_END}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="50" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Opening Aggregate Debt:]]></text>
+            </staticText>
+            <textField pattern="£#,##0.00">
+                <reportElement x="150" y="50" width="100" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{OPENING_DEBT}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="80" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Payments Received:]]></text>
+            </staticText>
+            <textField pattern="£#,##0.00">
+                <reportElement x="150" y="80" width="100" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{PAYMENTS_RECEIVED}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="110" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[New Debt Accrued:]]></text>
+            </staticText>
+            <textField pattern="£#,##0.00">
+                <reportElement x="150" y="110" width="100" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{NEW_DEBT_ACCRUED}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="140" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Closing Aggregate Debt:]]></text>
+            </staticText>
+            <textField pattern="£#,##0.00">
+                <reportElement x="150" y="140" width="100" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{CLOSING_DEBT}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="170" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Formula:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="150" y="170" width="300" height="20"/>
+                <textElement>
+                    <font size="11"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{CLOSING_DEBT} + " = " + $P{OPENING_DEBT} + " + " + $P{NEW_DEBT_ACCRUED} + " - " + $P{PAYMENTS_RECEIVED}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="200" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Total Debtors:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="150" y="200" width="100" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{TOTAL_DEBTORS}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="230" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Total Payments Count:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="150" y="230" width="100" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{TOTAL_PAYMENTS_COUNT}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="260" width="150" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Total Credit Sales:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="150" y="260" width="100" height="20"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{TOTAL_CREDIT_SALES}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <lastPageFooter>
+        <band height="40">
+            <textField>
+                <reportElement x="0" y="20" width="300" height="15"/>
+                <textElement>
+                    <font size="8"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Generated by: " + $P{GENERATED_BY} + " at " + $P{GENERATED_TIMESTAMP}]]></textFieldExpression>
+            </textField>
+        </band>
+    </lastPageFooter>
+</jasperReport>
