@@ -1,4 +1,7 @@
-package org.novastack.iposca.user;
+package org.novastack.iposca.session;
+
+import org.novastack.iposca.user.User;
+import org.novastack.iposca.user.UserEnums;
 
 import java.util.*;
 

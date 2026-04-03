@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.novastack.iposca.DashboardController;
-import org.novastack.iposca.user.SessionManager;
+import org.novastack.iposca.session.SessionManager;
 
 import java.io.IOException;
 

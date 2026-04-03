@@ -1,4 +1,6 @@
-package org.novastack.iposca.user;
+package org.novastack.iposca.session;
+
+import org.novastack.iposca.user.User;
 
 public final class SessionManager {
     private static Session currentSession;
