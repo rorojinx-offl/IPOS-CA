@@ -2,6 +2,7 @@ package org.novastack.iposca.cust.UIControllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -78,6 +79,7 @@ public class MenuController implements Initializable {
         VBox option = (VBox) event.getSource();
         Label childLabel = (Label) option.getChildren().get(1);
         childLabel.setTextFill(Color.RED);
+        option.setCursor(Cursor.HAND);
     }
 
     @FXML
@@ -85,5 +87,6 @@ public class MenuController implements Initializable {
         VBox option = (VBox) event.getSource();
         Label childLabel = (Label) option.getChildren().get(1);
         childLabel.setTextFill(Color.BLACK);
+        option.setCursor(Cursor.DEFAULT);
     }
 }
