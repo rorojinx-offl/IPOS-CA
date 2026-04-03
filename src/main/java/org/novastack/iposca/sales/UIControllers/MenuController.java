@@ -65,4 +65,10 @@ public class MenuController implements Initializable {
         childLabel.setTextFill(Color.BLACK);
         option.setCursor(Cursor.DEFAULT);
     }
+
+    @FXML
+    void returnToParent(MouseEvent event) throws IOException {
+        Stage stage = (Stage) acButton.getScene().getWindow();
+        CommonCalls.dashboardInit(stage);
+    }
 }
