@@ -13,11 +13,11 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private String role;
+    private UserEnums.UserRole role;
     private String fullName;
     private LocalDate createdAt;
 
-    public User(int id, String username, String password, String role, String fullName, LocalDate createdAt) {
+    public User(int id, String username, String password, UserEnums.UserRole role, String fullName, LocalDate createdAt) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -26,7 +26,7 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public User(String username, String password, String role, String fullName, LocalDate createdAt) {
+    public User(String username, String password, UserEnums.UserRole role, String fullName, LocalDate createdAt) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -39,7 +39,7 @@ public class User {
         ctx.insertInto(USER)
                 .set(USER.USERNAME, user.getUsername())
                 .set(USER.PASSWORD, hashPassword(user.getPassword()))
-                .set(USER.ROLE, user.getRole())
+                .set(USER.ROLE, user.getRole().name())
                 .set(USER.FULL_NAME, user.getFullName())
                 .set(USER.CREATED_AT, user.getCreatedAt().toString())
                 .execute();
@@ -63,7 +63,7 @@ public class User {
                 record.getId(),
                 record.getUsername(),
                 record.getPassword(),
-                record.getRole(),
+                UserEnums.UserRole.valueOf(record.getRole()),
                 record.getFullName(),
                 LocalDate.parse(record.getCreatedAt())
         );
@@ -89,7 +89,7 @@ public class User {
         return password;
     }
 
-    public String getRole() {
+    public UserEnums.UserRole getRole() {
         return role;
     }
 
