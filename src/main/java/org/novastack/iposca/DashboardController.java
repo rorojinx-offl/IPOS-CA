@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.novastack.iposca.user.Session;
+import org.novastack.iposca.user.SessionManager;
 import org.novastack.iposca.user.User;
 import org.novastack.iposca.user.UserEnums;
 import org.novastack.iposca.utils.ui.CommonCalls;
@@ -25,7 +26,8 @@ public class DashboardController implements Initializable {
     private Session session;
 
     public void receive(User user) {
-        session = new Session(user);
+        if (SessionManager.getCurrentSession() == null) SessionManager.start(user);
+        session = SessionManager.getCurrentSession();
         welcome.setText("Welcome, " + getForename(user.getFullName()));
         applyAccess(user);
     }
@@ -126,7 +128,7 @@ public class DashboardController implements Initializable {
 
     @FXML
     void logout(MouseEvent event) throws IOException {
-        session.clear();
+        SessionManager.end();
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
     }
