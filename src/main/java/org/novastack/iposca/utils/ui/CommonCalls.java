@@ -4,6 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.novastack.iposca.DashboardController;
+import org.novastack.iposca.user.SessionManager;
 
 import java.io.IOException;
 
@@ -44,4 +46,17 @@ public class CommonCalls {
 
         return controller.getResult();
     }
+
+    public static void dashboardInit(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(CommonCalls.class.getResource("/ui/dashboard/dashboard.fxml"));
+        Parent root = loader.load();
+
+        DashboardController controller = loader.getController();
+        controller.receive(SessionManager.getCurrentUser());
+
+        stage.setTitle("IPOS-CA Dashboard");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.show();
+    }
+
 }
