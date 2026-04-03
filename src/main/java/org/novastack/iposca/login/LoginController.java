@@ -75,7 +75,7 @@ public class LoginController implements Initializable {
 
         if (allFieldsFilled) {
             try {
-                Login.login(uname, pwd);
+                Login.login(uname, pwd, username);
             } catch (Exception e) {
                 if (e instanceof AuthenticationException) {
                     warning.setText(e.getMessage());
