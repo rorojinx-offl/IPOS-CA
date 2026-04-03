@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.EditController">
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.stock.UIControllers.AddController">
    <children>
       <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: #eca7ec;">
          <children>
@@ -21,7 +21,7 @@
             <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: Purple;" text="Back" textFill="WHITE" />
          </children>
       </Pane>
-      <HBox layoutX="22.0" layoutY="101.0">
+      <HBox layoutX="29.0" layoutY="87.0">
          <children>
             <Label text="Name ">
                <font>
@@ -36,7 +36,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="139.0">
+      <HBox layoutX="28.0" layoutY="126.0">
          <children>
             <Label text="Package Type ">
                <font>
@@ -51,7 +51,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="173.0">
+      <HBox layoutX="27.0" layoutY="166.0">
          <children>
             <Label text="Units ">
                <font>
@@ -66,7 +66,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="213.0">
+      <HBox layoutX="27.0" layoutY="203.0">
          <children>
             <Label text="Units in a pack ">
                <font>
@@ -81,7 +81,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="22.0" layoutY="250.0">
+      <HBox layoutX="27.0" layoutY="243.0">
          <children>
             <Label text="Bulk cost ">
                <font>
@@ -101,7 +101,7 @@
             <Font size="62.0" />
          </font>
       </Button>
-      <HBox layoutX="21.0" layoutY="285.0">
+      <HBox layoutX="26.0" layoutY="282.0">
          <children>
             <Label text="Quantity ">
                <font>
@@ -109,14 +109,14 @@
                </font>
             </Label>
             <TextField fx:id="quantity" />
-            <Label fx:id="qunatityWarning" textFill="RED">
+            <Label fx:id="quantityWarning" textFill="RED">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="20.0" layoutY="317.0">
+      <HBox layoutX="25.0" layoutY="322.0">
          <children>
             <Label text="Stock Limit ">
                <font>

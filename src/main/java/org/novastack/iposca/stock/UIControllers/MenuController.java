@@ -21,8 +21,6 @@ import java.util.ResourceBundle;
 
 public class MenuController implements Initializable {
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lowStockObservableList.setAll(Stock.getLowStock());
@@ -81,7 +79,7 @@ public class MenuController implements Initializable {
         }
 
         LowStockReportFactory.Merchant merchant = new LowStockReportFactory.Merchant(
-                "Meow Pharma",
+                "MeowMeow Pharma",
                 "67 Test Avenue, Test Town, Testshire, TE1 1ST",
                 "hetal@mpharma.co.uk",
                 loadLogo()

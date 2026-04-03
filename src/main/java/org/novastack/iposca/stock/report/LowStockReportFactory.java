@@ -1,15 +1,11 @@
 package org.novastack.iposca.stock.report;
-
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,7 +40,7 @@ public class LowStockReportFactory {
         params.put("M_ADDRESS", data.merchant().address());
         params.put("EMAIL", data.merchant().email());
         if (data.merchant().logo() != null) {
-            params.put("M_LOGO", new ByteArrayInputStream(data.merchant().logo()));
+            params.put("LOGO", new ByteArrayInputStream(data.merchant().logo()));
         }
         params.put("ITEM_DATA_SOURCE", dataSource);
         params.put("GENERATED", LocalDate.now().format(dateFormat));

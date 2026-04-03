@@ -31,10 +31,6 @@ public class TestJooq {
         System.out.println(meow.getFirst().getName());
         System.out.println(meow.getFirst().getQuantity());
 
-
-
-
-
     }
 
     private enum ProductType {

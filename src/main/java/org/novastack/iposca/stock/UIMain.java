@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class UIMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/ui/stock/StockMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ui/stock/AddingNonIPOSStock.fxml"));
         stage.setTitle("Stock");
         stage.setScene(new Scene(root));
         stage.show();

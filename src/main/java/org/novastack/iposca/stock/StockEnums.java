@@ -5,7 +5,7 @@ public class StockEnums {
         BOX,BOTTLE
     }
     public enum UnitType {
-        CAPS,ML,STRIPS,OTHER
+        CAPS,ML,OTHER
     }
     public enum ProductType {
         IPOS,NON_IPOS
