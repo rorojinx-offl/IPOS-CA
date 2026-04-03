@@ -69,6 +69,6 @@ public class MenuController implements Initializable {
     @FXML
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) acButton.getScene().getWindow();
-        CommonCalls.dashboardInit(stage);
+        new CommonCalls().traverse(stage, "/ui/dashboard/dashboard.fxml", "IPOS-CA Dashboard");
     }
 }

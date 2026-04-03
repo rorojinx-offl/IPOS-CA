@@ -21,16 +21,22 @@ import java.util.ResourceBundle;
 public class DashboardController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (SessionManager.getCurrentSession() != null) {
+            session = SessionManager.getCurrentSession();
+            User user = session.getCurrentUser();
+            welcome.setText("Welcome, " + getForename(user.getFullName()));
+            applyAccess(user);
+        } else {
+            try {
+                logout(null);
+            } catch (IOException e) {
+                System.exit(1);
+            }
+        }
     }
 
     private Session session;
 
-    public void receive(User user) {
-        if (SessionManager.getCurrentSession() == null) SessionManager.start(user);
-        session = SessionManager.getCurrentSession();
-        welcome.setText("Welcome, " + getForename(user.getFullName()));
-        applyAccess(user);
-    }
 
     private void applyAccess(User user) {
         setTileAccess(custButton, UserEnums.UserAccess.CUST, user);
