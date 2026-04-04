@@ -114,15 +114,15 @@ public class ManagementController implements Initializable {
             return;
         }
 
+        boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to delete this customer?");
+        if (!ok) {
+            return;
+        }
+
         try {
             new Customer().deleteCustomer(customerTable.getSelectionModel().getSelectedItem().getCustomerID());
         } catch (DataAccessException e) {
             new CommonCalls().openErrorDialog(e.getMessage());
-        }
-
-        boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to delete this customer?");
-        if (!ok) {
-            return;
         }
 
         refreshTable();
