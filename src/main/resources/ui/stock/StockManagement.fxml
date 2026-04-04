@@ -50,22 +50,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button mnemonicParsing="false" onMouseClicked="#processRepayment" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Add Non-IPOS Stock" textFill="WHITE">
+                <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Add Non-IPOS Stock" textFill="WHITE">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#manualAccountRestore" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple; -fx-border-radius: 25;" text="Delete Stock" textFill="WHITE" GridPane.rowIndex="1">
+                <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple; -fx-border-radius: 25;" text="Delete Stock" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#generateReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Edit Non-IPOS Stock" textFill="WHITE" GridPane.columnIndex="1">
+                <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Edit Non-IPOS Stock" textFill="WHITE" GridPane.columnIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" onMouseClicked="#viewReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Rate Customisation" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Rate Customisation" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
