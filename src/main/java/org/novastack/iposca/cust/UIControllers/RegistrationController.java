@@ -66,8 +66,18 @@ public class RegistrationController implements Initializable {
     @FXML
     private Button backButton;
 
+    private void clearWarnings() {
+        nameWarning.setText("");
+        emailWarning.setText("");
+        addressWarning.setText("");
+        phoneWarning.setText("");
+        credLimitWarning.setText("");
+        discountPlanWarning.setText("");
+    }
+
     @FXML
     void registerUser(MouseEvent event) throws IOException {
+        clearWarnings();
         boolean allFieldsFilled = true;
 
         if (name.getText().isEmpty()) {

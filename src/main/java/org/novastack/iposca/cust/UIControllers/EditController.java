@@ -80,8 +80,18 @@ public class EditController implements Initializable {
         oldDS = customer.getDiscountPlan();
     }
 
+    private void clearWarnings() {
+        nameWarning.setText("");
+        emailWarning.setText("");
+        addressWarning.setText("");
+        phoneWarning.setText("");
+        credLimitWarning.setText("");
+        discountPlanWarning.setText("");
+    }
+
     @FXML
     void editUser(MouseEvent event) throws IOException {
+        clearWarnings();
         boolean allFieldsFilled = true;
 
         if (name.getText().isEmpty()) {
