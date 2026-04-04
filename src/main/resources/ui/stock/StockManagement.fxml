@@ -21,23 +21,23 @@
                         <Font size="45.0" />
                     </font>
                 </Label>
-                <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #bc4abc;" text="Back">
+                <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: purple;" text="Back" textFill="WHITE">
                     <font>
                         <Font size="17.0" />
                     </font></Button>
             </children>
         </Pane>
-        <TableView fx:id="customerTable" layoutX="14.0" layoutY="120.0" prefHeight="266.0" prefWidth="720.0">
+        <TableView fx:id="stockTable" layoutX="14.0" layoutY="120.0" prefHeight="266.0" prefWidth="720.0">
             <columns>
-                <TableColumn fx:id="customerID" prefWidth="42.39999485015869" text="ID" visible="false" />
+                <TableColumn fx:id="id" prefWidth="42.39999485015869" text="ID" visible="false" />
                 <TableColumn fx:id="name" editable="false" prefWidth="120.0" text="Name" />
-            <TableColumn prefWidth="90.0" text="Product Type" />
-            <TableColumn prefWidth="90.0" text="Package Type" />
-            <TableColumn prefWidth="60.0" text="Units" />
-            <TableColumn prefWidth="90.0" text="Units in a pack" />
-                <TableColumn fx:id="balance" prefWidth="90.0" text="Bulk Cost" />
-                <TableColumn fx:id="status" prefWidth="90.0" text="Quantity" />
-            <TableColumn prefWidth="90.0" text="Stock Limit" />
+            <TableColumn fx:id="productType" prefWidth="90.0" text="Product Type" />
+            <TableColumn fx:id="packageType" prefWidth="90.0" text="Package Type" />
+            <TableColumn fx:id="units" prefWidth="60.0" text="Units" />
+            <TableColumn fx:id="unitsInAPack" prefWidth="90.0" text="Units in a pack" />
+                <TableColumn fx:id="bulkCost" prefWidth="90.0" text="Bulk Cost" />
+                <TableColumn fx:id="quantity" prefWidth="90.0" text="Quantity" />
+            <TableColumn fx:id="stockLimit" prefWidth="90.0" text="Stock Limit" />
             </columns>
         </TableView>
         <GridPane layoutX="14.0" layoutY="394.0" prefHeight="130.0" prefWidth="722.0">
@@ -50,22 +50,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Add Non-IPOS Stock" textFill="WHITE">
+                <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addPage" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc;" text="Add Non-IPOS Stock" textFill="WHITE">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple; -fx-border-radius: 25;" text="Delete Stock" textFill="WHITE" GridPane.rowIndex="1">
+                <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deleteStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-radius: 25;" text="Delete Stock" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Edit Non-IPOS Stock" textFill="WHITE" GridPane.columnIndex="1">
+                <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#editStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc;" text="Edit Non-IPOS Stock" textFill="WHITE" GridPane.columnIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Purple;" text="Rate Customisation" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button fx:id="rateButton" mnemonicParsing="false" onMouseClicked="#rateChange" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc;" text="Rate Customisation" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>

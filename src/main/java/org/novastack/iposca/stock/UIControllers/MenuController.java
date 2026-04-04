@@ -8,6 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.novastack.iposca.stock.Stock;
 import org.novastack.iposca.stock.report.LowStockBean;
 import org.novastack.iposca.stock.report.LowStockReportFactory;
@@ -51,12 +52,12 @@ public class MenuController implements Initializable {
 
     @FXML
     void highlight(MouseEvent event) {
-
     }
 
     @FXML
-    void manageStock(MouseEvent event) {
-
+    void manageStock(MouseEvent event) throws IOException {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/stock/StockManagement.fxml", "Stock");
     }
 
     @FXML

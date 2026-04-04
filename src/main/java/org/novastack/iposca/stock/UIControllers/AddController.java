@@ -72,9 +72,20 @@ public class AddController implements Initializable {
     @FXML
     private Label unitsWarning;
 
+    private void clearWarnings () {
+        nameWarning.setText("");
+        packageTypeWarning.setText("");
+        unitsWarning.setText("");
+        unitPackWarning.setText("");
+        bulkCostWarning.setText("");
+        quantityWarning.setText("");
+        stockLimitWarning.setText("");
+    }
+
     @FXML
     void addStock(MouseEvent event) throws IOException {
         boolean allFieldsFilled = true;
+        clearWarnings();
 
         if (name.getText().isEmpty()) {
             nameWarning.setText("Name cannot be empty");
