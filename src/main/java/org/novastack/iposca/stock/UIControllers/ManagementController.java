@@ -128,8 +128,24 @@ public class ManagementController implements Initializable {
     }
 
     @FXML
-    void deleteStock(MouseEvent event) {
+    void deleteStock(MouseEvent event) throws IOException {
+        if (stockTable.getSelectionModel().getSelectedItem() == null) {
+            new CommonCalls().openErrorDialog("Please select a stock item!");
+            return;
+        }
 
+        boolean ok = new CommonCalls().openConfirmationDialog("Are you sure you want to delete this stock item?");
+        if (!ok) {
+            return;
+        }
+
+        try {
+            Stock.deleteItem(stockTable.getSelectionModel().getSelectedItem().getId());
+        } catch (DataAccessException e) {
+            new CommonCalls().openErrorDialog(e.getMessage());
+        }
+
+        refreshTable();
     }
 
     @FXML

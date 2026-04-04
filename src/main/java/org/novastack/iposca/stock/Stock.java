@@ -108,7 +108,8 @@ public class Stock {
                 .execute();
     }
 
-    public static int deleteItem(DSLContext ctx, int itemId) {
+    public static int deleteItem(int itemId) {
+        DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.deleteFrom(STOCK_TABLE)
                 .where(STOCK_TABLE.ITEM_ID.eq(itemId))
                 .execute();
