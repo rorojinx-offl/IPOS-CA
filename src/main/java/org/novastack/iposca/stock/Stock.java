@@ -18,22 +18,24 @@ public class Stock {
     private String units;
     private int unitsInAPack;
     private float bulkCost;
+    private int markupRate;
     private int quantity;
     private int stockLimit;
 
 
-    public Stock(String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int quantity, int stockLimit) {
+    public Stock(String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {
         this.name = name;
         this.productType = productType;
         this.packageType = packageType;
         this.units = units;
         this.unitsInAPack = unitsInAPack;
         this.bulkCost = bulkCost;
+        this.markupRate = markupRate;
         this.quantity = quantity;
         this.stockLimit = stockLimit;
     }
 
-    public Stock(int id, String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int quantity, int stockLimit) {
+    public Stock(int id, String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {
         this.id=id;
         this.name = name;
         this.productType = productType;
@@ -41,6 +43,7 @@ public class Stock {
         this.units = units;
         this.unitsInAPack = unitsInAPack;
         this.bulkCost = bulkCost;
+        this.markupRate = markupRate;
         this.quantity = quantity;
         this.stockLimit = stockLimit;
     }
@@ -55,6 +58,7 @@ public class Stock {
                 .set(STOCK_TABLE.UNITS, stock.getUnits())
                 .set(STOCK_TABLE.UNITS_IN_A_PACK, stock.getUnitsInAPack())
                 .set(STOCK_TABLE.BULK_COST, stock.getBulkCost())
+                .set(STOCK_TABLE.MARKUP_RATE, stock.getMarkupRate())
                 .set(STOCK_TABLE.QUANTITY, stock.getQuantity())
                 .set(STOCK_TABLE.STOCK_LIMIT, stock.getStockLimit())
                 .execute();
@@ -72,6 +76,7 @@ public class Stock {
                     STOCK_TABLE.UNITS.getValue(record),
                     STOCK_TABLE.UNITS_IN_A_PACK.getValue(record),
                     STOCK_TABLE.BULK_COST.getValue(record),
+                    STOCK_TABLE.MARKUP_RATE.getValue(record),
                     STOCK_TABLE.QUANTITY.getValue(record),
                     STOCK_TABLE.STOCK_LIMIT.getValue(record)
             ));
@@ -92,6 +97,7 @@ public class Stock {
                     STOCK_TABLE.UNITS.getValue(record),
                     STOCK_TABLE.UNITS_IN_A_PACK.getValue(record),
                     STOCK_TABLE.BULK_COST.getValue(record),
+                    STOCK_TABLE.MARKUP_RATE.getValue(record),
                     STOCK_TABLE.QUANTITY.getValue(record),
                     STOCK_TABLE.STOCK_LIMIT.getValue(record)
                     )
@@ -135,49 +141,31 @@ public class Stock {
         return productType;
     }
 
-    public void setProductType(String productType) {
-        this.productType = productType;
-    }
-
     public String getPackageType() {
         return packageType;
     }
 
-    public void setPackageType(String packageType) {
-        this.packageType = packageType;
-    }
 
     public String getUnits() {
         return units;
-    }
-
-    public void setUnits(String units) {
-        this.units = units;
     }
 
     public int getUnitsInAPack() {
         return unitsInAPack;
     }
 
-    public void setUnitsInAPack(int unitsInAPack) {
-        this.unitsInAPack = unitsInAPack;
-    }
-
     public float getBulkCost() {
         return bulkCost;
     }
 
-    public void setBulkCost(float price) {
-        this.bulkCost = bulkCost;
+    public int getMarkupRate() {
+        return markupRate;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 
     public int getStockLimit() {
         return stockLimit;

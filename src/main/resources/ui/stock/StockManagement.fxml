@@ -36,6 +36,7 @@
             <TableColumn fx:id="units" prefWidth="60.0" text="Units" />
             <TableColumn fx:id="unitsInAPack" prefWidth="90.0" text="Units in a pack" />
                 <TableColumn fx:id="bulkCost" prefWidth="90.0" text="Bulk Cost" />
+            <TableColumn fx:id="markupRate" prefWidth="75.0" text="Markup Rate" />
                 <TableColumn fx:id="quantity" prefWidth="90.0" text="Quantity" />
             <TableColumn fx:id="stockLimit" prefWidth="90.0" text="Stock Limit" />
             </columns>
@@ -50,22 +51,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addPage" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc;" text="Add Non-IPOS Stock" textFill="WHITE">
+                <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addPage" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-color: black; -fx-border-width: 1.5;" text="Add Non-IPOS Stock" textFill="WHITE">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deleteStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-radius: 25;" text="Delete Stock" textFill="WHITE" GridPane.rowIndex="1">
+                <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deleteStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-width: 1.5; -fx-border-color: black;" text="Delete Stock" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#editStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc;" text="Edit Non-IPOS Stock" textFill="WHITE" GridPane.columnIndex="1">
+                <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#editStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-color: black; -fx-border-width: 1.5;" text="Edit Non-IPOS Stock" textFill="WHITE" GridPane.columnIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button fx:id="rateButton" mnemonicParsing="false" onMouseClicked="#rateChange" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc;" text="Rate Customisation" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button fx:id="rateButton" mnemonicParsing="false" onMouseClicked="#rateChange" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-color: black; -fx-border-width: 1.5;" text="Rate Customisation" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>

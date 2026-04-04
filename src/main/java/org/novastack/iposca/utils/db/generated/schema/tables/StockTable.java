@@ -85,6 +85,11 @@ public class StockTable extends TableImpl<StockTableRecord> {
     public final TableField<StockTableRecord, Float> BULK_COST = createField(DSL.name("BULK_COST"), SQLDataType.REAL.nullable(false), this, "");
 
     /**
+     * The column <code>stock_table.MARKUP_RATE</code>.
+     */
+    public final TableField<StockTableRecord, Integer> MARKUP_RATE = createField(DSL.name("MARKUP_RATE"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
      * The column <code>stock_table.QUANTITY</code>.
      */
     public final TableField<StockTableRecord, Integer> QUANTITY = createField(DSL.name("QUANTITY"), SQLDataType.INTEGER.defaultValue(DSL.field(DSL.raw("0"), SQLDataType.INTEGER)), this, "");

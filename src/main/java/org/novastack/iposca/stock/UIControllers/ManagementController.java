@@ -53,6 +53,7 @@ public class ManagementController implements Initializable {
         units.setCellValueFactory(new PropertyValueFactory<Stock, String>("units"));
         unitsInAPack.setCellValueFactory(new PropertyValueFactory<Stock, Integer>("unitsInAPack"));
         bulkCost.setCellValueFactory(new PropertyValueFactory<Stock, Float>("bulkCost"));
+        markupRate.setCellValueFactory(new PropertyValueFactory<Stock, Integer>("markupRate"));
         quantity.setCellValueFactory(new PropertyValueFactory<Stock, Integer>("quantity"));
         stockLimit.setCellValueFactory(new PropertyValueFactory<Stock, Integer>("stockLimit"));
 
@@ -87,6 +88,9 @@ public class ManagementController implements Initializable {
 
     @FXML
     private TableColumn<Stock, Integer> id;
+
+    @FXML
+    private TableColumn<Stock, Integer> markupRate;
 
     @FXML
     private TableView<Stock> stockTable;

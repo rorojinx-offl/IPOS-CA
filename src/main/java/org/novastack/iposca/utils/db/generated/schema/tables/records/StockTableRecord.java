@@ -117,31 +117,45 @@ public class StockTableRecord extends UpdatableRecordImpl<StockTableRecord> {
     }
 
     /**
+     * Setter for <code>stock_table.MARKUP_RATE</code>.
+     */
+    public void setMarkupRate(Integer value) {
+        set(7, value);
+    }
+
+    /**
+     * Getter for <code>stock_table.MARKUP_RATE</code>.
+     */
+    public Integer getMarkupRate() {
+        return (Integer) get(7);
+    }
+
+    /**
      * Setter for <code>stock_table.QUANTITY</code>.
      */
     public void setQuantity(Integer value) {
-        set(7, value);
+        set(8, value);
     }
 
     /**
      * Getter for <code>stock_table.QUANTITY</code>.
      */
     public Integer getQuantity() {
-        return (Integer) get(7);
+        return (Integer) get(8);
     }
 
     /**
      * Setter for <code>stock_table.STOCK_LIMIT</code>.
      */
     public void setStockLimit(Integer value) {
-        set(8, value);
+        set(9, value);
     }
 
     /**
      * Getter for <code>stock_table.STOCK_LIMIT</code>.
      */
     public Integer getStockLimit() {
-        return (Integer) get(8);
+        return (Integer) get(9);
     }
 
     // -------------------------------------------------------------------------
@@ -167,7 +181,7 @@ public class StockTableRecord extends UpdatableRecordImpl<StockTableRecord> {
     /**
      * Create a detached, initialised StockTableRecord
      */
-    public StockTableRecord(Integer itemId, String name, String productType, String packageType, String units, Integer unitsInAPack, Float bulkCost, Integer quantity, Integer stockLimit) {
+    public StockTableRecord(Integer itemId, String name, String productType, String packageType, String units, Integer unitsInAPack, Float bulkCost, Integer markupRate, Integer quantity, Integer stockLimit) {
         super(StockTable.STOCK_TABLE);
 
         setItemId(itemId);
@@ -177,6 +191,7 @@ public class StockTableRecord extends UpdatableRecordImpl<StockTableRecord> {
         setUnits(units);
         setUnitsInAPack(unitsInAPack);
         setBulkCost(bulkCost);
+        setMarkupRate(markupRate);
         setQuantity(quantity);
         setStockLimit(stockLimit);
         resetTouchedOnNotNull();

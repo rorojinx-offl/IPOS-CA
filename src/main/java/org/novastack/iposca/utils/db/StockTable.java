@@ -30,6 +30,7 @@ public class StockTable {
                 add(new TableSchema.Column("UNITS", "TEXT", false, true,null));
                 add(new TableSchema.Column("UNITS_IN_A_PACK", "INTEGER", false, true,null));
                 add(new TableSchema.Column("BULK_COST", "REAL", false, true,null));
+                add(new TableSchema.Column("MARKUP_RATE", "INTEGER", false, true,null));
                 add(new TableSchema.Column("QUANTITY", "INTEGER", false, false,new ArrayList<>(){{
                     add(new ColumnConstraint.Default("0"));
                 }}));

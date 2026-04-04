@@ -17,7 +17,7 @@ public class TestJooq {
         DSLContext ctx = JooqConnection.getDSLContext();
 
 
-        Stock stock= new Stock("Paracetamol","IPOS","Box", "Caps", 20, 0.10f, 20, 20000);
+       /* Stock stock= new Stock("Paracetamol","IPOS","Box", "Caps", 20, 0.10f, 10, 20, 20000);
         //createItem("Aspirin","IPOS","Box", "Caps", 20, 0.50f, 12453);
       //  stock.createItem(stock);
 
@@ -29,7 +29,7 @@ public class TestJooq {
         }
 
         System.out.println(meow.getFirst().getName());
-        System.out.println(meow.getFirst().getQuantity());
+        System.out.println(meow.getFirst().getQuantity()); */
 
     }
 
