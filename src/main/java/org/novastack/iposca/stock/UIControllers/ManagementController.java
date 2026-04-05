@@ -178,7 +178,9 @@ public class ManagementController implements Initializable {
     }
 
     @FXML
-    void rateChange(MouseEvent event) {
+    void rateChange(MouseEvent event) throws IOException {
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/stock/RateCustomisation.fxml", "Stock");
 
     }
 

@@ -9,7 +9,9 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
+import schema.tables.AppConfig;
 import schema.tables.StockTable;
+import schema.tables.records.AppConfigRecord;
 import schema.tables.records.StockTableRecord;
 
 
@@ -24,5 +26,6 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<AppConfigRecord> APP_CONFIG__PK_APP_CONFIG = Internal.createUniqueKey(AppConfig.APP_CONFIG, DSL.name("pk_app_config"), new TableField[] { AppConfig.APP_CONFIG.KEY }, true);
     public static final UniqueKey<StockTableRecord> STOCK_TABLE__PK_STOCK_TABLE = Internal.createUniqueKey(StockTable.STOCK_TABLE, DSL.name("pk_stock_table"), new TableField[] { StockTable.STOCK_TABLE.ITEM_ID }, true);
 }

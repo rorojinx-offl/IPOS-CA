@@ -35,12 +35,6 @@ public class EditController implements Initializable {
     private Label bulkCostWarning;
 
     @FXML
-    private TextField markupRate;
-
-    @FXML
-    private Label markupRateWarning;
-
-    @FXML
     private TextField name;
 
     @FXML
@@ -88,7 +82,6 @@ public class EditController implements Initializable {
         units.getSelectionModel().select(stock.getUnits());
         unitsInAPack.setText(String.valueOf(stock.getUnitsInAPack()));
         bulkCost.setText(String.valueOf(stock.getBulkCost()));
-        markupRate.setText(String.valueOf(stock.getMarkupRate()));
         quantity.setText(String.valueOf(stock.getQuantity()));
         stockLimit.setText(String.valueOf(stock.getStockLimit()));
 
@@ -100,7 +93,6 @@ public class EditController implements Initializable {
         unitsWarning.setText("");
         unitPackWarning.setText("");
         bulkCostWarning.setText("");
-        markupRateWarning.setText(""); //remove thisss shit
         quantityWarning.setText("");
         stockLimitWarning.setText("");
     }
@@ -138,14 +130,6 @@ public class EditController implements Initializable {
             bulkCostWarning.setText("Bulk cost must be a numerical value");
             allFieldsFilled = false;
         }
-        if (markupRate.getText().isEmpty()) {
-            markupRateWarning.setText("Markup rate cannot be empty");
-            allFieldsFilled = false;
-        }
-        if (!IValid.checkRate(markupRate.getText()) && !markupRate.getText().isEmpty()) {
-            markupRateWarning.setText("Markup rate must be numerical value");
-            allFieldsFilled = false;
-        }
         if (quantity.getText().isEmpty()) {
             quantityWarning.setText("Quantity cannot be empty");
             allFieldsFilled = false;
@@ -177,7 +161,6 @@ public class EditController implements Initializable {
                     units.getValue(),
                     Integer.parseInt(unitsInAPack.getText()),
                     Float.parseFloat(bulkCost.getText()),
-                    Integer.parseInt(markupRate.getText()),
                     Integer.parseInt(quantity.getText()),
                     Integer.parseInt(stockLimit.getText())
             );

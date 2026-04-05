@@ -10,10 +10,11 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="629.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.stock.UIControllers.RateController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.stock.UIControllers.RateController">
     <children>
         <Pane prefHeight="44.0" prefWidth="379.0" style="-fx-background-color: Orange;">
             <children>
@@ -24,31 +25,49 @@
                 </Label>
                 <ImageView fitHeight="38.0" fitWidth="53.0" layoutY="4.0" onMouseClicked="#returnToParent" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../common/assets/close.png" />
+                  <Image url="@close.png" />
                </image>
                 </ImageView>
             </children>
         </Pane>
-        <TableView fx:id="stockTable" layoutX="33.0" layoutY="91.0" prefHeight="285.0" prefWidth="313.0">
+        <TableView fx:id="stockTable" layoutX="33.0" layoutY="91.0" prefHeight="278.0" prefWidth="313.0">
             <columns>
-                <TableColumn fx:id="customerID" prefWidth="42.39999485015869" text="ID" visible="false" />
+                <TableColumn fx:id="stockID" prefWidth="42.39999485015869" text="ID" visible="false" />
                 <TableColumn fx:id="name" editable="false" prefWidth="204.00002765655518" text="Name" />
-                <TableColumn fx:id="rate" minWidth="0.0" prefWidth="107.9999938964844" text="Markup Rate" />
+                <TableColumn fx:id="markupRate" minWidth="0.0" prefWidth="107.9999938964844" text="Markup Rate" />
             </columns>
         </TableView>
-        <Button fx:id="editingRate" layoutX="67.0" layoutY="430.0" mnemonicParsing="false" onMouseClicked="#changeMarkupRate" prefHeight="38.0" prefWidth="244.0" style="-fx-background-color: Purple;" text="Edit Markup Rate for Stock Item" textFill="WHITE">
+        <Button fx:id="editingRate" layoutX="67.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#changeMarkupRate" prefHeight="38.0" prefWidth="244.0" style="-fx-background-color: Purple;" text="Edit Markup Rate for Stock Item" textFill="WHITE">
             <font>
                 <Font size="13.0" />
             </font>
         </Button>
-        <Button layoutX="82.0" layoutY="556.0" mnemonicParsing="false" onMouseClicked="#changeAllVAT" prefHeight="44.0" prefWidth="214.0" style="-fx-background-color: Purple;" text="Edit VAT for All Items" textFill="WHITE">
+        <Button layoutX="82.0" layoutY="575.0" mnemonicParsing="false" onMouseClicked="#changeAllVAT" prefHeight="44.0" prefWidth="214.0" style="-fx-background-color: Purple;" text="Edit VAT for All Items" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Button>
-        <Spinner fx:id="rateSpinner" editable="true" layoutX="101.0" layoutY="501.0" prefHeight="38.0" prefWidth="176.0" />
-        <Separator layoutY="479.0" prefHeight="7.0" prefWidth="379.0" />
-        <TextField fx:id="newMarkupRate" layoutX="102.0" layoutY="393.0" prefHeight="26.0" prefWidth="176.0" />
+        <Spinner fx:id="rateSpinner" editable="true" layoutX="99.0" layoutY="528.0" prefHeight="38.0" prefWidth="176.0" />
+        <Separator layoutY="472.0" prefHeight="7.0" prefWidth="379.0" />
+        <TextField fx:id="newMarkupRate" layoutX="98.0" layoutY="383.0" prefHeight="26.0" prefWidth="176.0" />
         <TextField fx:id="searchField" layoutX="52.0" layoutY="56.0" prefHeight="26.0" prefWidth="275.0" promptText="Search By Name..." />
+      <HBox alignment="CENTER" layoutX="106.0" layoutY="486.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="23.0" prefWidth="159.0" text="VAT Rate">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="91.0" layoutY="634.0">
+         <children>
+            <Label fx:id="success" alignment="CENTER" text="VAT updated successfully" textAlignment="CENTER" textFill="#5ce436" visible="false">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

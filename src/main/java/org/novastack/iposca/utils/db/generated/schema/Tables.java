@@ -4,6 +4,7 @@
 package schema;
 
 
+import schema.tables.AppConfig;
 import schema.tables.StockTable;
 
 
@@ -12,6 +13,11 @@ import schema.tables.StockTable;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
+
+    /**
+     * The table <code>app_config</code>.
+     */
+    public static final AppConfig APP_CONFIG = AppConfig.APP_CONFIG;
 
     /**
      * The table <code>stock_table</code>.

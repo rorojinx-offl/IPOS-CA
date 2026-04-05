@@ -1,7 +1,6 @@
 package org.novastack.iposca.stock;
 
 import org.jooq.DSLContext;
-import org.jooq.Field;
 import org.jooq.impl.DSL;
 import org.novastack.iposca.utils.db.JooqConnection;
 
@@ -46,6 +45,24 @@ public class Stock {
         this.markupRate = markupRate;
         this.quantity = quantity;
         this.stockLimit = stockLimit;
+    }
+
+    public Stock(int id, String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int quantity, int stockLimit) {
+        this.id=id;
+        this.name = name;
+        this.productType = productType;
+        this.packageType = packageType;
+        this.units = units;
+        this.unitsInAPack = unitsInAPack;
+        this.bulkCost = bulkCost;
+        this.quantity = quantity;
+        this.stockLimit = stockLimit;
+    }
+
+    public Stock(int id, String name, int markupRate) {
+        this.id=id;
+        this.name = name;
+        this.markupRate = markupRate;
     }
 
 
@@ -116,7 +133,6 @@ public class Stock {
                 .set(STOCK_TABLE.UNITS, stock.getUnits())
                 .set(STOCK_TABLE.UNITS_IN_A_PACK, stock.getUnitsInAPack())
                 .set(STOCK_TABLE.BULK_COST, stock.getBulkCost())
-                .set(STOCK_TABLE.MARKUP_RATE, stock.getMarkupRate())
                 .set(STOCK_TABLE.QUANTITY, stock.getQuantity())
                 .set(STOCK_TABLE.STOCK_LIMIT, stock.getStockLimit())
                 .where(STOCK_TABLE.ITEM_ID.eq(stock.getId()))
@@ -127,6 +143,27 @@ public class Stock {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.deleteFrom(STOCK_TABLE)
                 .where(STOCK_TABLE.ITEM_ID.eq(itemId))
+                .execute();
+    }
+
+    public static ArrayList<Stock> getAllMarkupRates() {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ArrayList<Stock> inventory = new ArrayList<>();
+        ctx.selectFrom(STOCK_TABLE).where(STOCK_TABLE.QUANTITY.gt(0)).fetch().forEach(record -> {
+            inventory.add(new Stock(
+                    STOCK_TABLE.ITEM_ID.getValue(record),
+                    STOCK_TABLE.NAME.getValue(record),
+                    STOCK_TABLE.MARKUP_RATE.getValue(record)
+            ));
+        });
+        return inventory;
+    }
+
+    public static void changeMarkupRate(int id, int markupRate) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.update(STOCK_TABLE)
+                .set(STOCK_TABLE.MARKUP_RATE, markupRate)
+                .where(STOCK_TABLE.ITEM_ID.eq(id))
                 .execute();
     }
 

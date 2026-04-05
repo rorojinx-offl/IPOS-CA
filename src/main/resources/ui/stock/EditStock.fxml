@@ -21,7 +21,7 @@
                 <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: Purple;" text="Back" textFill="WHITE" />
             </children>
         </Pane>
-        <HBox layoutX="29.0" layoutY="87.0" spacing="5.0">
+        <HBox layoutX="26.0" layoutY="91.0" spacing="5.0">
             <children>
                 <Label text="Name ">
                     <font>
@@ -36,7 +36,7 @@
                 </Label>
             </children>
         </HBox>
-        <HBox layoutX="28.0" layoutY="126.0" spacing="5.0">
+        <HBox layoutX="25.0" layoutY="127.0" spacing="5.0">
             <children>
                 <Label text="Package Type ">
                     <font>
@@ -96,12 +96,12 @@
                 </Label>
             </children>
         </HBox>
-        <Button fx:id="submitButton" layoutX="22.0" layoutY="401.0" mnemonicParsing="false" onMouseClicked="#editStock" prefHeight="82.0" prefWidth="705.0" style="-fx-background-color: Purple;" text="Submit" textFill="WHITE">
+        <Button fx:id="submitButton" layoutX="23.0" layoutY="368.0" mnemonicParsing="false" onMouseClicked="#editStock" prefHeight="118.0" prefWidth="705.0" style="-fx-background-color: Purple;" text="Submit" textFill="WHITE">
             <font>
                 <Font size="48.0" />
             </font>
         </Button>
-        <HBox layoutX="25.0" layoutY="321.0" spacing="5.0">
+        <HBox layoutX="27.0" layoutY="282.0" spacing="5.0">
             <children>
                 <Label text="Quantity ">
                     <font>
@@ -116,7 +116,7 @@
                 </Label>
             </children>
         </HBox>
-        <HBox layoutX="26.0" layoutY="357.0" spacing="5.0">
+        <HBox layoutX="28.0" layoutY="319.0" spacing="5.0">
             <children>
                 <Label text="Stock Limit ">
                     <font>
@@ -125,21 +125,6 @@
                 </Label>
                 <TextField fx:id="stockLimit" />
                 <Label fx:id="stockLimitWarning" textFill="RED">
-                    <font>
-                        <Font size="17.0" />
-                    </font>
-                </Label>
-            </children>
-        </HBox>
-        <HBox layoutX="28.0" layoutY="280.0" spacing="5.0">
-            <children>
-                <Label text="Markup Rate">
-                    <font>
-                        <Font size="19.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="markupRate" />
-                <Label fx:id="markupRateWarning" textFill="RED">
                     <font>
                         <Font size="17.0" />
                     </font>

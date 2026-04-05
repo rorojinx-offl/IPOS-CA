@@ -43,5 +43,4 @@ bin/
 .DS_Store
 /.idea/
 logs
-*.db
-/src/main/resources/ui/cust/assets/
+
