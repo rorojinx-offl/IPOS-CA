@@ -4,9 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.stock.Stock;
+import org.novastack.iposca.stock.StockEnums;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
@@ -153,8 +156,25 @@ public class ManagementController implements Initializable {
     }
 
     @FXML
-    void editStock(MouseEvent event) {
+    void editStock(MouseEvent event) throws IOException {
+        if (stockTable.getSelectionModel().getSelectedItem() == null ) {
+            new CommonCalls().openErrorDialog("Please select an item!");
+            return;
+        } else if(!stockTable.getSelectionModel().getSelectedItem().getProductType().equals(StockEnums.ProductType.NON_IPOS.name())){
+            new CommonCalls().openErrorDialog("Please select a Non-IPOS type!");
+            return;
+        }
 
+        Stage stage = (Stage) editButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/stock/EditStock.fxml"));
+        Parent root = loader.load();
+
+        EditController controller = loader.getController();
+        controller.receiver(stockTable.getSelectionModel().getSelectedItem());
+
+        stage.setTitle("Edit item: " + stockTable.getSelectionModel().getSelectedItem().getName());
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     @FXML

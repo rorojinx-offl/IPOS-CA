@@ -107,10 +107,19 @@ public class Stock {
         return inventory;
     }
 
-    public static int updateQuantity(DSLContext ctx, int itemId, int newQuantity) {
-        return ctx.update(STOCK_TABLE)
-                .set(STOCK_TABLE.QUANTITY, newQuantity)
-                .where(STOCK_TABLE.ITEM_ID.eq(itemId))
+    public void editStock(Stock stock) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.update(STOCK_TABLE)
+                .set(STOCK_TABLE.NAME, stock.getName())
+                .set(STOCK_TABLE.PRODUCT_TYPE, stock.getProductType())
+                .set(STOCK_TABLE.PACKAGE_TYPE, stock.getPackageType())
+                .set(STOCK_TABLE.UNITS, stock.getUnits())
+                .set(STOCK_TABLE.UNITS_IN_A_PACK, stock.getUnitsInAPack())
+                .set(STOCK_TABLE.BULK_COST, stock.getBulkCost())
+                .set(STOCK_TABLE.MARKUP_RATE, stock.getMarkupRate())
+                .set(STOCK_TABLE.QUANTITY, stock.getQuantity())
+                .set(STOCK_TABLE.STOCK_LIMIT, stock.getStockLimit())
+                .where(STOCK_TABLE.ITEM_ID.eq(stock.getId()))
                 .execute();
     }
 
