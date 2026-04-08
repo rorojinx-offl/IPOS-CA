@@ -47,31 +47,115 @@ public class StockRecord extends UpdatableRecordImpl<StockRecord> {
     }
 
     /**
+     * Setter for <code>stock.PRODUCT_TYPE</code>.
+     */
+    public void setProductType(String value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>stock.PRODUCT_TYPE</code>.
+     */
+    public String getProductType() {
+        return (String) get(2);
+    }
+
+    /**
+     * Setter for <code>stock.PACKAGE_TYPE</code>.
+     */
+    public void setPackageType(String value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>stock.PACKAGE_TYPE</code>.
+     */
+    public String getPackageType() {
+        return (String) get(3);
+    }
+
+    /**
+     * Setter for <code>stock.UNITS</code>.
+     */
+    public void setUnits(String value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>stock.UNITS</code>.
+     */
+    public String getUnits() {
+        return (String) get(4);
+    }
+
+    /**
+     * Setter for <code>stock.UNITS_IN_A_PACK</code>.
+     */
+    public void setUnitsInAPack(Integer value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>stock.UNITS_IN_A_PACK</code>.
+     */
+    public Integer getUnitsInAPack() {
+        return (Integer) get(5);
+    }
+
+    /**
      * Setter for <code>stock.BULK_COST</code>.
      */
     public void setBulkCost(Float value) {
-        set(2, value);
+        set(6, value);
     }
 
     /**
      * Getter for <code>stock.BULK_COST</code>.
      */
     public Float getBulkCost() {
-        return (Float) get(2);
+        return (Float) get(6);
+    }
+
+    /**
+     * Setter for <code>stock.MARKUP_RATE</code>.
+     */
+    public void setMarkupRate(Integer value) {
+        set(7, value);
+    }
+
+    /**
+     * Getter for <code>stock.MARKUP_RATE</code>.
+     */
+    public Integer getMarkupRate() {
+        return (Integer) get(7);
     }
 
     /**
      * Setter for <code>stock.QUANTITY</code>.
      */
     public void setQuantity(Integer value) {
-        set(3, value);
+        set(8, value);
     }
 
     /**
      * Getter for <code>stock.QUANTITY</code>.
      */
     public Integer getQuantity() {
-        return (Integer) get(3);
+        return (Integer) get(8);
+    }
+
+    /**
+     * Setter for <code>stock.STOCK_LIMIT</code>.
+     */
+    public void setStockLimit(Integer value) {
+        set(9, value);
+    }
+
+    /**
+     * Getter for <code>stock.STOCK_LIMIT</code>.
+     */
+    public Integer getStockLimit() {
+        return (Integer) get(9);
     }
 
     // -------------------------------------------------------------------------
@@ -97,13 +181,19 @@ public class StockRecord extends UpdatableRecordImpl<StockRecord> {
     /**
      * Create a detached, initialised StockRecord
      */
-    public StockRecord(Integer itemId, String name, Float bulkCost, Integer quantity) {
+    public StockRecord(Integer itemId, String name, String productType, String packageType, String units, Integer unitsInAPack, Float bulkCost, Integer markupRate, Integer quantity, Integer stockLimit) {
         super(Stock.STOCK);
 
         setItemId(itemId);
         setName(name);
+        setProductType(productType);
+        setPackageType(packageType);
+        setUnits(units);
+        setUnitsInAPack(unitsInAPack);
         setBulkCost(bulkCost);
+        setMarkupRate(markupRate);
         setQuantity(quantity);
+        setStockLimit(stockLimit);
         resetTouchedOnNotNull();
     }
 }

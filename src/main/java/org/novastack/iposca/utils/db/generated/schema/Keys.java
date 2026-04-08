@@ -11,6 +11,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 import org.jooq.impl.QOM.ForeignKeyRule;
 
+import schema.tables.AppConfig;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
@@ -25,6 +26,7 @@ import schema.tables.Sale;
 import schema.tables.SaleItem;
 import schema.tables.Stock;
 import schema.tables.User;
+import schema.tables.records.AppConfigRecord;
 import schema.tables.records.CustomerChargeRecord;
 import schema.tables.records.CustomerDebtRecord;
 import schema.tables.records.CustomerMonthlyBalanceRecord;
@@ -52,6 +54,7 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final UniqueKey<AppConfigRecord> APP_CONFIG__PK_APP_CONFIG = Internal.createUniqueKey(AppConfig.APP_CONFIG, DSL.name("pk_app_config"), new TableField[] { AppConfig.APP_CONFIG.KEY }, true);
     public static final UniqueKey<CustomerRecord> CUSTOMER__PK_CUSTOMER = Internal.createUniqueKey(Customer.CUSTOMER, DSL.name("pk_customer"), new TableField[] { Customer.CUSTOMER.ID }, true);
     public static final UniqueKey<CustomerChargeRecord> CUSTOMER_CHARGE__PK_CUSTOMER_CHARGE = Internal.createUniqueKey(CustomerCharge.CUSTOMER_CHARGE, DSL.name("pk_customer_charge"), new TableField[] { CustomerCharge.CUSTOMER_CHARGE.CRG_ID }, true);
     public static final UniqueKey<CustomerDebtRecord> CUSTOMER_DEBT__PK_CUSTOMER_DEBT = Internal.createUniqueKey(CustomerDebt.CUSTOMER_DEBT, DSL.name("pk_customer_debt"), new TableField[] { CustomerDebt.CUSTOMER_DEBT.CUST_ID }, true);

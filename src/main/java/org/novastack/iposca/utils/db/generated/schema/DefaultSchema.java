@@ -12,6 +12,7 @@ import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 
+import schema.tables.AppConfig;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
@@ -40,6 +41,11 @@ public class DefaultSchema extends SchemaImpl {
      * The reference instance of <code>DEFAULT_SCHEMA</code>
      */
     public static final DefaultSchema DEFAULT_SCHEMA = new DefaultSchema();
+
+    /**
+     * The table <code>app_config</code>.
+     */
+    public final AppConfig APP_CONFIG = AppConfig.APP_CONFIG;
 
     /**
      * The table <code>customer</code>.
@@ -127,6 +133,7 @@ public class DefaultSchema extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
+            AppConfig.APP_CONFIG,
             Customer.CUSTOMER,
             CustomerCharge.CUSTOMER_CHARGE,
             CustomerDebt.CUSTOMER_DEBT,

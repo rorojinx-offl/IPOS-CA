@@ -4,6 +4,7 @@
 package schema;
 
 
+import schema.tables.AppConfig;
 import schema.tables.Customer;
 import schema.tables.CustomerCharge;
 import schema.tables.CustomerDebt;
@@ -25,6 +26,11 @@ import schema.tables.User;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Tables {
+
+    /**
+     * The table <code>app_config</code>.
+     */
+    public static final AppConfig APP_CONFIG = AppConfig.APP_CONFIG;
 
     /**
      * The table <code>customer</code>.

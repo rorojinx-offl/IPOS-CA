@@ -65,14 +65,44 @@ public class Stock extends TableImpl<StockRecord> {
     public final TableField<StockRecord, String> NAME = createField(DSL.name("NAME"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
+     * The column <code>stock.PRODUCT_TYPE</code>.
+     */
+    public final TableField<StockRecord, String> PRODUCT_TYPE = createField(DSL.name("PRODUCT_TYPE"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>stock.PACKAGE_TYPE</code>.
+     */
+    public final TableField<StockRecord, String> PACKAGE_TYPE = createField(DSL.name("PACKAGE_TYPE"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>stock.UNITS</code>.
+     */
+    public final TableField<StockRecord, String> UNITS = createField(DSL.name("UNITS"), SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
+     * The column <code>stock.UNITS_IN_A_PACK</code>.
+     */
+    public final TableField<StockRecord, Integer> UNITS_IN_A_PACK = createField(DSL.name("UNITS_IN_A_PACK"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
      * The column <code>stock.BULK_COST</code>.
      */
     public final TableField<StockRecord, Float> BULK_COST = createField(DSL.name("BULK_COST"), SQLDataType.REAL.nullable(false), this, "");
 
     /**
+     * The column <code>stock.MARKUP_RATE</code>.
+     */
+    public final TableField<StockRecord, Integer> MARKUP_RATE = createField(DSL.name("MARKUP_RATE"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
      * The column <code>stock.QUANTITY</code>.
      */
     public final TableField<StockRecord, Integer> QUANTITY = createField(DSL.name("QUANTITY"), SQLDataType.INTEGER.defaultValue(DSL.field(DSL.raw("0"), SQLDataType.INTEGER)), this, "");
+
+    /**
+     * The column <code>stock.STOCK_LIMIT</code>.
+     */
+    public final TableField<StockRecord, Integer> STOCK_LIMIT = createField(DSL.name("STOCK_LIMIT"), SQLDataType.INTEGER.nullable(false), this, "");
 
     private Stock(Name alias, Table<StockRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
