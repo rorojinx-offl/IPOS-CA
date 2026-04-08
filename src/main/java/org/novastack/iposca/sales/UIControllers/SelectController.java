@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.novastack.iposca.config.AppConfig;
+import org.novastack.iposca.config.AppConfigAPI;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.plans.FixedDiscountPlan;
@@ -329,7 +331,7 @@ public class SelectController implements Initializable {
     }
 
     private void loadProducts() {
-        ArrayList<Stock> list = Stock.getAllStock();
+        ArrayList<Stock> list = Stock.getAllStockForSale();
         allProducts.setAll(list);
     }
 
@@ -364,10 +366,13 @@ public class SelectController implements Initializable {
     private void updateTotals() {
         double subtotal = cartItems.stream().mapToDouble(SaleLine::getSubtotal).sum();
         double total = subtotal;
-        double vat = total * 1.2;
+
+        int vatRate = AppConfigAPI.decodeByteToInt(AppConfig.get(AppConfig.ConfigKey.VAT));
+        double mult = 1 + (vatRate / 100.0);
+        double vat = total * mult;
 
         this.total.setText(String.format("Total: £%.2f  ", total));
-        this.vtotal.setText(String.format("Total with VAT: £%.2f  ", vat)); //Adjust for UK's national VAT rate of 20%
+        this.vtotal.setText(String.format("Total with VAT: £%.2f  ", vat)); //Adjust for national VAT rate
 
         if (currentMode == SaleService.CartMode.MEMBER && customer != null) {
             int rate;
@@ -498,7 +503,10 @@ public class SelectController implements Initializable {
         for (SaleLine item : cartItems) {
             total += item.getSubtotal();
         }
-        total = total * 1.2; //Adjust for UK's national VAT rate of 20%
+
+        int vatRate = AppConfigAPI.decodeByteToInt(AppConfig.get(AppConfig.ConfigKey.VAT));
+        double mult = 1 + (vatRate / 100.0);
+        total = total * mult; //Adjust for national VAT rate
 
         if (currentMode == SaleService.CartMode.MEMBER && customer != null) {
             int rate;
