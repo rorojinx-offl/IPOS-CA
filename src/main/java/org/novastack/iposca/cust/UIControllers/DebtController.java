@@ -24,6 +24,9 @@ import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.customer.CustomerReminder;
 import org.novastack.iposca.cust.reminders.ReminderFactory;
 import org.novastack.iposca.cust.reminders.ReminderInfo;
+import org.novastack.iposca.session.SessionManager;
+import org.novastack.iposca.user.User;
+import org.novastack.iposca.user.UserEnums;
 import org.novastack.iposca.utils.common.TestReminderGen;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
@@ -190,6 +193,17 @@ public class DebtController implements Initializable {
     void manualAccountRestore(MouseEvent event) throws IOException {
         if (customerTable.getSelectionModel().getSelectedItem() == null || !customerTable.getSelectionModel().getSelectedItem().getCustStatus().equals(CustomerEnums.AccountStatus.IN_DEFAULT.name())) {
             new CommonCalls().openErrorDialog("Please select a customer whose account is in default!");
+            return;
+        }
+
+        User user = SessionManager.getCurrentUser();
+        if (user == null || user.getRole() != UserEnums.UserRole.MANAGER) {
+            new CommonCalls().openErrorDialog("You are not authorized to perform this action!");
+            return;
+        }
+
+        if (customerTable.getSelectionModel().getSelectedItem().getBalance() > 0f) {
+            new CommonCalls().openErrorDialog("This customer has unsettled debts! Please settle them before restoring the account.");
             return;
         }
 
