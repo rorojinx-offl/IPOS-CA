@@ -110,7 +110,7 @@ public class AddController implements Initializable {
             unitPackWarning.setText("Units In Pack cannot be empty");
             allFieldsFilled = false;
         }
-        if (!IValid.checkRate(unitsInAPack.getText()) && !unitsInAPack.getText().isEmpty()) {
+        if (!IValid.checkInt(unitsInAPack.getText()) && !unitsInAPack.getText().isEmpty()) {
             unitPackWarning.setText("Units in a pack must be a numerical value");
             allFieldsFilled = false;
         }
@@ -134,7 +134,7 @@ public class AddController implements Initializable {
             quantityWarning.setText("Quantity cannot be empty");
             allFieldsFilled = false;
         }
-        if (!IValid.checkRate(quantity.getText()) && !quantity.getText().isEmpty()) {
+        if (!IValid.checkInt(quantity.getText()) && !quantity.getText().isEmpty()) {
             quantityWarning.setText("Quantity must be a numerical value");
             allFieldsFilled = false;
         }
@@ -142,7 +142,7 @@ public class AddController implements Initializable {
             stockLimitWarning.setText("Stock Limit cannot be empty");
             allFieldsFilled = false;
         }
-        if (!IValid.checkRate(stockLimit.getText()) && !stockLimit.getText().isEmpty()) {
+        if (!IValid.checkInt(stockLimit.getText()) && !stockLimit.getText().isEmpty()) {
             stockLimitWarning.setText("Stock Limit must be a numerical value");
             allFieldsFilled = false;
         }

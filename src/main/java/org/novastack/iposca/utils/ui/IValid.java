@@ -28,4 +28,13 @@ public class IValid {
         }
         return rateInt >= 0 && rateInt <= 100;
     }
+
+    public static boolean checkInt(String in) {
+        try {
+            Integer.parseInt(in);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
 }
