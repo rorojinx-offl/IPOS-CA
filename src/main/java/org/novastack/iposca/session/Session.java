@@ -21,7 +21,8 @@ public class Session {
             ))),
             entry(UserEnums.UserRole.MANAGER, new ArrayList<>(List.of(
                     UserEnums.UserAccess.RPT,
-                    UserEnums.UserAccess.TEMPLATES
+                    UserEnums.UserAccess.TEMPLATES,
+                    UserEnums.UserAccess.CUST
             )))
     );
 
