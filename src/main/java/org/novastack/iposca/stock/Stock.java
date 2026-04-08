@@ -185,6 +185,15 @@ public class Stock {
                 .execute();
     }
 
+    public static void minusStock(int productID, int quantity) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.update(STOCK)
+                .set(STOCK.QUANTITY, STOCK.QUANTITY.minus(quantity))
+                .where(STOCK.ITEM_ID.eq(productID))
+                .and(STOCK.QUANTITY.ge(quantity))
+                .execute();
+    }
+
     public static String getProductName(int productID) {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.selectFrom(STOCK).where(STOCK.ITEM_ID.eq(productID)).fetchOne().getValue(STOCK.NAME);
