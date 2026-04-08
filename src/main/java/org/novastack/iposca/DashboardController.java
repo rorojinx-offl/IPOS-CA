@@ -173,13 +173,33 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void stock(MouseEvent event) {
+    void stock(MouseEvent event) throws IOException {
+        Stage stage =  (Stage) stockButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
 
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.STOCK)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/stock/StockMenu.fxml", "Stock Portal");
     }
 
     @FXML
-    void templates(MouseEvent event) {
+    void templates(MouseEvent event) throws IOException {
+        Stage stage =  (Stage) templatesButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
 
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.TEMPLATES)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/templates/templates.fxml", "Configure Document Template");
     }
 
     @FXML
