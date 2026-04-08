@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.sales.SaleService;
+import org.novastack.iposca.stock.Stock;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
 import java.io.IOException;
@@ -132,6 +133,8 @@ public class CardController implements Initializable {
                         item.price(),
                         item.subtotal()
                 ));
+
+                Stock.minusStock(item.productID(), item.quantity());
             }
             if (cartMode == SaleService.CartMode.MEMBER) SaleService.checkFlexiRateChange(customer, draft.totalAmount());
 

@@ -243,6 +243,8 @@ public class SelectController implements Initializable {
                     item.price(),
                     item.subtotal()
             ));
+
+            Stock.minusStock(item.productID(), item.quantity());
         }
 
         Stage stage = (Stage) backButton.getScene().getWindow();
@@ -307,6 +309,8 @@ public class SelectController implements Initializable {
                     item.price(),
                     item.subtotal()
             ));
+
+            Stock.minusStock(item.productID(), item.quantity());
         }
         SaleService.checkFlexiRateChange(customer, draft.totalAmount());
 
@@ -433,7 +437,23 @@ public class SelectController implements Initializable {
                 spinner.valueProperty().addListener((obs, oldVal, newVal) -> {
                     if (getIndex() >= 0 && getIndex() < getTableView().getItems().size()) {
                         SaleLine line = getTableView().getItems().get(getIndex());
-                        if (newVal != null && line.getQuantity() != newVal) {
+
+                        if (newVal == null) {
+                            return;
+                        }
+
+                        int available = line.getProduct().getQuantity();
+                        if (newVal > available) {
+                            spinner.getValueFactory().setValue(oldVal);
+                            try {
+                                new CommonCalls().openErrorDialog(available == 0 ? "This product is out of stock!" : "There is insufficient stock for this product!");
+                            } catch (IOException e) {
+                                return;
+                            }
+                            return;
+                        }
+
+                        if (line.getQuantity() != newVal) {
                             line.setQuantity(newVal);
                         }
                     }
