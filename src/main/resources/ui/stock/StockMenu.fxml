@@ -19,6 +19,11 @@
                   <Font name="Agency FB" size="45.0" />
                </font>
             </Label>
+            <Button fx:id="backButton" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: purple;" text="Back" textFill="WHITE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
       <VBox fx:id="manageButton" alignment="CENTER" layoutX="469.0" layoutY="165.0" onMouseClicked="#manageStock" onMouseEntered="#highlight" onMouseExited="#restoreCol">
@@ -38,7 +43,7 @@
       <ListView fx:id="lowStockList" layoutX="38.0" layoutY="97.0" prefHeight="279.0" prefWidth="349.0" />
       <Button layoutX="113.0" layoutY="413.0" mnemonicParsing="false" onMouseClicked="#genReport" prefHeight="45.0" prefWidth="204.0" style="-fx-background-color: Purple;" text="Generate Report" textFill="WHITE">
          <font>
-            <Font size="24.0" />
+            <Font size="21.0" />
          </font></Button>
    </children>
 </AnchorPane>
