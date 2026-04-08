@@ -12,7 +12,7 @@ import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.jooq.impl.SchemaImpl;
 
-import schema.tables.Users;
+import schema.tables.User;
 
 
 /**
@@ -29,9 +29,9 @@ public class DefaultSchema extends SchemaImpl {
     public static final DefaultSchema DEFAULT_SCHEMA = new DefaultSchema();
 
     /**
-     * The table <code>users</code>.
+     * The table <code>user</code>.
      */
-    public final Users USERS = Users.USERS;
+    public final User USER = User.USER;
 
     /**
      * No further instances allowed
@@ -49,7 +49,7 @@ public class DefaultSchema extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
-            Users.USERS
+            User.USER
         );
     }
 }

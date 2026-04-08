@@ -20,6 +20,10 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.51.2.0")
     implementation("org.jooq:jooq:3.20.11")
     implementation("org.openjfx:javafx:25.0.2")
+    implementation("org.controlsfx:controlsfx:11.2.3")
+    implementation("net.sf.jasperreports:jasperreports:7.0.6")
+    implementation("net.sf.jasperreports:jasperreports-pdf:7.0.6")
+    implementation("org.mindrot:jbcrypt:0.4")
     jooqCodegen("org.xerial:sqlite-jdbc:3.51.2.0") //Add SQLite to task's classpath
 }
 
@@ -62,5 +66,5 @@ javafx {
 }
 
 application {
-    mainClass.set("org.novastack.iposca.order.UIMain")
+    mainClass.set("org.novastack.iposca.UIMain")
 }

@@ -4,7 +4,7 @@
 package schema;
 
 
-import schema.tables.Users;
+import schema.tables.User;
 
 
 /**
@@ -14,7 +14,7 @@ import schema.tables.Users;
 public class Tables {
 
     /**
-     * The table <code>users</code>.
+     * The table <code>user</code>.
      */
-    public static final Users USERS = Users.USERS;
+    public static final User USER = User.USER;
 }

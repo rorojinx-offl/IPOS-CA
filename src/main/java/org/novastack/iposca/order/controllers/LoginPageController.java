@@ -1,6 +1,5 @@
-package org.novastack.iposca.order;
+package org.novastack.iposca.order.controllers;
 
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -13,11 +12,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.jooq.exception.IOException;
 
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import org.novastack.iposca.order.controllers.LoggedInController;
+import org.novastack.iposca.order.LoginResult;
+import org.novastack.iposca.order.LoginService;
 
 public class LoginPageController implements Initializable {
     @Override

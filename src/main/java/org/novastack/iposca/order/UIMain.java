@@ -10,9 +10,9 @@ public class UIMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/ui/order/loginPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ui/user/createUserPage.fxml"));
 
-        stage.setTitle("Login to Portal");
+        stage.setTitle("Create User Account");
         stage.setScene(new Scene(root));
         stage.show();
     }

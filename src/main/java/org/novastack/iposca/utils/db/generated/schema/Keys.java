@@ -9,8 +9,8 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.Internal;
 
-import schema.tables.Users;
-import schema.tables.records.UsersRecord;
+import schema.tables.User;
+import schema.tables.records.UserRecord;
 
 
 /**
@@ -24,5 +24,6 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<UsersRecord> USERS__PK_USERS = Internal.createUniqueKey(Users.USERS, DSL.name("pk_users"), new TableField[] { Users.USERS.ID }, true);
+    public static final UniqueKey<UserRecord> USER__PK_USER = Internal.createUniqueKey(User.USER, DSL.name("pk_user"), new TableField[] { User.USER.ID }, true);
+    public static final UniqueKey<UserRecord> USER__UK_USER_1_117708238 = Internal.createUniqueKey(User.USER, DSL.name("uk_user_1_117708238"), new TableField[] { User.USER.USERNAME }, true);
 }
