@@ -24,8 +24,9 @@
 
 <ComboBox fx:id="roleComboBox" prefWidth="250.0" promptText="Select role" />
 
-<Button onAction="#handleCreateUser" prefWidth="250.0" text="Create User" />
-   <Button fx:id="returnDashboard" onAction="#handleCreateUser" prefWidth="250.0" text="Back" />
+<Button onAction="#handleCreateUser" prefWidth="250.0" style="-fx-background-color: green; -fx-text-fill: white;" text="Create User" />
+   <Button fx:id="viewAllUsersButton" onAction="#handleViewAllUsers" prefWidth="250.0" style="-fx-background-color: #5b7db1; -fx-text-fill: white;" text="View All Users" />
+   <Button fx:id="returnDashboard" onAction="#handleReturnDashboard" prefWidth="250.0" text="Back" />
 
 <Label fx:id="messageLabel" style="-fx-text-fill: red;" text="" />
 
