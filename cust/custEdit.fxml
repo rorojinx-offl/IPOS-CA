@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.EditController">
+   <children>
+      <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Orange;">
+         <children>
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" text="Edit Customer">
+               <font>
+                  <Font name="Agency FB" size="45.0" />
+               </font>
+            </Label>
+            <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #FF0000;" text="Back" />
+         </children>
+      </Pane>
+      <HBox layoutX="22.0" layoutY="101.0">
+         <children>
+            <Label text="Full Name ">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="name" />
+            <Label fx:id="nameWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="139.0">
+         <children>
+            <Label text="Email ">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="email" />
+            <Label fx:id="emailWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="173.0">
+         <children>
+            <Label text="Address ">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="address" />
+            <Label fx:id="addressWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="213.0">
+         <children>
+            <Label text="Phone ">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="phone" />
+            <Label fx:id="phoneWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="250.0">
+         <children>
+            <Label text="Credit Limit ">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextField fx:id="credLimit" />
+            <Label fx:id="credLimitWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox layoutX="22.0" layoutY="304.0">
+         <children>
+            <Label text="Discount Plan ">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="discountPlan" prefWidth="150.0" />
+            <Label fx:id="discountPlanWarning" textFill="RED">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Button layoutX="22.0" layoutY="357.0" mnemonicParsing="false" onMouseClicked="#editUser" prefHeight="122.0" prefWidth="706.0" style="-fx-background-color: #7FFF00;" text="Submit">
+         <font>
+            <Font size="62.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
