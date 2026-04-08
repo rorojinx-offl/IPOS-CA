@@ -61,7 +61,7 @@ public class MenuController implements Initializable {
         LocalDate now = LocalDate.now();
         ArrayList<Customer> custs = StatementService.getEligibleCustomers();
 
-        if (!now.isAfter(now.withDayOfMonth(5)) && !now.isBefore(now.withDayOfMonth(15))) {
+        if (now.isAfter(now.withDayOfMonth(5)) && now.isBefore(now.withDayOfMonth(15))) {
             if (custs.isEmpty()) {
                 new CommonCalls().openErrorDialog("No eligible customers found!");
                 return;
