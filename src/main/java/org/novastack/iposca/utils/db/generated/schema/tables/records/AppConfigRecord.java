@@ -35,15 +35,15 @@ public class AppConfigRecord extends UpdatableRecordImpl<AppConfigRecord> {
     /**
      * Setter for <code>app_config.VALUE</code>.
      */
-    public void setValue(String value) {
+    public void setValue(byte[] value) {
         set(1, value);
     }
 
     /**
      * Getter for <code>app_config.VALUE</code>.
      */
-    public String getValue() {
-        return (String) get(1);
+    public byte[] getValue() {
+        return (byte[]) get(1);
     }
 
     // -------------------------------------------------------------------------
@@ -69,7 +69,7 @@ public class AppConfigRecord extends UpdatableRecordImpl<AppConfigRecord> {
     /**
      * Create a detached, initialised AppConfigRecord
      */
-    public AppConfigRecord(String key, String value) {
+    public AppConfigRecord(String key, byte[] value) {
         super(AppConfig.APP_CONFIG);
 
         setKey(key);

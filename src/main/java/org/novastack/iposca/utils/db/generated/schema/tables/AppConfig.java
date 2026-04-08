@@ -57,7 +57,7 @@ public class AppConfig extends TableImpl<AppConfigRecord> {
     /**
      * The column <code>app_config.VALUE</code>.
      */
-    public final TableField<AppConfigRecord, String> VALUE = createField(DSL.name("VALUE"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<AppConfigRecord, byte[]> VALUE = createField(DSL.name("VALUE"), SQLDataType.BLOB.nullable(false), this, "");
 
     private AppConfig(Name alias, Table<AppConfigRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

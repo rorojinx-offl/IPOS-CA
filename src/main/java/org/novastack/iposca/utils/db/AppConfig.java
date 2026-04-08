@@ -22,7 +22,7 @@ public class AppConfig {
                 add(new TableSchema.Column("KEY", "TEXT", true, true,new ArrayList<>(){{
                     add(new ColumnConstraint.Unique());
                 }}));
-                add(new TableSchema.Column("VALUE", "TEXT", false, true,null));
+                add(new TableSchema.Column("VALUE", "BLOB", false, true,null));
             }
         };
     }

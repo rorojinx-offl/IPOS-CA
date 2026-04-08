@@ -81,9 +81,9 @@ public class RateController implements Initializable {
             return;
         }
         int newRate = rateSpinner.getValue();
-        AppConfig appConfig = new AppConfig(org.novastack.iposca.config.AppConfig.ConfigKey.VAT, String.valueOf(newRate));
-        appConfig.configure(appConfig);
-        success.setVisible(true);
+    //    AppConfig appConfig = new AppConfig(org.novastack.iposca.config.AppConfig.ConfigKey.VAT, String.valueOf(newRate));
+      //  appConfig.configure(appConfig);
+     //   success.setVisible(true);
     }
 
     @FXML
