@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -51,6 +52,9 @@ public class MenuController implements Initializable {
     private VBox manageButton;
 
     @FXML
+    private Button backButton;
+
+    @FXML
     void highlight(MouseEvent event) {
     }
 
@@ -93,6 +97,12 @@ public class MenuController implements Initializable {
         } catch(Exception e) {
             new CommonCalls().openErrorDialog(e.getMessage());
         }
+    }
+
+    @FXML
+    void returnToParent(MouseEvent event) throws IOException {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/dashboard/dashboard.fxml", "IPOS-CA Dashboard");
     }
 
     private int calculateMinOrder(Stock stock) {

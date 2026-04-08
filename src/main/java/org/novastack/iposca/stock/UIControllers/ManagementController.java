@@ -187,6 +187,6 @@ public class ManagementController implements Initializable {
     @FXML
     void returnToParent(MouseEvent event) throws IOException {
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        new CommonCalls().traverse(stage, "/ui/stock/StockMenu.fxml", "Stock");
+        new CommonCalls().traverse(stage, "/ui/stock/StockMenu.fxml", "Stock Portal");
     }
 }
