@@ -1,6 +1,6 @@
-package org.novastack.iposca.order;
+package org.novastack.iposca.order.tests;
 
-import static schema.tables.Users.USERS;
+import org.novastack.iposca.order.User;
 
 public class TestUsers {
     public static void main(String[] args) {

@@ -13,17 +13,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.jooq.exception.IOException;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.novastack.iposca.order.controllers.LoggedInController;
 
 public class LoginPageController implements Initializable {
     @Override
@@ -37,50 +31,38 @@ public class LoginPageController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
+    private final LoginService loginService = new LoginService();
+
     @FXML
     void handleLogin(ActionEvent event) throws IOException, java.io.IOException {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert("Login Error", "Username and password cannot be empty.");
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
+            showAlert(Alert.AlertType.ERROR, "Validation Error", "Please enter both username and password.");
             return;
         }
 
-        User userService = new User();
-        User foundUser = userService.getUserByUsername(username);
+        try {
+            LoginResult loginResult = loginService.loginToIPOSSA(username, password);
 
-        if (foundUser == null) {
-            showAlert("Login Failed", "Invalid username or password.");
-            return;
-        }
+            if (!"MERCHANT".equalsIgnoreCase(loginResult.getRole())) {
+                showAlert(Alert.AlertType.ERROR, "Access Denied", "This login is not a merchant account.");
+                return;
+            }
 
-        if (foundUser.getIsActive() != 1) {
-            showAlert("Login Failed", "This account is inactive.");
-            return;
-        }
+            loginService.openMerchantSite(loginResult.getSessionToken());
 
-        if (foundUser.getPassword().equals(password)) {
-//            showAlert("Login Successful", "Welcome, " + foundUser.getFullName() + "!");
+            showAlert(Alert.AlertType.INFORMATION, "Login Successful", "Merchant site opened in browser.");
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/order/loggedIn.fxml"));
-            Parent root = loader.load();
-
-            LoggedInController controller = loader.getController();
-            controller.setLoggedInUsername(foundUser.getUsername());
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-
-        } else {
-            showAlert("Login Failed", "Invalid username or password.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Login Failed", e.getMessage());
         }
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
