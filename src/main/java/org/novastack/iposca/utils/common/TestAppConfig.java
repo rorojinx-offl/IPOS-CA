@@ -13,7 +13,7 @@ public class TestAppConfig {
         int vatRate = AppConfigAPI.decodeByteToInt(AppConfig.get(AppConfig.ConfigKey.VAT));
         System.out.println(vatRate);
 
-        byte[] mName = AppConfigAPI.enocdeString("TestPharma");
+        byte[] mName = AppConfigAPI.encodeString("TestPharma");
 
         appConfig = new AppConfig(org.novastack.iposca.config.AppConfig.ConfigKey.MERCHANT_NAME,mName);
         appConfig.configure(appConfig);

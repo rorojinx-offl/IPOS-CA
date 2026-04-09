@@ -87,13 +87,13 @@ public class TemplatesController implements Initializable {
                 return;
             }
 
-            AppConfig ac = new AppConfig(AppConfig.ConfigKey.MERCHANT_NAME, AppConfigAPI.enocdeString(name.getText()));
+            AppConfig ac = new AppConfig(AppConfig.ConfigKey.MERCHANT_NAME, AppConfigAPI.encodeString(name.getText()));
             ac.configure(ac);
 
-            ac = new AppConfig(AppConfig.ConfigKey.MERCHANT_ADDRESS, AppConfigAPI.enocdeString(address.getText()));
+            ac = new AppConfig(AppConfig.ConfigKey.MERCHANT_ADDRESS, AppConfigAPI.encodeString(address.getText()));
             ac.configure(ac);
 
-            ac = new AppConfig(AppConfig.ConfigKey.MERCHANT_EMAIL, AppConfigAPI.enocdeString(email.getText()));
+            ac = new AppConfig(AppConfig.ConfigKey.MERCHANT_EMAIL, AppConfigAPI.encodeString(email.getText()));
             ac.configure(ac);
 
             ac = new AppConfig(AppConfig.ConfigKey.MERCHANT_LOGO, logo);

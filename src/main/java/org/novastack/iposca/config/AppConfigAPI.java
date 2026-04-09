@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 public class AppConfigAPI {
-    public static byte[] enocdeString(String s) {
+    public static byte[] encodeString(String s) {
         return s.getBytes(StandardCharsets.UTF_8);
     }
 
