@@ -22,7 +22,7 @@ import java.util.Map;
 public class SaleService {
     public record Sale(Integer saleID, Integer customerID, String paymentMethod, String cardVendor, String cardFirst4, String cardLast4, YearMonth cardExp, LocalDateTime saleDateTime, float saleAmount) {}
     public record SaleItem(Integer saleItemID, Integer saleID, int productID, int quantity, float price, float subtotal) {}
-    public record SaleDraft(Integer customerID, ArrayList<SaleItem> items, float totalAmount) {}
+    public record SaleDraft(Integer customerID, ArrayList<SaleItem> items, float totalAmount, float totalWithTax, float grandTotal) {}
     public record Callback(Customer customer, ObservableList<SaleLine> cartSession, CartMode mode) {}
     public enum CartMode {
         MEMBER, GUEST

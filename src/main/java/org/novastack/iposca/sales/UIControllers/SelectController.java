@@ -105,6 +105,8 @@ public class SelectController implements Initializable {
     private final ObservableList<Stock> allProducts = FXCollections.observableArrayList();
     private ObservableList<SaleLine> cartItems = FXCollections.observableArrayList();
     private SaleService.CartMode currentMode;
+    public record Totals(float sum, float vat, float discount) {
+    }
 
     public void receive(Customer cust, SaleService.CartMode mode) {
         switch (mode) {
@@ -199,7 +201,7 @@ public class SelectController implements Initializable {
         Parent root = loader.load();
 
         CardController controller = loader.getController();
-        controller.receive(customer, draft, cartItems, currentMode, draft.totalAmount());
+        controller.receive(customer, draft, cartItems, currentMode, new Totals(draft.totalAmount(), draft.totalWithTax(), draft.grandTotal()));
 
         stage.setTitle("Pay with a Card");
         stage.setScene(new javafx.scene.Scene(root));
@@ -231,7 +233,7 @@ public class SelectController implements Initializable {
                 null,
                 null,
                 LocalDateTime.now(),
-                draft.totalAmount()
+                draft.grandTotal()
         );
         int saleID = SaleService.recordSale(sale);
         for (SaleService.SaleItem item : draft.items()) {
@@ -252,7 +254,7 @@ public class SelectController implements Initializable {
         Parent root = loader.load();
 
         SuccessController controller = loader.getController();
-        controller.receive(cartItems, null, SaleService.CartMode.GUEST, draft.totalAmount());
+        controller.receive(cartItems, null, SaleService.CartMode.GUEST, new Totals(draft.totalAmount(), draft.totalWithTax(), draft.grandTotal()));
 
         stage.setTitle("Payment Successful");
         stage.setScene(new javafx.scene.Scene(root));
@@ -297,7 +299,7 @@ public class SelectController implements Initializable {
                 null,
                 null,
                 LocalDateTime.now(),
-                draft.totalAmount()
+                draft.grandTotal()
         );
         int saleID = SaleService.recordSale(sale);
         for (SaleService.SaleItem item : draft.items()) {
@@ -312,14 +314,14 @@ public class SelectController implements Initializable {
 
             Stock.minusStock(item.productID(), item.quantity());
         }
-        SaleService.checkFlexiRateChange(customer, draft.totalAmount());
+        SaleService.checkFlexiRateChange(customer, draft.grandTotal());
 
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/success.fxml"));
         Parent root = loader.load();
 
         SuccessController controller = loader.getController();
-        controller.receive(cartItems, customer, SaleService.CartMode.MEMBER, draft.totalAmount());
+        controller.receive(cartItems, customer, SaleService.CartMode.MEMBER, new Totals(draft.totalAmount(), draft.totalWithTax(), draft.grandTotal()));
 
         stage.setTitle("Payment Successful");
         stage.setScene(new javafx.scene.Scene(root));
@@ -512,21 +514,23 @@ public class SelectController implements Initializable {
                 )).toList();
 
         ArrayList<SaleService.SaleItem> items = new ArrayList<>(itemsTemp);
-        float total = (float) collectOrderTotal();
+        Totals total = collectOrderTotal();
         Integer customerID = currentMode == SaleService.CartMode.MEMBER ? customer.getCustomerID() : null;
 
-        return new SaleService.SaleDraft(customerID, items, total);
+        return new SaleService.SaleDraft(customerID, items, total.sum(), total.vat(), total.discount());
     }
 
-    private double collectOrderTotal() {
-        double total = 0.0;
+    private Totals collectOrderTotal() {
+        double sum = 0.0;
+        double vat = 0.0;
+        double discount = 0.0;
         for (SaleLine item : cartItems) {
-            total += item.getSubtotal();
+            sum += item.getSubtotal();
         }
 
         int vatRate = AppConfigAPI.decodeByteToInt(AppConfig.get(AppConfig.ConfigKey.VAT));
         double mult = 1 + (vatRate / 100.0);
-        total = total * mult; //Adjust for national VAT rate
+        vat = sum * mult; //Adjust for national VAT rate
 
         if (currentMode == SaleService.CartMode.MEMBER && customer != null) {
             int rate;
@@ -534,14 +538,11 @@ public class SelectController implements Initializable {
                 rate = new FixedDiscountPlan().getCurrentDiscountRate(customer.getCustomerID());
             } else {
                 rate = new FlexiDiscountPlan().getCurrentDiscountRate(customer.getCustomerID());
-                if (rate == 0) {
-                    return total;
-                }
             }
 
             double multiplier = 1.0 - (rate / 100.0);
-            return total * multiplier;
+            discount = vat * multiplier;
         }
-        return total;
+        return new Totals((float) sum, (float) vat, (float) discount);
     }
 }

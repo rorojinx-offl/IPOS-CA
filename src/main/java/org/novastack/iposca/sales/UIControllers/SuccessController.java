@@ -6,7 +6,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.novastack.iposca.config.AppConfig;
+import org.novastack.iposca.config.AppConfigAPI;
 import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.cust.reminders.ReminderInfo;
 import org.novastack.iposca.sales.InvoiceFactory;
 import org.novastack.iposca.sales.InvoiceItems;
 import org.novastack.iposca.sales.SaleService;
@@ -29,18 +32,24 @@ public class SuccessController implements Initializable {
     private Customer customer;
     private SaleService.CartMode cartMode;
     private float total;
+    private SelectController.Totals totals;
 
-    public void receive(ObservableList<SaleLine> cart, Customer cust, SaleService.CartMode mode, float total) {
+    public void receive(ObservableList<SaleLine> cart, Customer cust, SaleService.CartMode mode, SelectController.Totals totals) {
         cartSession = cart;
         customer = cust;
         cartMode = mode;
-        this.total = total;
+        this.totals = totals;
     }
 
     @FXML
     void printInvoice(MouseEvent event) throws IOException {
         if (cartMode == SaleService.CartMode.MEMBER && (cartSession == null || customer == null)) {
             new CommonCalls().openErrorDialog("Unable to print invoice: Cart session could not be found!");
+            return;
+        }
+
+        if (!AppConfig.configExists()) {
+            new CommonCalls().openErrorDialog("Document Template not configured. Please contact your admin/manager to configure it.");
             return;
         }
 
@@ -57,10 +66,16 @@ public class SuccessController implements Initializable {
                 InvoiceFactory.InvoiceData data = new InvoiceFactory.InvoiceData(
                         items,
                         customer,
-                        total,
+                        totals,
                         cartMode
                 );
-                InvoiceFactory.generateInvoice(data);
+
+                ReminderInfo.Merchant merchant = new ReminderInfo.Merchant(
+                        AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_NAME)),
+                        AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_ADDRESS)),
+                        AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_EMAIL)),
+                        AppConfig.get(AppConfig.ConfigKey.MERCHANT_LOGO));
+                InvoiceFactory.generateInvoice(data, merchant);
             } catch (Exception e) {
                 new CommonCalls().openErrorDialog("Unable to print invoice: " + e.getMessage());
                 return;

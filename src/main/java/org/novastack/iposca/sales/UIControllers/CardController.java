@@ -31,14 +31,15 @@ public class CardController implements Initializable {
     private ObservableList<SaleLine> cartSession;
     private SaleService.CartMode cartMode;
     private float total;
+    private SelectController.Totals totals;
 
 
-    public void receive(Customer cust, SaleService.SaleDraft sd, ObservableList<SaleLine> cs, SaleService.CartMode mode, float total) {
+    public void receive(Customer cust, SaleService.SaleDraft sd, ObservableList<SaleLine> cs, SaleService.CartMode mode, SelectController.Totals totals) {
         customer = cust;
         draft = sd;
         cartSession = cs;
         cartMode = mode;
-        this.total = total;
+        this.totals = totals;
     }
 
     public SaleService.Callback checkCallback() {
@@ -121,7 +122,7 @@ public class CardController implements Initializable {
                     last4,
                     YearMonth.of(cardExp.getValue().getYear(), cardExp.getValue().getMonth()),
                     LocalDateTime.now(),
-                    draft.totalAmount()
+                    cartMode == SaleService.CartMode.MEMBER ? totals.discount() : totals.vat()
             );
             int saleID = SaleService.recordSale(sale);
             for (SaleService.SaleItem item : draft.items()) {
@@ -136,14 +137,14 @@ public class CardController implements Initializable {
 
                 Stock.minusStock(item.productID(), item.quantity());
             }
-            if (cartMode == SaleService.CartMode.MEMBER) SaleService.checkFlexiRateChange(customer, draft.totalAmount());
+            if (cartMode == SaleService.CartMode.MEMBER) SaleService.checkFlexiRateChange(customer, totals.discount());
 
             Stage stage = (Stage) backButton.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/sales/success.fxml"));
             Parent root = loader.load();
 
             SuccessController controller = loader.getController();
-            controller.receive(cartSession, customer, cartMode, draft.totalAmount());
+            controller.receive(cartSession, customer, cartMode, totals);
 
             stage.setTitle("Payment Successful");
             stage.setScene(new javafx.scene.Scene(root));
