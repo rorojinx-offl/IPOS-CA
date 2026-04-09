@@ -66,7 +66,7 @@
             </Label>
          </children>
       </HBox>
-      <ImageView fx:id="logoViewer" fitHeight="150.0" fitWidth="200.0" layoutX="29.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="logoViewer" fitHeight="150.0" fitWidth="154.0" layoutX="59.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true" />
       <HBox layoutX="108.0" layoutY="180.0" spacing="5.0">
          <children>
             <Label text="Logo">
