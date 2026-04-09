@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import org.controlsfx.control.textfield.CustomPasswordField;
 import org.controlsfx.control.textfield.CustomTextField;
@@ -53,6 +55,12 @@ public class LoginController implements Initializable {
         pwdHidden.setManaged(true);
     }
 
+    @FXML
+    void loginFromPwdField(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            login(null);
+        }
+    }
 
     @FXML
     void login(MouseEvent event) {
@@ -64,18 +72,18 @@ public class LoginController implements Initializable {
             warning.setText("Username cannot be empty!");
             allFieldsFilled = false;
         }
-        if (pwd.isEmpty()) {
+        if (pwd.isEmpty() && pwdNaked.getText().isEmpty()) {
             warning.setText("Password cannot be empty!");
             allFieldsFilled = false;
         }
-        if (uname.isEmpty() && pwd.isEmpty()) {
+        if (uname.isEmpty() && (pwd.isEmpty() && pwdNaked.getText().isEmpty())) {
             warning.setText("Username and password cannot be empty!");
             allFieldsFilled = false;
         }
 
         if (allFieldsFilled) {
             try {
-                Login.login(uname, pwd, username);
+                Login.login(uname, pwd.isEmpty() ? pwdNaked.getText() : pwd, username);
             } catch (Exception e) {
                 if (e instanceof AuthenticationException) {
                     warning.setText(e.getMessage());
