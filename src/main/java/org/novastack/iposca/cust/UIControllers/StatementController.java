@@ -14,7 +14,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.jooq.exception.DataAccessException;
+import org.novastack.iposca.config.AppConfig;
+import org.novastack.iposca.config.AppConfigAPI;
 import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.cust.reminders.ReminderInfo;
 import org.novastack.iposca.cust.statement.StatementFactory;
 import org.novastack.iposca.cust.statement.StatementService;
 import org.novastack.iposca.utils.ui.CommonCalls;
@@ -93,8 +96,19 @@ public class StatementController implements Initializable {
             return;
         }
 
+        if (!AppConfig.configExists()) {
+            new CommonCalls().openErrorDialog("Document Template not configured. Please contact your admin/manager to configure it.");
+            return;
+        }
+
+        ReminderInfo.Merchant merchant = new ReminderInfo.Merchant(
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_NAME)),
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_ADDRESS)),
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_EMAIL)),
+                AppConfig.get(AppConfig.ConfigKey.MERCHANT_LOGO));
+
         try {
-            StatementFactory.generateStatement(info, YearMonth.now());
+            StatementFactory.generateStatement(info, YearMonth.now(), merchant);
         } catch (Exception e) {
             new CommonCalls().openErrorDialog(e.getMessage());
         }

@@ -15,17 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StatementFactory {
-    public static void generateStatement(StatementService.StatementInfo info, YearMonth month) throws IOException, JRException {
+    public static void generateStatement(StatementService.StatementInfo info, YearMonth month, ReminderInfo.Merchant merchant) throws IOException, JRException {
         InputStream jrxml = StatementFactory.class.getResourceAsStream("/jasper/cust/statement.jrxml");
         if (jrxml == null) {
             throw new IOException("Resource not found!");
         }
-
-        ReminderInfo.Merchant merchant = new ReminderInfo.Merchant(
-                "T-Pharma",
-                "123 Test Street, Test Town, Testshire, TE1 1ST",
-                "test@tpharma.com",
-                DebtController.loadLogo());
 
         JasperReport statement = JasperCompileManager.compileReport(jrxml);
         Map<String, Object> params = buildParams(info, month, merchant);

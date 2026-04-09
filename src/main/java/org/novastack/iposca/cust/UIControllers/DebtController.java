@@ -18,6 +18,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 import org.jooq.exception.DataAccessException;
+import org.novastack.iposca.config.AppConfig;
+import org.novastack.iposca.config.AppConfigAPI;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerDebt;
 import org.novastack.iposca.cust.customer.CustomerEnums;
@@ -159,12 +161,16 @@ public class DebtController implements Initializable {
             return;
         }
 
+        if (!AppConfig.configExists()) {
+            new CommonCalls().openErrorDialog("Document Template not configured. Please contact your admin/manager to configure it.");
+            return;
+        }
         ReminderInfo info = ReminderInfo.setReminderInfo(cd, type);
         ReminderInfo.Merchant merchant = new ReminderInfo.Merchant(
-                "T-Pharma",
-                "123 Test Street, Test Town, Testshire, TE1 1ST",
-                "test@tpharma.com",
-                loadLogo());
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_NAME)),
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_ADDRESS)),
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_EMAIL)),
+                AppConfig.get(AppConfig.ConfigKey.MERCHANT_LOGO));
 
         Path jrxml = Path.of("/jasper/cust/reminder.jrxml");
         int remNumber = type.equals(CustomerEnums.ReminderType.FIRST) ? 1 : 2;

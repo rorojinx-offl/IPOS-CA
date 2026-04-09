@@ -10,6 +10,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.novastack.iposca.config.AppConfig;
+import org.novastack.iposca.config.AppConfigAPI;
+import org.novastack.iposca.cust.reminders.ReminderInfo;
 import org.novastack.iposca.stock.Stock;
 import org.novastack.iposca.stock.report.LowStockBean;
 import org.novastack.iposca.stock.report.LowStockReportFactory;
@@ -83,12 +86,16 @@ public class MenuController implements Initializable {
                     ));
         }
 
+        if (!AppConfig.configExists()) {
+            new CommonCalls().openErrorDialog("Document Template not configured. Please contact your admin/manager to configure it.");
+            return;
+        }
+
         LowStockReportFactory.Merchant merchant = new LowStockReportFactory.Merchant(
-                "MeowMeow Pharma",
-                "67 Test Avenue, Test Town, Testshire, TE1 1ST",
-                "hetal@mpharma.co.uk",
-                loadLogo()
-        );
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_NAME)),
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_ADDRESS)),
+                AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_EMAIL)),
+                AppConfig.get(AppConfig.ConfigKey.MERCHANT_LOGO));
 
         LowStockReportFactory.ReportData reportData = new LowStockReportFactory.ReportData(beans, merchant);
 
@@ -110,15 +117,6 @@ public class MenuController implements Initializable {
         double x = stock.getStockLimit() * multiplier;
         double difference = x - stock.getQuantity();
         return Math.toIntExact(Math.round(difference));
-    }
-
-    private byte[] loadLogo() throws IOException {
-        try (InputStream in = MenuController.class.getResourceAsStream("/ui/stock/assets/stockManagement.jpeg")) {
-            if (in == null) {
-                throw new IOException("Unable to load image from file");
-            }
-            return in.readAllBytes();
-        }
     }
 }
 
