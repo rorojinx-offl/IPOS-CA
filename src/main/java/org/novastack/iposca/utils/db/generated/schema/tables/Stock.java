@@ -4,7 +4,9 @@
 package schema.tables;
 
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
@@ -174,6 +176,11 @@ public class Stock extends TableImpl<StockRecord> {
     @Override
     public UniqueKey<StockRecord> getPrimaryKey() {
         return Keys.STOCK__PK_STOCK;
+    }
+
+    @Override
+    public List<UniqueKey<StockRecord>> getUniqueKeys() {
+        return Arrays.asList(Keys.STOCK__UK_STOCK_1_792076);
     }
 
     private transient SaleItemPath _saleItem;

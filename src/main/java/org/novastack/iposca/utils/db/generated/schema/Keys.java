@@ -70,6 +70,7 @@ public class Keys {
     public static final UniqueKey<SaleRecord> SALE__PK_SALE = Internal.createUniqueKey(Sale.SALE, DSL.name("pk_sale"), new TableField[] { Sale.SALE.ID }, true);
     public static final UniqueKey<SaleItemRecord> SALE_ITEM__PK_SALE_ITEM = Internal.createUniqueKey(SaleItem.SALE_ITEM, DSL.name("pk_sale_item"), new TableField[] { SaleItem.SALE_ITEM.ID }, true);
     public static final UniqueKey<StockRecord> STOCK__PK_STOCK = Internal.createUniqueKey(Stock.STOCK, DSL.name("pk_stock"), new TableField[] { Stock.STOCK.ITEM_ID }, true);
+    public static final UniqueKey<StockRecord> STOCK__UK_STOCK_1_792076 = Internal.createUniqueKey(Stock.STOCK, DSL.name("uk_stock_1_792076"), new TableField[] { Stock.STOCK.NAME }, true);
     public static final UniqueKey<UserRecord> USER__PK_USER = Internal.createUniqueKey(User.USER, DSL.name("pk_user"), new TableField[] { User.USER.ID }, true);
     public static final UniqueKey<UserRecord> USER__UK_USER_1_117708238 = Internal.createUniqueKey(User.USER, DSL.name("uk_user_1_117708238"), new TableField[] { User.USER.USERNAME }, true);
 
