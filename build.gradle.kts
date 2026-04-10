@@ -24,6 +24,8 @@ dependencies {
     implementation("net.sf.jasperreports:jasperreports:7.0.6")
     implementation("net.sf.jasperreports:jasperreports-pdf:7.0.6")
     implementation("org.mindrot:jbcrypt:0.4")
+    implementation("io.javalin:javalin:7.1.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.1")
     jooqCodegen("org.xerial:sqlite-jdbc:3.51.2.0") //Add SQLite to task's classpath
 }
 

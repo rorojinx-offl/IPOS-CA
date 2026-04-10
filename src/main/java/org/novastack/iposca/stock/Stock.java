@@ -18,10 +18,23 @@ public class Stock {
     private int markupRate;
     private int quantity;
     private int stockLimit;
+    public record PUStockRequest(int id, int quantity) {}
+    public record SAStockRequest(String name, String packageType, String units , int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {}
 
     public Stock(String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {
         this.name = name;
         this.productType = productType;
+        this.packageType = packageType;
+        this.units = units;
+        this.unitsInAPack = unitsInAPack;
+        this.bulkCost = bulkCost;
+        this.markupRate = markupRate;
+        this.quantity = quantity;
+        this.stockLimit = stockLimit;
+    }
+
+    public Stock(String name, String packageType, String units, int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {
+        this.name = name;
         this.packageType = packageType;
         this.units = units;
         this.unitsInAPack = unitsInAPack;
@@ -82,6 +95,31 @@ public class Stock {
                 .set(STOCK.QUANTITY, stock.getQuantity())
                 .set(STOCK.STOCK_LIMIT, stock.getStockLimit())
                 .execute();
+    }
+
+    public static int upsertIPOSItem(Stock stock) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+
+        int rowsAffected = ctx.insertInto(STOCK)
+                .set(STOCK.NAME, stock.getName())
+                .set(STOCK.PRODUCT_TYPE, StockEnums.ProductType.IPOS.name())
+                .set(STOCK.PACKAGE_TYPE, stock.getPackageType())
+                .set(STOCK.UNITS, stock.getUnits())
+                .set(STOCK.UNITS_IN_A_PACK, stock.getUnitsInAPack())
+                .set(STOCK.BULK_COST, stock.getBulkCost())
+                .set(STOCK.MARKUP_RATE, stock.getMarkupRate())
+                .set(STOCK.QUANTITY, stock.getQuantity())
+                .set(STOCK.STOCK_LIMIT, stock.getStockLimit())
+                .onConflict(STOCK.NAME)
+                .doUpdate()
+                .set(STOCK.QUANTITY, STOCK.QUANTITY.plus(stock.getQuantity()))
+                .execute();
+
+        if (rowsAffected == 1) {
+            return 200;
+        } else {
+            return 404;
+        }
     }
 
     public static ArrayList<Stock> getAllStock() {
@@ -189,13 +227,19 @@ public class Stock {
                 .execute();
     }
 
-    public static void minusStock(int productID, int quantity) {
+    public static int minusStock(int productID, int quantity) {
         DSLContext ctx = JooqConnection.getDSLContext();
-        ctx.update(STOCK)
+        int rowsUpdated = ctx.update(STOCK)
                 .set(STOCK.QUANTITY, STOCK.QUANTITY.minus(quantity))
                 .where(STOCK.ITEM_ID.eq(productID))
                 .and(STOCK.QUANTITY.ge(quantity))
                 .execute();
+
+        if (rowsUpdated == 1) {
+            return 200;
+        } else {
+            return 404;
+        }
     }
 
     public static String getProductName(int productID) {
