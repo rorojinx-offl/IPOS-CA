@@ -112,11 +112,15 @@ public class Stock {
             inventory.add(new Stock(
                     STOCK.ITEM_ID.getValue(record),
                     STOCK.NAME.getValue(record),
-                    STOCK.BULK_COST.getValue(record),
+                    calcRetailPrice(STOCK.BULK_COST.getValue(record), STOCK.MARKUP_RATE.getValue(record)),
                     STOCK.QUANTITY.getValue(record)
             ));
         });
         return inventory;
+    }
+
+    private static float calcRetailPrice(float bulkCost, int markupRate) {
+        return bulkCost * (1 + (markupRate / 100f));
     }
 
     public static ArrayList<Stock> getLowStock() {
