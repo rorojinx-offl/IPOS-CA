@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.novastack.iposca.http.Server;
 import org.novastack.iposca.session.SessionTimeoutManager;
 
 public class UIMain extends Application {
@@ -15,6 +16,7 @@ public class UIMain extends Application {
         stage.setTitle("Customer");
         stage.setScene(new Scene(root));
         SessionTimeoutManager.install(stage);
+        Server.start();
         stage.show();
     }
 
