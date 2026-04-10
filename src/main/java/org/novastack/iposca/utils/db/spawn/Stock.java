@@ -24,7 +24,9 @@ public class Stock {
         return new ArrayList<>() {
             {
                 add(new TableSchema.Column("ITEM_ID", "INTEGER", true, true,null));
-                add(new TableSchema.Column("NAME", "TEXT", false, true,null));
+                add(new TableSchema.Column("NAME", "TEXT", false, true,new ArrayList<>() {{
+                    add(new ColumnConstraint.Unique());
+                }}));
                 add(new TableSchema.Column("PRODUCT_TYPE", "TEXT", false, true,null));
                 add(new TableSchema.Column("PACKAGE_TYPE", "TEXT", false, true,null));
                 add(new TableSchema.Column("UNITS", "TEXT", false, true,null));
