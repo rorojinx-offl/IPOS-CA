@@ -21,6 +21,10 @@ public class AppConfig {
         }
     }
 
+    public static void create(Connection conn, DDLEngine ddl) throws SQLException {
+        ddl.createTable(conn, "app_config", AppConfig.initiateTables());
+    }
+
     private static ArrayList<TableSchema> initiateTables() {
         return new ArrayList<>() {
             {

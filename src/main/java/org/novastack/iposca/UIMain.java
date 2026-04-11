@@ -16,6 +16,7 @@ public class UIMain extends Application {
         stage.setTitle("Customer");
         stage.setScene(new Scene(root));
         SessionTimeoutManager.install(stage);
+        Bootstrap.init();
         Server.start();
         stage.show();
     }

@@ -15,10 +15,13 @@ public class SaleItem {
         DDLEngine ddl = new DDLEngine();
         try {
             ddl.createTable(conn,"sale_item",initiateTables());
-            //ddl.createIndex(conn,"customer_reminder","ID");
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public static void create(Connection conn, DDLEngine ddl) throws SQLException {
+        ddl.createTable(conn, "sale_item", SaleItem.initiateTables());
     }
 
     private static ArrayList<TableSchema> initiateTables() {

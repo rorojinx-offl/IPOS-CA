@@ -16,10 +16,13 @@ public class CustomerMonthlyBalance {
         DDLEngine ddl = new DDLEngine();
         try {
             ddl.createTable(conn,"customer_monthly_balance",initiateTables());
-            //ddl.createIndex(conn,"customer_monthly_balance","ID");
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public static void create(Connection conn, DDLEngine ddl) throws SQLException {
+        ddl.createTable(conn, "customer_monthly_balance", CustomerMonthlyBalance.initiateTables());
     }
 
     private static ArrayList<TableSchema> initiateTables() {

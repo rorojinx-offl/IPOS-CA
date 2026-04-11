@@ -20,6 +20,10 @@ public class Stock {
         }
     }
 
+    public static void create(Connection conn, DDLEngine ddl) throws SQLException {
+        ddl.createTable(conn, "stock", Stock.initiateTables());
+    }
+
     private static ArrayList<TableSchema> initiateTables() {
         return new ArrayList<>() {
             {
