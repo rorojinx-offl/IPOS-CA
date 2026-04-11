@@ -2,6 +2,7 @@ package org.novastack.iposca.cust.statement;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.novastack.iposca.Bootstrap;
 import org.novastack.iposca.cust.UIControllers.DebtController;
 import org.novastack.iposca.cust.reminders.ReminderInfo;
 
@@ -24,9 +25,8 @@ public class StatementFactory {
         JasperReport statement = JasperCompileManager.compileReport(jrxml);
         Map<String, Object> params = buildParams(info, month, merchant);
         JasperPrint print = JasperFillManager.fillReport(statement, params, new JREmptyDataSource(1));
-        Files.createDirectories(Path.of("generated-reports"));
 
-        Path pdf = Path.of("generated-reports", "statement-" + month.toString() + "-" + info.customer().getName() + ".pdf");
+        Path pdf = Path.of(Bootstrap.getDocsPath("statements").toString(), "statement-" + month.toString() + "-" + info.customer().getName() + ".pdf");
         JasperExportManager.exportReportToPdfFile(print, pdf.toString());
     }
 

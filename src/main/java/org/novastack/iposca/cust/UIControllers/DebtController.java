@@ -18,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
 import org.jooq.exception.DataAccessException;
+import org.novastack.iposca.Bootstrap;
 import org.novastack.iposca.config.AppConfig;
 import org.novastack.iposca.config.AppConfigAPI;
 import org.novastack.iposca.cust.customer.Customer;
@@ -174,7 +175,7 @@ public class DebtController implements Initializable {
 
         Path jrxml = Path.of("/jasper/cust/reminder.jrxml");
         int remNumber = type.equals(CustomerEnums.ReminderType.FIRST) ? 1 : 2;
-        Path pdf = Path.of("generated-reports", "debt-reminder"+ remNumber +"-"+ cd.getCustomerID() +".pdf");
+        Path pdf = Path.of(Bootstrap.getDocsPath("reminders").toString(), "debt-reminder"+ remNumber +"-"+ cd.getCustomerID() +".pdf");
         ReminderFactory.generateReminder(info, merchant, type, pdf, jrxml);
 
         switch (type) {
