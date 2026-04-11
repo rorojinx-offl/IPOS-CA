@@ -12,7 +12,6 @@ import schema.tables.CustomerMonthlyBalance;
 import schema.tables.CustomerMonthlySpend;
 import schema.tables.CustomerReminder;
 import schema.tables.CustomerRepayment;
-import schema.tables.CustomerStatement;
 import schema.tables.FixedDsc;
 import schema.tables.FlexiDsc;
 import schema.tables.Sale;
@@ -66,11 +65,6 @@ public class Tables {
      * The table <code>customer_repayment</code>.
      */
     public static final CustomerRepayment CUSTOMER_REPAYMENT = CustomerRepayment.CUSTOMER_REPAYMENT;
-
-    /**
-     * The table <code>customer_statement</code>.
-     */
-    public static final CustomerStatement CUSTOMER_STATEMENT = CustomerStatement.CUSTOMER_STATEMENT;
 
     /**
      * The table <code>fixed_dsc</code>.

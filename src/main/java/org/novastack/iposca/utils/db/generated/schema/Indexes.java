@@ -14,7 +14,6 @@ import schema.tables.CustomerDebt;
 import schema.tables.CustomerMonthlySpend;
 import schema.tables.CustomerReminder;
 import schema.tables.CustomerRepayment;
-import schema.tables.CustomerStatement;
 import schema.tables.FixedDsc;
 import schema.tables.FlexiDsc;
 
@@ -34,7 +33,6 @@ public class Indexes {
     public static final Index IDX_CUSTOMER_MONTHLY_SPEND_CUST_ID = Internal.createIndex(DSL.name("idx_customer_monthly_spend_cust_id"), CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND, new OrderField[] { CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND.CUST_ID }, false);
     public static final Index IDX_CUSTOMER_REMINDER_ID = Internal.createIndex(DSL.name("idx_customer_reminder_id"), CustomerReminder.CUSTOMER_REMINDER, new OrderField[] { CustomerReminder.CUSTOMER_REMINDER.ID }, false);
     public static final Index IDX_CUSTOMER_REPAYMENT_ID = Internal.createIndex(DSL.name("idx_customer_repayment_id"), CustomerRepayment.CUSTOMER_REPAYMENT, new OrderField[] { CustomerRepayment.CUSTOMER_REPAYMENT.ID }, false);
-    public static final Index IDX_CUSTOMER_STATEMENT_ID = Internal.createIndex(DSL.name("idx_customer_statement_id"), CustomerStatement.CUSTOMER_STATEMENT, new OrderField[] { CustomerStatement.CUSTOMER_STATEMENT.ID }, false);
     public static final Index IDX_FIXED_DSC_CUST_ID = Internal.createIndex(DSL.name("idx_fixed_dsc_cust_id"), FixedDsc.FIXED_DSC, new OrderField[] { FixedDsc.FIXED_DSC.CUST_ID }, false);
     public static final Index IDX_FLEXI_DSC_CUST_ID = Internal.createIndex(DSL.name("idx_flexi_dsc_cust_id"), FlexiDsc.FLEXI_DSC, new OrderField[] { FlexiDsc.FLEXI_DSC.CUST_ID }, false);
 }

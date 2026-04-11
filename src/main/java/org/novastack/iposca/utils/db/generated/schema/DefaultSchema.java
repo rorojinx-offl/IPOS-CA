@@ -20,7 +20,6 @@ import schema.tables.CustomerMonthlyBalance;
 import schema.tables.CustomerMonthlySpend;
 import schema.tables.CustomerReminder;
 import schema.tables.CustomerRepayment;
-import schema.tables.CustomerStatement;
 import schema.tables.FixedDsc;
 import schema.tables.FlexiDsc;
 import schema.tables.Sale;
@@ -83,11 +82,6 @@ public class DefaultSchema extends SchemaImpl {
     public final CustomerRepayment CUSTOMER_REPAYMENT = CustomerRepayment.CUSTOMER_REPAYMENT;
 
     /**
-     * The table <code>customer_statement</code>.
-     */
-    public final CustomerStatement CUSTOMER_STATEMENT = CustomerStatement.CUSTOMER_STATEMENT;
-
-    /**
      * The table <code>fixed_dsc</code>.
      */
     public final FixedDsc FIXED_DSC = FixedDsc.FIXED_DSC;
@@ -141,7 +135,6 @@ public class DefaultSchema extends SchemaImpl {
             CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND,
             CustomerReminder.CUSTOMER_REMINDER,
             CustomerRepayment.CUSTOMER_REPAYMENT,
-            CustomerStatement.CUSTOMER_STATEMENT,
             FixedDsc.FIXED_DSC,
             FlexiDsc.FLEXI_DSC,
             Sale.SALE,
