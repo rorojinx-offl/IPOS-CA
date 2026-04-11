@@ -36,7 +36,7 @@ public class DDLEngine {
 
         int i = 0;
         long colObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.Column).count();
-        long fkObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.ForeignKey).count();
+        //long fkObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.ForeignKey).count();
         long pkObjCount = tableSchema.stream().filter(x -> x instanceof TableSchema.MultiPrimaryKey).count();
 
         for (TableSchema rule : tableSchema) {
@@ -67,7 +67,7 @@ public class DDLEngine {
                     ChainData refColChain = fkChainIdentifierCheck(fk.refColumns());
 
                     if (colObjCount < 1) {throw new IllegalStateException("Foreign keys can only be added when atleast one column is present");}
-                    if (fkObjCount > 1) {throw new IllegalStateException("Please add multiple foreign key declarations in one statement");}
+                    //if (fkObjCount > 1) {throw new IllegalStateException("Please add multiple foreign key declarations in one statement");}
                     if (fkColChain.length != refColChain.length) {throw new IllegalStateException("Foreign key column count and reference column count should be same");}
 
                     String refTable = identifierCheck(fk.refTable());
