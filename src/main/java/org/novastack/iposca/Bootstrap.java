@@ -1,5 +1,6 @@
 package org.novastack.iposca;
 
+import org.novastack.iposca.cust.debt.DebtAutomationService;
 import org.novastack.iposca.utils.db.DDLEngine;
 import org.novastack.iposca.utils.db.SQLiteConnection;
 import org.novastack.iposca.utils.db.spawn.*;
@@ -9,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ public class Bootstrap {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+        debtCheck();
     }
 
     private static void dbInit() {
@@ -80,6 +83,13 @@ public class Bootstrap {
         );
 
         docsPath.putAll(docs);
+    }
+
+    private static void debtCheck() {
+        LocalDate date = LocalDate.now();
+        int lastDayOfMonth = date.getMonth().maxLength();
+        if (date.isEqual(date.withDayOfMonth(lastDayOfMonth))) DebtAutomationService.runDebtEvaluation();
+        DebtAutomationService.runDailyDebtEvaluation();
     }
 
     public static Path getDocsPath(String docType) {

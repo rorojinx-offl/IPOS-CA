@@ -14,7 +14,8 @@ public class DebtAutomationService {
     public static void runDebtEvaluation() {
         ArrayList<DAUtils.DebtWarrant> list = DAUtils.checkBalances();
         Month month = LocalDate.now().getMonth();
-        LocalDate date = LocalDate.of(2026,month.getValue(),month.maxLength());
+        //LocalDate date = LocalDate.of(2026,month.getValue(),month.maxLength());
+        LocalDate date = LocalDate.now();
         for (DAUtils.DebtWarrant dw : list) {
             CustomerDebt debt = CustomerDebt.getDebtFull(dw.customerID());
             if (DAUtils.check1stReminderExists(debt)) {
