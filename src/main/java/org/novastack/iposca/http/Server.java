@@ -6,8 +6,12 @@ import org.novastack.iposca.stock.Stock;
 import java.util.Map;
 
 public class Server {
-    public static void start() {
-        Javalin app = Javalin.create(config -> {
+    private static Javalin app;
+
+    public static synchronized void start() {
+        if (app != null) return;
+
+        app = Javalin.create(config -> {
             config.routes.apiBuilder(() -> {
                 config.routes.get("/", ctx -> {
                     ctx.result("Javalin is running!");
@@ -43,5 +47,13 @@ public class Server {
         }).start(8088);
 
         System.out.println("Server started at http://localhost:8088");
+    }
+
+    public static synchronized void stop() {
+        if (app == null) return;
+
+        app.stop();
+        app = null;
+        System.out.println("Server stopped");
     }
 }
