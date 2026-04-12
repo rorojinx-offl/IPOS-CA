@@ -10,47 +10,78 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import static java.util.Map.entry;
 
 public class Bootstrap {
     public static final Map<String, Path> docsPath = new HashMap<>();
+    public static final int TOTAL_STEPS = 17;
 
-    public static void init() {
-        dbInit();
-        try {
-            docsPathInit();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+    public static void init(BiConsumer<Integer, String> progress) throws SQLException, IOException {
+        int step = 0;
+
+        step = dbInit(progress, step);
+
+        progress.accept(++step, "Docs Path Init");
+        docsPathInit();
+        progress.accept(++step, "Debt Check");
         debtCheck();
+
+        progress.accept(++step, "Starting server and session manager");
     }
 
-    private static void dbInit() {
+    private static int dbInit(BiConsumer<Integer, String> progress, int step) throws SQLException {
         Connection connection = new SQLiteConnection().getConnection();
         DDLEngine ddl = new DDLEngine();
 
-        try {
-            AppConfig.create(connection, ddl);
-            Customer.create(connection, ddl);
-            CustomerCharge.create(connection, ddl);
-            CustomerDebt.create(connection, ddl);
-            CustomerMonthlyBalance.create(connection, ddl);
-            CustomerMonthlySpend.create(connection, ddl);
-            CustomerReminder.create(connection, ddl);
-            CustomerRepayment.create(connection, ddl);
-            FixedDiscount.create(connection, ddl);
-            FlexiDiscount.create(connection, ddl);
-            Sale.create(connection, ddl);
-            SaleItem.create(connection, ddl);
-            Stock.create(connection, ddl);
-            User.create(connection, ddl);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        progress.accept(step++, "Creating tables");
+        AppConfig.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        Customer.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        CustomerCharge.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        CustomerDebt.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        CustomerMonthlyBalance.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        CustomerMonthlySpend.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        CustomerReminder.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        CustomerRepayment.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        FixedDiscount.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        FlexiDiscount.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        Sale.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        SaleItem.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        Stock.create(connection, ddl);
+
+        progress.accept(step++, "Creating tables");
+        User.create(connection, ddl);
+
+        return step;
     }
 
     private static void docsPathInit() throws IOException {
