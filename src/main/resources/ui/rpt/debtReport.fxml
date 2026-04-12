@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFF7B2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.rpt.controller.DebtReportController">
+    <children>
+        <Pane prefHeight="71.0" prefWidth="800.0" style="-fx-background-color: #28282B;">
+            <children>
+                <Label alignment="CENTER" prefHeight="71.0" prefWidth="800.0" text="Aggregated Debt Change Report" textAlignment="CENTER" textFill="#dd9221">
+                    <font>
+                        <Font name="Agency FB" size="45.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+
+        <VBox layoutX="50.0" layoutY="100.0" prefWidth="700.0" spacing="20.0">
+            <children>
+                <GridPane hgap="15.0" vgap="10.0">
+                    <children>
+                        <Label text="Start Date:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <DatePicker fx:id="startDatePicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="End Date:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <DatePicker fx:id="endDatePicker" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <Button fx:id="generateButton" onMouseClicked="#generateReport" prefWidth="150.0" style="-fx-background-color: #FFD700;" text="Generate Report">
+                    <font><Font size="14.0" /></font>
+                </Button>
+
+                <Separator prefWidth="700.0" />
+
+                <GridPane hgap="15.0" vgap="10.0">
+                    <children>
+                        <Label text="Period:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="periodLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Label text="Opening Aggregate Debt:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="openingDebtLabel" text="£0.00" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Label text="Payments Received:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="paymentsReceivedLabel" text="£0.00" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Label text="New Debt Accrued:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="newDebtLabel" text="£0.00" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Label text="Closing Aggregate Debt:" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="closingDebtLabel" text="£0.00" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Label text="Formula:" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="formulaLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+
+                        <Separator prefWidth="400.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+
+                        <Label text="Total Debtors:" GridPane.columnIndex="0" GridPane.rowIndex="7">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="totalDebtorsLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Label text="Total Payments Count:" GridPane.columnIndex="0" GridPane.rowIndex="8">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="totalPaymentsCountLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Label text="Total Credit Sales:" GridPane.columnIndex="0" GridPane.rowIndex="9">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="totalCreditSalesLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Separator prefWidth="400.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+
+                        <Label text="Generated By:" GridPane.columnIndex="0" GridPane.rowIndex="11">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="generatedByLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+
+                        <Label text="Generated At:" GridPane.columnIndex="0" GridPane.rowIndex="12">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <Label fx:id="generatedTimestampLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                    </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <HBox spacing="20.0">
+                    <children>
+                        <Button fx:id="exportPdfButton" onMouseClicked="#exportToPdf" prefWidth="120.0" style="-fx-background-color: #FFD700;" text="Export to PDF">
+                            <font><Font size="14.0" /></font>
+                        </Button>
+                        <Button fx:id="backButton" onMouseClicked="#goBack" prefWidth="100.0" style="-fx-background-color: #FF4444; -fx-text-fill: white;" text="Back">
+                            <font><Font size="14.0" /></font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <Separator layoutX="350.0" layoutY="71.0" orientation="VERTICAL" prefHeight="529.0" />
+        <Separator layoutY="550.0" prefHeight="1.0" prefWidth="800.0" />
+    </children>
+</AnchorPane>

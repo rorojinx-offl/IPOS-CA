@@ -153,8 +153,18 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void rpt(MouseEvent event) {
+    void rpt(MouseEvent event) throws IOException {
+        Stage stage = (Stage) rptButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
 
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.RPT)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/rpt/reportsMenu.fxml", "Reports");
     }
 
     @FXML

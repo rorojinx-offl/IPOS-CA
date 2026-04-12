@@ -1,0 +1,85 @@
+<!-- Created for JasperReports 7 XML format -->
+<jasperReport name="debtReport" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94e51a77-253d-410e-aec2-f1f01ecbce50">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NO_DATA_ADAPTER"/>
+	<parameter name="PERIOD_START" class="java.lang.String"/>
+	<parameter name="PERIOD_END" class="java.lang.String"/>
+	<parameter name="OPENING_DEBT" class="java.lang.Float"/>
+	<parameter name="PAYMENTS_RECEIVED" class="java.lang.Float"/>
+	<parameter name="NEW_DEBT_ACCRUED" class="java.lang.Float"/>
+	<parameter name="CLOSING_DEBT" class="java.lang.Float"/>
+	<parameter name="TOTAL_DEBTORS" class="java.lang.Integer"/>
+	<parameter name="TOTAL_PAYMENTS_COUNT" class="java.lang.Integer"/>
+	<parameter name="TOTAL_CREDIT_SALES" class="java.lang.Integer"/>
+	<parameter name="GENERATED_BY" class="java.lang.String"/>
+	<parameter name="GENERATED_TIMESTAMP" class="java.lang.String"/>
+	<query language="sql"><![CDATA[]]></query>
+	<background splitType="Stretch"/>
+	<title height="80" splitType="Stretch">
+		<element kind="staticText" uuid="12e3c912-ee18-440c-b29d-914cd75885bb" x="0" y="20" width="555" height="30" fontSize="18.0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+			<text><![CDATA[Aggregated Debt Change Report]]></text>
+		</element>
+	</title>
+	<detail>
+		<band height="290" splitType="Stretch">
+			<element kind="staticText" uuid="a57dd5f7-9fa0-4424-bb37-7c76a2994e2b" x="0" y="20" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[Period:]]></text>
+			</element>
+			<element kind="textField" uuid="b2c35f95-ad35-4074-bd95-b802a926db44" x="190" y="20" width="250" height="20" fontSize="12.0">
+				<expression><![CDATA[$P{PERIOD_START} + " to " + $P{PERIOD_END}]]></expression>
+			</element>
+			<element kind="staticText" uuid="0b8bd37d-1a60-4ce2-badc-b6e22f2486cb" x="0" y="50" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[Opening Aggregate Debt:]]></text>
+			</element>
+			<element kind="textField" uuid="ad7cc0a1-7bfa-45be-9485-ae1656487d26" x="190" y="50" width="120" height="20" fontSize="12.0" hTextAlign="Right">
+				<expression><![CDATA[String.format("£%.2f", $P{OPENING_DEBT})]]></expression>
+			</element>
+			<element kind="staticText" uuid="b8863f39-10e4-408e-a2a0-c6bb3c7e573f" x="0" y="80" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[Payments Received:]]></text>
+			</element>
+			<element kind="textField" uuid="890c40c0-efc4-4f19-b956-4f715a2cd17d" x="190" y="80" width="120" height="20" fontSize="12.0" hTextAlign="Right">
+				<expression><![CDATA[String.format("£%.2f", $P{PAYMENTS_RECEIVED})]]></expression>
+			</element>
+			<element kind="staticText" uuid="0fc95c35-497a-4086-9861-9e6367dcf0c2" x="0" y="110" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[New Debt Accrued:]]></text>
+			</element>
+			<element kind="textField" uuid="32347236-7c07-48b1-962f-b04901b5db57" x="190" y="110" width="120" height="20" fontSize="12.0" hTextAlign="Right">
+				<expression><![CDATA[String.format("£%.2f", $P{NEW_DEBT_ACCRUED})]]></expression>
+			</element>
+			<element kind="staticText" uuid="ff86b3d3-606f-48ac-977f-03d1b3bd45bc" x="0" y="140" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[Closing Aggregate Debt:]]></text>
+			</element>
+			<element kind="textField" uuid="b8f6351d-8dcc-44ea-b7a2-d7248f560750" x="190" y="140" width="120" height="20" fontSize="12.0" hTextAlign="Right">
+				<expression><![CDATA[String.format("£%.2f", $P{CLOSING_DEBT})]]></expression>
+			</element>
+			<element kind="staticText" uuid="4fd69b94-c3ce-41ac-a68c-b08b72d5b490" x="0" y="170" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[Formula:]]></text>
+			</element>
+			<element kind="textField" uuid="549a9266-f02f-4f01-aed5-9da9d6d39ea2" x="190" y="170" width="300" height="20" fontSize="11.0">
+				<expression><![CDATA[String.format("£%.2f = £%.2f + £%.2f - £%.2f", $P{CLOSING_DEBT}, $P{OPENING_DEBT}, $P{NEW_DEBT_ACCRUED}, $P{PAYMENTS_RECEIVED})]]></expression>
+			</element>
+			<element kind="staticText" uuid="8ce246d0-825f-4a29-9955-2b3baac03885" x="0" y="200" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[Total Debtors:]]></text>
+			</element>
+			<element kind="textField" uuid="4ba83bf9-0c4a-4cd3-a46f-2a81c26868b4" x="190" y="200" width="120" height="20" fontSize="12.0" hTextAlign="Right">
+				<expression><![CDATA[$P{TOTAL_DEBTORS}]]></expression>
+			</element>
+			<element kind="staticText" uuid="591f4e3c-c1db-4abc-9fc3-08def9d1c96a" x="0" y="230" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[Total Payments Count:]]></text>
+			</element>
+			<element kind="textField" uuid="93541955-f20d-4d95-9f5a-749990332292" x="190" y="230" width="120" height="20" fontSize="12.0" hTextAlign="Right">
+				<expression><![CDATA[$P{TOTAL_PAYMENTS_COUNT}]]></expression>
+			</element>
+			<element kind="staticText" uuid="41a5440d-d61f-4ed4-8f81-71a70aa4e7e1" x="0" y="260" width="180" height="20" fontSize="12.0">
+				<text><![CDATA[Total Credit Sales:]]></text>
+			</element>
+			<element kind="textField" uuid="f2324e5b-3f12-47a8-a0b4-4cf1f54537f8" x="190" y="260" width="120" height="20" fontSize="12.0" hTextAlign="Right">
+				<expression><![CDATA[$P{TOTAL_CREDIT_SALES}]]></expression>
+			</element>
+		</band>
+	</detail>
+	<lastPageFooter height="40" splitType="Stretch">
+		<element kind="textField" uuid="99ed98c7-4e57-44bb-a69e-b0fb2bbac922" x="0" y="20" width="360" height="15" fontSize="8.0">
+			<expression><![CDATA["Generated by: " + $P{GENERATED_BY} + " at " + $P{GENERATED_TIMESTAMP}]]></expression>
+		</element>
+	</lastPageFooter>
+</jasperReport>

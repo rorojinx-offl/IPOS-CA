@@ -7,6 +7,8 @@ import org.novastack.iposca.utils.db.JooqConnection;
 import schema.tables.records.UserRecord;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import static schema.tables.User.USER;
 
 public class User {
@@ -59,6 +61,32 @@ public class User {
             throw new AuthenticationException("Invalid Password!");
         }
 
+        return fromRecord(record);
+    }
+
+    public static List<User> getAllUsers() {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        return ctx.selectFrom(USER)
+                .orderBy(USER.ID.asc())
+                .fetch(User::fromRecord);
+    }
+
+    public static void deleteUserById(int id) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.deleteFrom(USER)
+                .where(USER.ID.eq(id))
+                .execute();
+    }
+
+    public static void updateUserRole(int id, UserEnums.UserRole role) {
+        DSLContext ctx = JooqConnection.getDSLContext();
+        ctx.update(USER)
+                .set(USER.ROLE, role.name())
+                .where(USER.ID.eq(id))
+                .execute();
+    }
+
+    private static User fromRecord(UserRecord record) {
         return new User(
                 record.getId(),
                 record.getUsername(),
