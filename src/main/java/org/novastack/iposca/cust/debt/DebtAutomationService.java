@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class DebtAutomationService {
     public static void runDebtEvaluation() {
         ArrayList<DAUtils.DebtWarrant> list = DAUtils.checkBalances();
+        if (list.isEmpty()) return;
         Month month = LocalDate.now().getMonth();
         //LocalDate date = LocalDate.of(2026,month.getValue(),month.maxLength());
         LocalDate date = LocalDate.now();
@@ -29,6 +30,7 @@ public class DebtAutomationService {
 
     public static void runDailyDebtEvaluation() {
         ArrayList<DAUtils.DebtWarrant> list = DAUtils.checkBalances();
+        if (list.isEmpty()) return;
         for (DAUtils.DebtWarrant dw : list) {
             CustomerDebt debt = CustomerDebt.getDebtFull(dw.customerID());
             if (DAUtils.check2ndReminderExists(debt)) {

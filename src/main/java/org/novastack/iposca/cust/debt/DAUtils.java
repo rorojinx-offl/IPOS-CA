@@ -32,6 +32,7 @@ public class DAUtils {
     }
 
     protected static boolean check2ndReminderExists(org.novastack.iposca.cust.customer.CustomerDebt debt) {
+        if (debt.getStatus1Reminder() == null) return false;
         return (debt.getStatus1Reminder().equals(CustomerEnums.ReminderStatus.SENT.name())) && debt.getDate2Reminder() == null && debt.getStatus2Reminder() == null;
     }
 
