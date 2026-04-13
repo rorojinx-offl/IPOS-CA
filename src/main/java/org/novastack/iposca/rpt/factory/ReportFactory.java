@@ -2,6 +2,7 @@ package org.novastack.iposca.rpt.factory;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.novastack.iposca.Bootstrap;
 import org.novastack.iposca.rpt.model.DebtChangeData;
 import org.novastack.iposca.rpt.model.StockItem;
 import org.novastack.iposca.rpt.model.TurnoverData;
@@ -45,12 +46,12 @@ public class ReportFactory {
                 : new JRBeanCollectionDataSource(data.getSales());
         JasperPrint print = JasperFillManager.fillReport(report, params, dataSource);
 
-        Files.createDirectories(Path.of(REPORT_DIR));
+        //Files.createDirectories(Path.of(REPORT_DIR));
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        String filename = REPORT_DIR + "/turnover_report_" + timestamp + "_" + currentUser + ".pdf";
-        JasperExportManager.exportReportToPdfFile(print, filename);
+        Path pdf = Path.of(Bootstrap.getDocsPath("turnover").toString(), "turnover_report_" + timestamp + "_" + currentUser + ".pdf");
+        JasperExportManager.exportReportToPdfFile(print, pdf.toString());
 
-        return new File(filename);
+        return new File(pdf.toUri());
     }
 
     public static File generateDebtReport(DebtChangeData data, String currentUser) throws IOException, JRException {
@@ -79,12 +80,13 @@ public class ReportFactory {
                 : new JRBeanCollectionDataSource(data.getPdfRows());
         JasperPrint print = JasperFillManager.fillReport(report, params, dataSource);
 
-        Files.createDirectories(Path.of(REPORT_DIR));
+        //Files.createDirectories(Path.of(REPORT_DIR));
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        String filename = REPORT_DIR + "/debt_report_" + timestamp + "_" + currentUser + ".pdf";
-        JasperExportManager.exportReportToPdfFile(print, filename);
 
-        return new File(filename);
+        Path pdf = Path.of(Bootstrap.getDocsPath("debt").toString(), "debt_report_" + timestamp + "_" + currentUser + ".pdf");
+        JasperExportManager.exportReportToPdfFile(print, pdf.toString());
+
+        return new File(pdf.toUri());
     }
 
     public static File generateStockReport(List<StockItem> items, String currentUser) throws IOException, JRException {
@@ -112,12 +114,12 @@ public class ReportFactory {
 
         JasperPrint print = JasperFillManager.fillReport(report, params, dataSource);
 
-        Files.createDirectories(Path.of(REPORT_DIR));
+        //Files.createDirectories(Path.of(REPORT_DIR));
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
-        String filename = REPORT_DIR + "/stock_report_" + timestamp + "_" + currentUser + ".pdf";
-        JasperExportManager.exportReportToPdfFile(print, filename);
+        Path pdf = Path.of(Bootstrap.getDocsPath("stockReport").toString(), "stock_report_" + timestamp + "_" + currentUser + ".pdf");
+        JasperExportManager.exportReportToPdfFile(print, pdf.toString());
 
-        return new File(filename);
+        return new File(pdf.toUri());
     }
 
     public static void openReport(File pdfFile) throws IOException {

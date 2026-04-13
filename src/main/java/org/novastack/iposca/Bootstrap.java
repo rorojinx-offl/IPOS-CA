@@ -96,6 +96,10 @@ public class Bootstrap {
         Path custInvoice = dir.resolve("customer-invoices");
         Path guestInvoice = dir.resolve("guest-invoices");
         Path lowStock = dir.resolve("low-stock-reports");
+        Path reports = dir.resolve("reports");
+        Path debt = reports.resolve("debt");
+        Path stock = reports.resolve("stock");
+        Path turnover = reports.resolve("turnover");
 
 
         Files.createDirectories(dir);
@@ -104,13 +108,20 @@ public class Bootstrap {
         Files.createDirectories(custInvoice);
         Files.createDirectories(guestInvoice);
         Files.createDirectories(lowStock);
+        Files.createDirectories(reports);
+        Files.createDirectories(debt);
+        Files.createDirectories(stock);
+        Files.createDirectories(turnover);
 
         Map<String, Path> docs = Map.ofEntries(
                 entry("reminders", reminders),
                 entry("statements", statements),
                 entry("cinvoice", custInvoice),
                 entry("ginvoice", guestInvoice),
-                entry("stock", lowStock)
+                entry("stock", lowStock),
+                entry("debt", debt),
+                entry("stockReport", stock),
+                entry("turnover", turnover)
         );
 
         docsPath.putAll(docs);
