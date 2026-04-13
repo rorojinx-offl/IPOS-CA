@@ -1,13 +1,20 @@
 package org.novastack.iposca.rpt.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.novastack.iposca.rpt.factory.ReportFactory;
 import org.novastack.iposca.rpt.model.TurnoverData;
+import org.novastack.iposca.rpt.model.TurnoverSale;
 import org.novastack.iposca.rpt.service.ReportService;
 import org.novastack.iposca.session.Session;
 import org.novastack.iposca.session.SessionManager;
@@ -15,6 +22,7 @@ import org.novastack.iposca.user.User;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.ControllerTemplate;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -33,8 +41,8 @@ public class TurnoverReportController extends ControllerTemplate {
     @FXML
     private Label totalSalesCountLabel;
 
-    @FXML
-    private Label totalOrdersLabel;
+//    @FXML
+//    private Label totalOrdersLabel;
 
     @FXML
     private Label periodLabel;
@@ -44,6 +52,21 @@ public class TurnoverReportController extends ControllerTemplate {
 
     @FXML
     private Label generatedTimestampLabel;
+
+    @FXML
+    private TableView<TurnoverSale> saleBreakdownTable;
+
+    @FXML
+    private TableColumn<TurnoverSale, Integer> saleIdColumn;
+
+    @FXML
+    private TableColumn<TurnoverSale, String> paymentMethodColumn;
+
+    @FXML
+    private TableColumn<TurnoverSale, String> saleDateColumn;
+
+    @FXML
+    private TableColumn<TurnoverSale, Float> amountColumn;
 
     @FXML
     private Button generateButton;
@@ -57,12 +80,26 @@ public class TurnoverReportController extends ControllerTemplate {
     private ReportService reportService;
     private TurnoverData currentData;
     private String currentUser;
+    private ObservableList<TurnoverSale> saleBreakdown = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         LocalDate now = LocalDate.now();
         startDatePicker.setValue(now.withDayOfMonth(1));
         endDatePicker.setValue(now);
+
+        saleIdColumn.setCellValueFactory(new PropertyValueFactory<>("saleId"));
+        paymentMethodColumn.setCellValueFactory(new PropertyValueFactory<>("paymentMethod"));
+        saleDateColumn.setCellValueFactory(new PropertyValueFactory<>("saleDate"));
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        amountColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Float amount, boolean empty) {
+                super.updateItem(amount, empty);
+                setText(empty || amount == null ? null : String.format("\u00A3%.2f", amount));
+            }
+        });
+        saleBreakdownTable.setItems(saleBreakdown);
 
         currentUser = getCurrentUserDisplayName();
         reportService = new ReportService(currentUser);
@@ -117,8 +154,14 @@ public class TurnoverReportController extends ControllerTemplate {
         }
 
         try {
-            ReportFactory.generateTurnoverReport(currentData, currentUser);
-            new CommonCalls().openErrorDialog("Report exported successfully to generated-reports/");
+            File reportFile = ReportFactory.generateTurnoverReport(currentData, currentUser);
+            try {
+                ReportFactory.openReport(reportFile);
+                new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath());
+            } catch (IOException openException) {
+                new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath()
+                        + "\n\nThe PDF could not be opened automatically: " + openException.getMessage());
+            }
         } catch (Exception e) {
             try {
                 new CommonCalls().openErrorDialog("Failed to export PDF: " + e.getMessage());
@@ -138,9 +181,10 @@ public class TurnoverReportController extends ControllerTemplate {
         periodLabel.setText(data.getReportPeriodStart() + " to " + data.getReportPeriodEnd());
         totalSalesAmountLabel.setText(String.format("£%.2f", data.getTotalSalesAmount()));
         totalSalesCountLabel.setText(String.valueOf(data.getTotalSalesCount()));
-        totalOrdersLabel.setText(String.format("£%.2f", data.getTotalOrdersPlacedValue()));
+//        totalOrdersLabel.setText(String.format("£%.2f", data.getTotalOrdersPlacedValue()));
         generatedByLabel.setText(data.getGeneratedBy());
         generatedTimestampLabel.setText(data.getGeneratedTimestamp().toString());
+        saleBreakdown.setAll(data.getSales());
 
         if (data.getTotalSalesAmount() == 0 && data.getTotalSalesCount() == 0 && data.getTotalOrdersPlacedValue() == 0) {
             try {

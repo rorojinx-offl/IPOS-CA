@@ -1,17 +1,23 @@
 package org.novastack.iposca.rpt.service;
 
+import org.jooq.DSLContext;
 import org.novastack.iposca.config.AppConfig;
 import org.novastack.iposca.config.AppConfigAPI;
 import org.novastack.iposca.rpt.model.DebtChangeData;
 import org.novastack.iposca.rpt.model.StockItem;
 import org.novastack.iposca.rpt.model.TurnoverData;
+import org.novastack.iposca.rpt.model.TurnoverSale;
 import org.novastack.iposca.stock.Stock;
+import org.novastack.iposca.utils.db.JooqConnection;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import static schema.tables.Sale.SALE;
 
 public class ReportService {
 
@@ -28,9 +34,31 @@ public class ReportService {
         data.setGeneratedBy(currentUser);
         data.setGeneratedTimestamp(LocalDate.now());
 
-        data.setTotalSalesCount(0);
-        data.setTotalSalesAmount(0f);
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.plusDays(1).atStartOfDay();
+        DSLContext ctx = JooqConnection.getDSLContext();
+
+        List<TurnoverSale> sales = new ArrayList<>();
+        ctx.selectFrom(SALE)
+                .where(SALE.SALE_DATE_TIME.ge(startDateTime.toString()))
+                .and(SALE.SALE_DATE_TIME.lt(endDateTime.toString()))
+                .orderBy(SALE.SALE_DATE_TIME.asc())
+                .fetch()
+                .forEach(record -> sales.add(new TurnoverSale(
+                        record.getId(),
+                        record.getPaymentMethod(),
+                        record.getSaleDateTime(),
+                        record.getAmount()
+                )));
+
+        float totalSalesAmount = (float) sales.stream()
+                .mapToDouble(TurnoverSale::getAmount)
+                .sum();
+
+        data.setTotalSalesCount(sales.size());
+        data.setTotalSalesAmount(totalSalesAmount);
         data.setTotalOrdersPlacedValue(0f);
+        data.setSales(sales);
 
         logReport("TURNOVER_REPORT", "Period: " + startDate + " to " + endDate);
         return data;
@@ -124,6 +152,4 @@ public class ReportService {
         }
     }
 }
-
-
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="199.0" prefWidth="467.0" style="-fx-background-color: #F7F7F7;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.utils.ui.InfoController">
+   <children>
+      <Label layoutX="159.0" layoutY="25.0" text="Report exported">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="infoMsg" editable="false" layoutX="36.0" layoutY="79.0" prefHeight="82.0" prefWidth="395.0" wrapText="true" />
+   </children>
+</AnchorPane>

@@ -18,6 +18,7 @@ import org.novastack.iposca.user.User;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.ControllerTemplate;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -157,8 +158,14 @@ public class StockReportController extends ControllerTemplate {
         }
 
         try {
-            ReportFactory.generateStockReport(displayedItems, currentUser);
-            new CommonCalls().openErrorDialog("Report exported successfully to generated-reports/");
+            File reportFile = ReportFactory.generateStockReport(displayedItems, currentUser);
+            try {
+                ReportFactory.openReport(reportFile);
+                new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath());
+            } catch (IOException openException) {
+                new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath()
+                        + "\n\nThe PDF could not be opened automatically: " + openException.getMessage());
+            }
         } catch (Exception e) {
             try {
                 new CommonCalls().openErrorDialog("Failed to export PDF: " + e.getMessage());

@@ -23,7 +23,7 @@ public class ReportFactory {
 
     private static final String REPORT_DIR = "generated-reports";
 
-    public static void generateTurnoverReport(TurnoverData data, String currentUser) throws IOException, JRException {
+    public static File generateTurnoverReport(TurnoverData data, String currentUser) throws IOException, JRException {
         InputStream jrxml = ReportFactory.class.getResourceAsStream("/jasper/rpt/turnoverReport.jrxml");
         if (jrxml == null) {
             throw new IOException("Report template not found: turnoverReport.jrxml");
@@ -40,16 +40,20 @@ public class ReportFactory {
         params.put("GENERATED_BY", data.getGeneratedBy());
         params.put("GENERATED_TIMESTAMP", data.getGeneratedTimestamp().toString());
 
-        JasperPrint print = JasperFillManager.fillReport(report, params, new JREmptyDataSource(1));
+        JRDataSource dataSource = data.getSales().isEmpty()
+                ? new JREmptyDataSource(1)
+                : new JRBeanCollectionDataSource(data.getSales());
+        JasperPrint print = JasperFillManager.fillReport(report, params, dataSource);
 
         Files.createDirectories(Path.of(REPORT_DIR));
-        String filename = REPORT_DIR + "/turnover_report_" + LocalDate.now() + "_" + currentUser + ".pdf";
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String filename = REPORT_DIR + "/turnover_report_" + timestamp + "_" + currentUser + ".pdf";
         JasperExportManager.exportReportToPdfFile(print, filename);
 
-        openPDF(new File(filename));
+        return new File(filename);
     }
 
-    public static void generateDebtReport(DebtChangeData data, String currentUser) throws IOException, JRException {
+    public static File generateDebtReport(DebtChangeData data, String currentUser) throws IOException, JRException {
         InputStream jrxml = ReportFactory.class.getResourceAsStream("/jasper/rpt/debtReport.jrxml");
         if (jrxml == null) {
             throw new IOException("Report template not found: debtReport.jrxml");
@@ -76,10 +80,10 @@ public class ReportFactory {
         String filename = REPORT_DIR + "/debt_report_" + LocalDate.now() + "_" + currentUser + ".pdf";
         JasperExportManager.exportReportToPdfFile(print, filename);
 
-        openPDF(new File(filename));
+        return new File(filename);
     }
 
-    public static void generateStockReport(List<StockItem> items, String currentUser) throws IOException, JRException {
+    public static File generateStockReport(List<StockItem> items, String currentUser) throws IOException, JRException {
         InputStream jrxml = ReportFactory.class.getResourceAsStream("/jasper/rpt/stockReport.jrxml");
         if (jrxml == null) {
             throw new IOException("Report template not found: stockReport.jrxml");
@@ -109,10 +113,10 @@ public class ReportFactory {
         String filename = REPORT_DIR + "/stock_report_" + timestamp + "_" + currentUser + ".pdf";
         JasperExportManager.exportReportToPdfFile(print, filename);
 
-        openPDF(new File(filename));
+        return new File(filename);
     }
 
-    private static void openPDF(File pdfFile) throws IOException {
+    public static void openReport(File pdfFile) throws IOException {
         if (!Desktop.isDesktopSupported()) {
             throw new IOException("Desktop is not supported");
         }

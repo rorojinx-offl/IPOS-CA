@@ -1,6 +1,8 @@
 package org.novastack.iposca.rpt.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TurnoverData {
     private LocalDate reportPeriodStart;
@@ -10,6 +12,7 @@ public class TurnoverData {
     private float totalOrdersPlacedValue;
     private String generatedBy;
     private LocalDate generatedTimestamp;
+    private List<TurnoverSale> sales = new ArrayList<>();
 
     public TurnoverData() {}
 
@@ -73,5 +76,13 @@ public class TurnoverData {
 
     public void setReportPeriodEnd(LocalDate reportPeriodEnd) {
         this.reportPeriodEnd = reportPeriodEnd;
+    }
+
+    public List<TurnoverSale> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<TurnoverSale> sales) {
+        this.sales = sales;
     }
 }
