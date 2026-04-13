@@ -31,6 +31,20 @@ public class CommonCalls {
         stage.showAndWait();
     }
 
+    public void openInfoDialog(String info) throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/common/info.fxml"));
+        Parent root = loader.load();
+
+        InfoController controller = loader.getController();
+        controller.setInfo(info);
+
+        stage.setTitle("Information");
+        stage.setScene(new javafx.scene.Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
+    }
+
     public boolean openConfirmationDialog(String prompt) throws IOException {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/common/confirm.fxml"));

@@ -233,7 +233,7 @@ public class SelectController implements Initializable {
                 null,
                 null,
                 LocalDateTime.now(),
-                draft.grandTotal()
+                draft.totalWithTax()
         );
         int saleID = SaleService.recordSale(sale);
         for (SaleService.SaleItem item : draft.items()) {
