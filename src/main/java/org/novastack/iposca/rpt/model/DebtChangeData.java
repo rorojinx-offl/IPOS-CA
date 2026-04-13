@@ -1,6 +1,8 @@
 package org.novastack.iposca.rpt.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DebtChangeData {
     private LocalDate startDate;
@@ -14,6 +16,7 @@ public class DebtChangeData {
     private int totalCreditSalesCount;
     private String generatedBy;
     private LocalDate generatedTimestamp;
+    private List<DebtReportRow> pdfRows = new ArrayList<>();
 
     public DebtChangeData() {}
 
@@ -103,5 +106,13 @@ public class DebtChangeData {
 
     public void setGeneratedTimestamp(LocalDate generatedTimestamp) {
         this.generatedTimestamp = generatedTimestamp;
+    }
+
+    public List<DebtReportRow> getPdfRows() {
+        return pdfRows;
+    }
+
+    public void setPdfRows(List<DebtReportRow> pdfRows) {
+        this.pdfRows = pdfRows;
     }
 }

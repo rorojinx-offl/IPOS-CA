@@ -4,6 +4,7 @@ import org.jooq.DSLContext;
 import org.novastack.iposca.config.AppConfig;
 import org.novastack.iposca.config.AppConfigAPI;
 import org.novastack.iposca.rpt.model.DebtChangeData;
+import org.novastack.iposca.rpt.model.DebtReportRow;
 import org.novastack.iposca.rpt.model.StockItem;
 import org.novastack.iposca.rpt.model.TurnoverData;
 import org.novastack.iposca.rpt.model.TurnoverSale;
@@ -14,9 +15,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import static schema.tables.Customer.CUSTOMER;
+import static schema.tables.CustomerCharge.CUSTOMER_CHARGE;
+import static schema.tables.CustomerRepayment.CUSTOMER_REPAYMENT;
 import static schema.tables.Sale.SALE;
 
 public class ReportService {
@@ -106,13 +112,39 @@ public class ReportService {
         data.setGeneratedBy(currentUser);
         data.setGeneratedTimestamp(LocalDate.now());
 
-        data.setOpeningAggregateDebt(0f);
-        data.setPaymentsReceived(0f);
-        data.setNewDebtAccrued(0f);
-        data.setClosingAggregateDebt(0f);
-        data.setTotalDebtorsCount(0);
-        data.setTotalPaymentsCount(0);
-        data.setTotalCreditSalesCount(0);
+        DSLContext ctx = JooqConnection.getDSLContext();
+        String start = startDate.toString();
+        String endExclusive = endDate.plusDays(1).toString();
+
+        List<Float> charges = ctx.select(CUSTOMER_CHARGE.AMOUNT)
+                .from(CUSTOMER_CHARGE)
+                .where(CUSTOMER_CHARGE.DATE.ge(start))
+                .and(CUSTOMER_CHARGE.DATE.lt(endExclusive))
+                .fetch(CUSTOMER_CHARGE.AMOUNT);
+
+        List<Float> repayments = ctx.select(CUSTOMER_REPAYMENT.AMOUNT)
+                .from(CUSTOMER_REPAYMENT)
+                .where(CUSTOMER_REPAYMENT.DATE.ge(start))
+                .and(CUSTOMER_REPAYMENT.DATE.lt(endExclusive))
+                .fetch(CUSTOMER_REPAYMENT.AMOUNT);
+
+        Map<Integer, Float> closingBalances = getDebtBalancesBefore(ctx, endExclusive);
+
+        float newDebtAccrued = sum(charges);
+        float paymentsReceived = sum(repayments);
+        float closingAggregateDebt = sumPositiveBalances(closingBalances);
+        float openingAggregateDebt = closingAggregateDebt - newDebtAccrued + paymentsReceived;
+
+        data.setOpeningAggregateDebt(openingAggregateDebt);
+        data.setPaymentsReceived(paymentsReceived);
+        data.setNewDebtAccrued(newDebtAccrued);
+        data.setClosingAggregateDebt(closingAggregateDebt);
+        data.setTotalDebtorsCount((int) closingBalances.values().stream()
+                .filter(balance -> balance > 0f)
+                .count());
+        data.setTotalPaymentsCount(repayments.size());
+        data.setTotalCreditSalesCount(charges.size());
+        data.setPdfRows(buildDebtReportRows(ctx, start, endExclusive, closingBalances));
 
         logReport("DEBT_REPORT", "Period: " + startDate + " to " + endDate);
         return data;
@@ -143,6 +175,100 @@ public class ReportService {
         return bulkCost * (1 + (markupRate / 100f));
     }
 
+    private float sum(List<Float> values) {
+        return (float) values.stream()
+                .mapToDouble(value -> value == null ? 0f : value)
+                .sum();
+    }
+
+    private List<DebtReportRow> buildDebtReportRows(DSLContext ctx, String start, String endExclusive, Map<Integer, Float> closingBalances) {
+        List<DebtReportRow> rows = new ArrayList<>();
+
+        rows.add(new DebtReportRow("Credit Sales", "", "", "", ""));
+        rows.add(new DebtReportRow("Charge ID", "Customer ID", "Customer", "Date", "Amount"));
+        int creditSalesRows = rows.size();
+        ctx.select(CUSTOMER_CHARGE.CRG_ID, CUSTOMER_CHARGE.CUST_ID, CUSTOMER.NAME, CUSTOMER_CHARGE.DATE, CUSTOMER_CHARGE.AMOUNT)
+                .from(CUSTOMER_CHARGE)
+                .join(CUSTOMER)
+                .on(CUSTOMER_CHARGE.CUST_ID.eq(CUSTOMER.ID))
+                .where(CUSTOMER_CHARGE.DATE.ge(start))
+                .and(CUSTOMER_CHARGE.DATE.lt(endExclusive))
+                .orderBy(CUSTOMER_CHARGE.DATE.asc(), CUSTOMER_CHARGE.CRG_ID.asc())
+                .fetch()
+                .forEach(record -> rows.add(new DebtReportRow(
+                        String.valueOf(record.get(CUSTOMER_CHARGE.CRG_ID)),
+                        String.valueOf(record.get(CUSTOMER_CHARGE.CUST_ID)),
+                        record.get(CUSTOMER.NAME),
+                        record.get(CUSTOMER_CHARGE.DATE),
+                        String.format("£%.2f", record.get(CUSTOMER_CHARGE.AMOUNT))
+                )));
+        if (rows.size() == creditSalesRows) {
+            rows.add(new DebtReportRow("No credit sales in selected period", "", "", "", ""));
+        }
+
+        rows.add(new DebtReportRow("", "", "", "", ""));
+        rows.add(new DebtReportRow("Debtors at Period End", "", "", "", ""));
+        rows.add(new DebtReportRow("Customer ID", "Customer", "Status", "Credit Limit", "Debt Balance"));
+        int debtorRows = rows.size();
+        closingBalances.entrySet().stream()
+                .filter(entry -> entry.getValue() > 0f)
+                .sorted(Map.Entry.comparingByKey())
+                .forEach(entry -> {
+                    var customerRecord = ctx.select(CUSTOMER.NAME, CUSTOMER.STATUS, CUSTOMER.CREDITLIMIT)
+                            .from(CUSTOMER)
+                            .where(CUSTOMER.ID.eq(entry.getKey()))
+                            .fetchOne();
+                    if (customerRecord == null) {
+                        return;
+                    }
+
+                    rows.add(new DebtReportRow(
+                            String.valueOf(entry.getKey()),
+                            customerRecord.get(CUSTOMER.NAME),
+                            customerRecord.get(CUSTOMER.STATUS),
+                            String.format("£%.2f", customerRecord.get(CUSTOMER.CREDITLIMIT)),
+                            String.format("£%.2f", entry.getValue())
+                    ));
+                });
+        if (rows.size() == debtorRows) {
+            rows.add(new DebtReportRow("No debtors at period end", "", "", "", ""));
+        }
+
+        return rows;
+    }
+
+    private Map<Integer, Float> getDebtBalancesBefore(DSLContext ctx, String endExclusive) {
+        Map<Integer, Float> balances = new HashMap<>();
+
+        ctx.select(CUSTOMER_CHARGE.CUST_ID, CUSTOMER_CHARGE.AMOUNT)
+                .from(CUSTOMER_CHARGE)
+                .where(CUSTOMER_CHARGE.DATE.lt(endExclusive))
+                .fetch()
+                .forEach(record -> balances.merge(
+                        record.get(CUSTOMER_CHARGE.CUST_ID),
+                        record.get(CUSTOMER_CHARGE.AMOUNT),
+                        Float::sum
+                ));
+
+        ctx.select(CUSTOMER_REPAYMENT.CUST_ID, CUSTOMER_REPAYMENT.AMOUNT)
+                .from(CUSTOMER_REPAYMENT)
+                .where(CUSTOMER_REPAYMENT.DATE.lt(endExclusive))
+                .fetch()
+                .forEach(record -> balances.merge(
+                        record.get(CUSTOMER_REPAYMENT.CUST_ID),
+                        -record.get(CUSTOMER_REPAYMENT.AMOUNT),
+                        Float::sum
+                ));
+
+        return balances;
+    }
+
+    private float sumPositiveBalances(Map<Integer, Float> balances) {
+        return (float) balances.values().stream()
+                .mapToDouble(balance -> Math.max(0f, balance))
+                .sum();
+    }
+
     private float getVatRate() {
         try {
             byte[] vat = AppConfig.get(AppConfig.ConfigKey.VAT);
@@ -152,4 +278,3 @@ public class ReportService {
         }
     }
 }
-

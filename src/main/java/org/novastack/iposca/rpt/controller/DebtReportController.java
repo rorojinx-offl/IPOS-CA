@@ -163,7 +163,7 @@ public class DebtReportController extends ControllerTemplate {
         paymentsReceivedLabel.setText(String.format("£%.2f", data.getPaymentsReceived()));
         newDebtLabel.setText(String.format("£%.2f", data.getNewDebtAccrued()));
         closingDebtLabel.setText(String.format("£%.2f", data.getClosingAggregateDebt()));
-        formulaLabel.setText(String.format("£%.2f = £%.2f + £%.2f - £%.2f",
+        formulaLabel.setText(String.format("End Debt £%.2f = Start Debt £%.2f + New Purchases £%.2f - Payments £%.2f",
                 data.getClosingAggregateDebt(),
                 data.getOpeningAggregateDebt(),
                 data.getNewDebtAccrued(),

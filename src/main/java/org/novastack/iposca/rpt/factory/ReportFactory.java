@@ -74,10 +74,14 @@ public class ReportFactory {
         params.put("GENERATED_BY", data.getGeneratedBy());
         params.put("GENERATED_TIMESTAMP", data.getGeneratedTimestamp().toString());
 
-        JasperPrint print = JasperFillManager.fillReport(report, params, new JREmptyDataSource(1));
+        JRDataSource dataSource = data.getPdfRows().isEmpty()
+                ? new JREmptyDataSource(1)
+                : new JRBeanCollectionDataSource(data.getPdfRows());
+        JasperPrint print = JasperFillManager.fillReport(report, params, dataSource);
 
         Files.createDirectories(Path.of(REPORT_DIR));
-        String filename = REPORT_DIR + "/debt_report_" + LocalDate.now() + "_" + currentUser + ".pdf";
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String filename = REPORT_DIR + "/debt_report_" + timestamp + "_" + currentUser + ".pdf";
         JasperExportManager.exportReportToPdfFile(print, filename);
 
         return new File(filename);
