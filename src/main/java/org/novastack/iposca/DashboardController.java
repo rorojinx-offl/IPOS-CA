@@ -213,8 +213,18 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void user(MouseEvent event) {
+    void user(MouseEvent event) throws IOException {
+        Stage stage = (Stage) userButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
 
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.USER)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/user/userMenu.fxml", "Admin Dashboard");
     }
 
 }
