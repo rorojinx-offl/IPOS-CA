@@ -4,6 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.novastack.iposca.session.Session;
+import org.novastack.iposca.session.SessionManager;
+import org.novastack.iposca.user.User;
+import org.novastack.iposca.user.UserEnums;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.ControllerTemplate;
 
@@ -25,13 +29,13 @@ public class ReportsMenuController extends ControllerTemplate{
     @FXML
     private Button backButton;
 
-    private String currentUserRole = "MANAGER";
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (!currentUserRole.equals("MANAGER") && !currentUserRole.equals("ADMIN")) {
+        Session session = SessionManager.getCurrentSession();
+        User user = SessionManager.getCurrentUser();
+        if (session == null || user == null || !session.hasAccess(user.getRole(), UserEnums.UserAccess.RPT)) {
             try {
-                new CommonCalls().openErrorDialog("Access Denied: Only Managers and Admins can access reports.");
+                new CommonCalls().openErrorDialog("Access Denied: You do not have access to reports.");
                 goBack();
             } catch (IOException e) {
                 e.printStackTrace();

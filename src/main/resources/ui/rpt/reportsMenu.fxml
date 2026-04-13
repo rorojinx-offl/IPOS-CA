@@ -45,7 +45,5 @@
             </children>
         </VBox>
 
-        <Separator layoutX="350.0" layoutY="71.0" orientation="VERTICAL" prefHeight="429.0" />
-        <Separator layoutY="450.0" prefHeight="1.0" prefWidth="750.0" />
     </children>
 </AnchorPane>

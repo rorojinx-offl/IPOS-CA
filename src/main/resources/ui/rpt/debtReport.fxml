@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFF7B2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.rpt.controller.DebtReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: #FFF7B2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.rpt.controller.DebtReportController">
     <children>
         <Pane prefHeight="71.0" prefWidth="800.0" style="-fx-background-color: #28282B;">
             <children>
@@ -163,7 +163,7 @@
             </children>
         </VBox>
 
-        <Separator layoutX="350.0" layoutY="71.0" orientation="VERTICAL" prefHeight="529.0" />
-        <Separator layoutY="550.0" prefHeight="1.0" prefWidth="800.0" />
+<!--        <Separator layoutX="350.0" layoutY="71.0" orientation="VERTICAL" prefHeight="529.0" />-->
+<!--        <Separator layoutY="550.0" prefHeight="1.0" prefWidth="800.0" />-->
     </children>
 </AnchorPane>

@@ -120,7 +120,7 @@
             </children>
         </VBox>
 
-        <Separator layoutX="450.0" layoutY="71.0" orientation="VERTICAL" prefHeight="579.0" />
-        <Separator layoutY="600.0" prefHeight="1.0" prefWidth="950.0" />
+<!--        <Separator layoutX="450.0" layoutY="71.0" orientation="VERTICAL" prefHeight="579.0" />-->
+<!--        <Separator layoutY="600.0" prefHeight="1.0" prefWidth="950.0" />-->
     </children>
 </AnchorPane>

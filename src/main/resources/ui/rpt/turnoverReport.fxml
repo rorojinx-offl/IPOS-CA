@@ -104,7 +104,7 @@
             </children>
         </VBox>
 
-        <Separator layoutX="350.0" layoutY="71.0" orientation="VERTICAL" prefHeight="479.0" />
+<!--        <Separator layoutX="350.0" layoutY="71.0" orientation="VERTICAL" prefHeight="479.0" />-->
         <Separator layoutY="500.0" prefHeight="1.0" prefWidth="800.0" />
     </children>
 </AnchorPane>

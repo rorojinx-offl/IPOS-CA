@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import org.novastack.iposca.rpt.factory.ReportFactory;
 import org.novastack.iposca.rpt.model.DebtChangeData;
 import org.novastack.iposca.rpt.service.ReportService;
+import org.novastack.iposca.session.Session;
+import org.novastack.iposca.session.SessionManager;
+import org.novastack.iposca.user.User;
 import org.novastack.iposca.utils.ui.CommonCalls;
 import org.novastack.iposca.utils.ui.ControllerTemplate;
 
@@ -69,7 +72,7 @@ public class DebtReportController extends ControllerTemplate {
 
     private ReportService reportService;
     private DebtChangeData currentData;
-    private String currentUser = "admin";
+    private String currentUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -77,6 +80,7 @@ public class DebtReportController extends ControllerTemplate {
         startDatePicker.setValue(now.withDayOfMonth(1));
         endDatePicker.setValue(now);
 
+        currentUser = getCurrentUserDisplayName();
         reportService = new ReportService(currentUser);
         exportPdfButton.setDisable(true);
     }
@@ -174,4 +178,18 @@ public class DebtReportController extends ControllerTemplate {
     }
 
 
+    private String getCurrentUserDisplayName() {
+        Session session = SessionManager.getCurrentSession();
+        User user = session == null ? null : session.getCurrentUser();
+        if (user == null) {
+            return "unknown";
+        }
+
+        String fullName = user.getFullName();
+        if (fullName != null && !fullName.trim().isEmpty()) {
+            return fullName.trim();
+        }
+
+        return user.getUsername();
+    }
 }
