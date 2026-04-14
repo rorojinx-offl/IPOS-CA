@@ -44,11 +44,11 @@
             </Label>
             <StackPane>
                <children>
-                  <CustomPasswordField fx:id="pwdHidden" style="-fx-border-color: #cfd6e4; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 8 12 8 12;" />
-                  <CustomTextField fx:id="pwdNaked" style="-fx-border-color: #cfd6e4; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 8 12 8 12;" visible="false" />
+                  <CustomPasswordField fx:id="pwdHidden" onKeyPressed="#loginFromPwdField" style="-fx-border-color: #cfd6e4; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 8 12 8 12;" />
+                  <CustomTextField fx:id="pwdNaked" onKeyPressed="#loginFromPwdField" style="-fx-border-color: #cfd6e4; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 8 12 8 12;" visible="false" />
                </children>
             </StackPane>
-            <CheckBox fx:id="showPwd" lineSpacing="1.0" mnemonicParsing="false" onAction="#togglePassword" text="Show Password" />
+            <CheckBox fx:id="showPwd" lineSpacing="1.0" mnemonicParsing="false" onAction="#togglePassword" text="Show/Hide" />
          </children>
       </HBox>
       <Pane layoutX="364.0" layoutY="14.0" prefHeight="123.0" prefWidth="243.0" visible="false">

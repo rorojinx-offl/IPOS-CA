@@ -65,7 +65,7 @@
                         <Image url="@assets/user.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" text="User Management" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
+                  <Label alignment="CENTER" text="Admin Dashboard" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
                      <font>
                         <Font size="16.0" />
                      </font>
