@@ -241,6 +241,18 @@ public class DashboardController implements Initializable {
     }
 
     private static void openBrowser(String url) throws IOException {
+
+        String os = System.getProperty("os.name").toLowerCase();
+
+        if (os.contains("linux")) {
+            try {
+                new ProcessBuilder("xdg-open", url).start();
+            } catch (Exception e) {
+                throw new IOException("Failed to open PDF file: " + e.getMessage());
+            }
+            return;
+        }
+
         if (Desktop.isDesktopSupported()) {
             Desktop.getDesktop().browse(URI.create(url));
         } else {
