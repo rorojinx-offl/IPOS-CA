@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.novastack.iposca.cust.customer.Customer;
+import org.novastack.iposca.cust.debt.DebtAutomationService;
 import org.novastack.iposca.cust.statement.StatementService;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
@@ -52,6 +53,7 @@ public class MenuController implements Initializable {
 
     @FXML
     void manageDebt(MouseEvent event) throws IOException {
+        DebtAutomationService.runDailyDebtEvaluation();
         Stage stage = (Stage) debtButton.getScene().getWindow();
         new CommonCalls().traverse(stage, "/ui/cust/debtMgmt.fxml", "Debt Management");
     }

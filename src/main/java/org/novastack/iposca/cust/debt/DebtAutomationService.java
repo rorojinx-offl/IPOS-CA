@@ -35,7 +35,12 @@ public class DebtAutomationService {
             CustomerDebt debt = CustomerDebt.getDebtFull(dw.customerID());
             if (DAUtils.check2ndReminderExists(debt)) {
                 String secondDate = DAUtils.secondReminderPush(debt.getDate1Reminder());
-                CustomerDebt.setReminderDateStatus(dw.customerID(), CustomerEnums.ReminderType.SECOND, secondDate, CustomerEnums.ReminderStatus.DUE.name());
+                if (LocalDate.parse(secondDate).isAfter(LocalDate.now())) {
+                    CustomerDebt.setReminderDateStatus(dw.customerID(), CustomerEnums.ReminderType.SECOND, secondDate, CustomerEnums.ReminderStatus.NO_NEED.name());
+                } else {
+                    CustomerDebt.setReminderDateStatus(dw.customerID(), CustomerEnums.ReminderType.SECOND, secondDate, CustomerEnums.ReminderStatus.DUE.name());
+                }
+
                 Customer.updateAccountStatus(dw.customerID(), CustomerEnums.AccountStatus.SUSPENDED.name());
                 continue;
             }
