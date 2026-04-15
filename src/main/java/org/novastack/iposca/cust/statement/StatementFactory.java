@@ -5,6 +5,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.novastack.iposca.Bootstrap;
 import org.novastack.iposca.cust.UIControllers.DebtController;
 import org.novastack.iposca.cust.reminders.ReminderInfo;
+import org.novastack.iposca.rpt.factory.ReportFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class StatementFactory {
 
         Path pdf = Path.of(Bootstrap.getDocsPath("statements").toString(), "statement-" + month.toString() + "-" + info.customer().getName() + ".pdf");
         JasperExportManager.exportReportToPdfFile(print, pdf.toString());
+        ReportFactory.openPDF(pdf.toFile());
     }
 
     private static Map<String, Object> buildParams(StatementService.StatementInfo info, YearMonth month, ReminderInfo.Merchant merchant) {

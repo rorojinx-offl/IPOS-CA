@@ -2,6 +2,7 @@ package org.novastack.iposca.cust.reminders;
 
 import net.sf.jasperreports.engine.*;
 import org.novastack.iposca.cust.customer.CustomerEnums;
+import org.novastack.iposca.rpt.factory.ReportFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class ReminderFactory {
         Files.createDirectories(outputPath.getParent());
 
         JasperExportManager.exportReportToPdfFile(print, outputPath.toString());
+        ReportFactory.openPDF(outputPath.toFile());
     }
 
     private static Map<String, Object> buildParams(ReminderInfo info, ReminderInfo.Merchant merchant, CustomerEnums.ReminderType type) {

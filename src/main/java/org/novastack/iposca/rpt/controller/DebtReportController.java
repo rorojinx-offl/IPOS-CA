@@ -136,7 +136,7 @@ public class DebtReportController extends ControllerTemplate {
         try {
             File reportFile = ReportFactory.generateDebtReport(currentData, currentUser);
             try {
-                ReportFactory.openReport(reportFile);
+                ReportFactory.openPDF(reportFile);
                 new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath());
             } catch (IOException openException) {
                 new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath()

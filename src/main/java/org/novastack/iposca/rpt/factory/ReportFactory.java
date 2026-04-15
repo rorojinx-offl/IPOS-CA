@@ -11,7 +11,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -122,17 +121,23 @@ public class ReportFactory {
         return new File(pdf.toUri());
     }
 
-    public static void openReport(File pdfFile) throws IOException {
-        if (!Desktop.isDesktopSupported()) {
-            throw new IOException("Desktop is not supported");
+    public static void openPDF(File pdfFile) throws IOException {
+        Path path = pdfFile.toPath().toAbsolutePath();
+
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (desktop.isSupported(Desktop.Action.OPEN)) {
+                    desktop.open(path.toFile());
+                    return;
+                }
+            }
+        } catch (Exception ignored) {}
+
+        try {
+            new ProcessBuilder("xdg-open", path.toString()).start();
+        } catch (Exception e) {
+            throw new IOException("Failed to open PDF file: " + e.getMessage());
         }
-
-        Desktop desktop = Desktop.getDesktop();
-
-        if (!desktop.isSupported(Desktop.Action.OPEN)) {
-            throw new IOException("Opening PDF files is not supported");
-        }
-
-        desktop.open(pdfFile);
     }
 }

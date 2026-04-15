@@ -2,6 +2,7 @@ package org.novastack.iposca.stock.report;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.novastack.iposca.Bootstrap;
+import org.novastack.iposca.rpt.factory.ReportFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -31,6 +32,7 @@ public class LowStockReportFactory {
 
         Path pdf = Path.of(Bootstrap.getDocsPath("stock").toString(), "lowStockReport-" + LocalDate.now().format(dateFormat) + ".pdf");
         JasperExportManager.exportReportToPdfFile(print, pdf.toString());
+        ReportFactory.openPDF(pdf.toFile());
     }
 
     private static Map<String, Object> buildParams(ReportData data) {

@@ -11,6 +11,7 @@ import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.plans.FixedDiscountPlan;
 import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.cust.reminders.ReminderInfo;
+import org.novastack.iposca.rpt.factory.ReportFactory;
 import org.novastack.iposca.sales.UIControllers.SelectController;
 
 import java.awt.*;
@@ -45,7 +46,7 @@ public class InvoiceFactory {
             pdf = Path.of(Bootstrap.getDocsPath("cinvoice").toString(), "invoice-" + LocalDate.now().toString() + "-" + data.customer().getName() + ".pdf");
         }
         JasperExportManager.exportReportToPdfFile(print, pdf.toString());
-        //openPDF(pdf.toFile());
+        ReportFactory.openPDF(pdf.toFile());
     }
 
     private static Map<String, Object> buildParams(ArrayList<InvoiceItems> items, Customer customer, SaleService.CartMode cartMode, ReminderInfo.Merchant merchant, SelectController.Totals totals) {
@@ -103,19 +104,5 @@ public class InvoiceFactory {
         params.put("ITEM_DATA_SOURCE", dataSource);
 
         return params;
-    }
-
-    private static void openPDF(File pdfFile) throws IOException, UnsupportedOperationException {
-        if (!Desktop.isDesktopSupported()) {
-            throw new UnsupportedOperationException("Desktop is not supported");
-        }
-
-        Desktop desktop = Desktop.getDesktop();
-
-        if (!desktop.isSupported(Desktop.Action.OPEN)) {
-            throw new UnsupportedOperationException("Opening PDF files is not supported");
-        }
-
-        desktop.open(pdfFile);
     }
 }
