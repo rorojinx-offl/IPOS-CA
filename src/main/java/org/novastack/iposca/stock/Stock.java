@@ -165,7 +165,7 @@ public class Stock {
         ArrayList<Stock> inventory = new ArrayList<>();
         DSLContext ctx = JooqConnection.getDSLContext();
         double percentage = 0.2;
-        ctx.selectFrom(STOCK).where(STOCK.QUANTITY.le(DSL.round(STOCK.STOCK_LIMIT.mul(percentage)))).fetch().forEach(record -> {
+        ctx.selectFrom(STOCK).where(STOCK.QUANTITY.le(STOCK.STOCK_LIMIT)).fetch().forEach(record -> {
                     inventory.add(new Stock(
                                     STOCK.ITEM_ID.getValue(record),
                                     STOCK.NAME.getValue(record),
