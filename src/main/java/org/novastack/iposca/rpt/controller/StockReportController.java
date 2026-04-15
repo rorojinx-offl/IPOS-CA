@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.novastack.iposca.PDF;
 import org.novastack.iposca.rpt.factory.ReportFactory;
 import org.novastack.iposca.rpt.model.StockItem;
 import org.novastack.iposca.rpt.service.ReportService;
@@ -160,7 +161,7 @@ public class StockReportController extends ControllerTemplate {
         try {
             File reportFile = ReportFactory.generateStockReport(displayedItems, currentUser);
             try {
-                ReportFactory.openPDF(reportFile);
+                PDF.openPDF(reportFile);
                 new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath());
             } catch (IOException openException) {
                 new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath()

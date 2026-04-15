@@ -3,23 +3,19 @@ package org.novastack.iposca.sales;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.novastack.iposca.Bootstrap;
+import org.novastack.iposca.PDF;
 import org.novastack.iposca.config.AppConfig;
 import org.novastack.iposca.config.AppConfigAPI;
-import org.novastack.iposca.cust.UIControllers.DebtController;
 import org.novastack.iposca.cust.customer.Customer;
 import org.novastack.iposca.cust.customer.CustomerEnums;
 import org.novastack.iposca.cust.plans.FixedDiscountPlan;
 import org.novastack.iposca.cust.plans.FlexiDiscountPlan;
 import org.novastack.iposca.cust.reminders.ReminderInfo;
-import org.novastack.iposca.rpt.factory.ReportFactory;
 import org.novastack.iposca.sales.UIControllers.SelectController;
 
-import java.awt.*;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,7 +42,7 @@ public class InvoiceFactory {
             pdf = Path.of(Bootstrap.getDocsPath("cinvoice").toString(), "invoice-" + LocalDate.now().toString() + "-" + data.customer().getName() + ".pdf");
         }
         JasperExportManager.exportReportToPdfFile(print, pdf.toString());
-        ReportFactory.openPDF(pdf.toFile());
+        PDF.openPDF(pdf.toFile());
     }
 
     private static Map<String, Object> buildParams(ArrayList<InvoiceItems> items, Customer customer, SaleService.CartMode cartMode, ReminderInfo.Merchant merchant, SelectController.Totals totals) {

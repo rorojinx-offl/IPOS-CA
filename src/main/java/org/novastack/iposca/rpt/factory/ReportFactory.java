@@ -7,7 +7,6 @@ import org.novastack.iposca.rpt.model.DebtChangeData;
 import org.novastack.iposca.rpt.model.StockItem;
 import org.novastack.iposca.rpt.model.TurnoverData;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -121,23 +120,4 @@ public class ReportFactory {
         return new File(pdf.toUri());
     }
 
-    public static void openPDF(File pdfFile) throws IOException {
-        Path path = pdfFile.toPath().toAbsolutePath();
-
-        try {
-            if (Desktop.isDesktopSupported()) {
-                Desktop desktop = Desktop.getDesktop();
-                if (desktop.isSupported(Desktop.Action.OPEN)) {
-                    desktop.open(path.toFile());
-                    return;
-                }
-            }
-        } catch (Exception ignored) {}
-
-        try {
-            new ProcessBuilder("xdg-open", path.toString()).start();
-        } catch (Exception e) {
-            throw new IOException("Failed to open PDF file: " + e.getMessage());
-        }
-    }
 }

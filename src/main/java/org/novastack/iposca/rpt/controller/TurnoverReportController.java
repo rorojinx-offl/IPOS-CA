@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.novastack.iposca.PDF;
 import org.novastack.iposca.rpt.factory.ReportFactory;
 import org.novastack.iposca.rpt.model.TurnoverData;
 import org.novastack.iposca.rpt.model.TurnoverSale;
@@ -156,7 +157,7 @@ public class TurnoverReportController extends ControllerTemplate {
         try {
             File reportFile = ReportFactory.generateTurnoverReport(currentData, currentUser);
             try {
-                ReportFactory.openPDF(reportFile);
+                PDF.openPDF(reportFile);
                 new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath());
             } catch (IOException openException) {
                 new CommonCalls().openInfoDialog("Report exported successfully to " + reportFile.getPath()
