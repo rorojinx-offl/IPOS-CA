@@ -60,10 +60,10 @@ public class CustomerMonthlySpend {
     }
 
     private int calculateRate(float currSpending) {
-        if (currSpending >= 4000f) {return 50;}
-        else if (currSpending >= 3000f) {return 30;}
-        else if (currSpending >= 2000f) {return 20;}
-        else if (currSpending >= 1000f) {return 10;}
+        if (currSpending >= 300f) {return 2;}
+        else if (currSpending >= 100f) {return 1;}
+        //else if (currSpending >= 2000f) {return 20;}
+        //else if (currSpending >= 1000f) {return 10;}
         else return 0;
     }
 
