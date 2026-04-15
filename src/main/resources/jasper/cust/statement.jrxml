@@ -49,13 +49,13 @@
 	<query language="sql"><![CDATA[]]></query>
 	<background splitType="Stretch"/>
 	<title height="219" splitType="Stretch">
-		<element kind="textField" uuid="1f9fb75b-e284-4710-8ea1-3862d71d7e42" x="91" y="-10" width="570" height="50" fontName="Agency FB" fontSize="36.0" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="1f9fb75b-e284-4710-8ea1-3862d71d7e42" x="91" y="-10" width="570" height="50" fontName="SansSerif" fontSize="36.0" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{M_NAME} + " Statement"]]></expression>
 		</element>
 		<element kind="textField" uuid="8f77920d-8dbb-4e43-94f9-9798b8fc3432" x="241" y="40" width="270" height="20" fontSize="14.0" textAdjust="ScaleFont" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{M_ADDRESS}]]></expression>
 		</element>
-		<element kind="textField" uuid="41e319d6-7d30-4f2e-abdb-43b93a16bd8b" x="295" y="60" width="162" height="20" fontSize="11.0" textAdjust="ScaleFont">
+		<element kind="textField" uuid="41e319d6-7d30-4f2e-abdb-43b93a16bd8b" x="295" y="60" width="162" height="20" fontSize="11.0" textAdjust="ScaleFont" hTextAlign="Center">
 			<expression><![CDATA["Email: " + $P{EMAIL}]]></expression>
 		</element>
 		<element kind="image" uuid="3314cc8e-f729-4499-bafd-a55f842d2620" x="660" y="-10" width="79" height="79">
