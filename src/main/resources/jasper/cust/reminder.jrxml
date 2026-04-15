@@ -16,7 +16,7 @@
 	<query language="SQL"><![CDATA[]]></query>
 	<background splitType="Stretch"/>
 	<title height="119" splitType="Stretch">
-		<element kind="textField" uuid="53ad0f6c-b999-433f-a435-f2538936dca4" x="-8" y="0" width="570" height="79" fontName="SansSerif" fontSize="36.0" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="53ad0f6c-b999-433f-a435-f2538936dca4" x="-8" y="0" width="570" height="79" fontName="SansSerif" fontSize="27.0" textAdjust="ScaleFont" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{M_NAME} + " Debt Reminder"]]></expression>
 		</element>
 		<element kind="textField" uuid="ec8a89bf-0973-4233-ad59-9f88b5802e1e" x="151" y="59" width="270" height="20" fontSize="14.0" textAdjust="ScaleFont" hTextAlign="Center" vTextAlign="Middle">
@@ -29,13 +29,13 @@
 			<expression><![CDATA[$P{LOGO}]]></expression>
 		</element>
 	</title>
-	<pageHeader height="253" splitType="Stretch">
+	<pageHeader height="250" splitType="Stretch">
 		<element kind="textField" uuid="5aaec570-d1f0-41db-bb14-4b025dc91752" x="10" y="1" width="140" height="98" textAdjust="ScaleFont">
 			<expression><![CDATA[$P{C_NAME} + "\n" +
 $P{C_ADDRESS} + "\n" + 
 "Phone: " + $P{PHONE}]]></expression>
 		</element>
-		<element kind="textField" uuid="4d97a084-c2e4-4f50-b123-64a4ca521c47" x="10" y="150" width="560" height="100">
+		<element kind="textField" uuid="4d97a084-c2e4-4f50-b123-64a4ca521c47" x="10" y="150" width="560" height="100" textAdjust="ScaleFont">
 			<expression><![CDATA["Dear " + $P{C_NAME} + ",\n\n"
 + "Our records indicate that an outstanding balance of £"
 + new java.text.DecimalFormat("0.00").format($P{DEBT})
