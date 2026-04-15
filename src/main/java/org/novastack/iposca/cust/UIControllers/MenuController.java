@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -60,6 +61,11 @@ public class MenuController implements Initializable {
 
     @FXML
     void generateStatements(MouseEvent event) throws IOException {
+        if (event.getButton() == MouseButton.SECONDARY) {
+            genStatementForDemo();
+            return;
+        }
+
         LocalDate now = LocalDate.now();
         ArrayList<Customer> custs = StatementService.getEligibleCustomers();
 
@@ -74,6 +80,18 @@ public class MenuController implements Initializable {
         } else {
             new CommonCalls().openErrorDialog("Statements cannot be generated at this time!");
         }
+    }
+
+    private void genStatementForDemo() throws IOException {
+        ArrayList<Customer> custs = StatementService.getEligibleCustomers();
+
+        if (custs.isEmpty()) {
+            new CommonCalls().openErrorDialog("No eligible customers found!");
+            return;
+        }
+
+        Stage stage = (Stage) statementButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/cust/custStm.fxml", "Customer Statements");
     }
 
     @FXML
