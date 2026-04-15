@@ -31,9 +31,7 @@ public class CustomerMonthlyBalance {
                 add(new TableSchema.Column("CUST_ID", "INTEGER", false, true,new ArrayList<>() {{
                     add(new ColumnConstraint.Unique());
                 }}));
-                add(new TableSchema.Column("MONTH_YEAR", "TEXT", false, true,new ArrayList<>() {{
-                    add(new ColumnConstraint.Unique());
-                }}));
+                add(new TableSchema.Column("MONTH_YEAR", "TEXT", false, true, null));
                 add(new TableSchema.Column("BALANCE_DUE", "REAL", false, true,null));
                 add(new TableSchema.ForeignKey("CUST_ID", "customer", "ID", true, true));
             }
