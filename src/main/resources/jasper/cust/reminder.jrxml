@@ -16,13 +16,13 @@
 	<query language="SQL"><![CDATA[]]></query>
 	<background splitType="Stretch"/>
 	<title height="119" splitType="Stretch">
-		<element kind="textField" uuid="53ad0f6c-b999-433f-a435-f2538936dca4" x="-8" y="0" width="570" height="79" fontName="Agency FB" fontSize="36.0" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="53ad0f6c-b999-433f-a435-f2538936dca4" x="-8" y="0" width="570" height="79" fontName="SansSerif" fontSize="36.0" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{M_NAME} + " Debt Reminder"]]></expression>
 		</element>
 		<element kind="textField" uuid="ec8a89bf-0973-4233-ad59-9f88b5802e1e" x="151" y="59" width="270" height="20" fontSize="14.0" textAdjust="ScaleFont" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{M_ADDRESS}]]></expression>
 		</element>
-		<element kind="textField" uuid="45106f78-5c80-4031-b1b1-6ff08f4bb907" x="205" y="79" width="162" height="20" fontSize="11.0" textAdjust="ScaleFont">
+		<element kind="textField" uuid="45106f78-5c80-4031-b1b1-6ff08f4bb907" x="205" y="79" width="162" height="20" fontSize="11.0" textAdjust="ScaleFont" hTextAlign="Center">
 			<expression><![CDATA["Email: " + $P{EMAIL}]]></expression>
 		</element>
 		<element kind="image" uuid="f9b7cc47-36fb-4da9-923c-529b0d0a8600" x="490" y="10" width="79" height="79">
