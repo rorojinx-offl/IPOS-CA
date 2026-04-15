@@ -24,7 +24,10 @@ public class DebtAutomationService {
                 CustomerDebt.setReminderDateStatus(dw.customerID(), CustomerEnums.ReminderType.FIRST, firstDate, CustomerEnums.ReminderStatus.DUE.name());
             }
 
-            StatementService.trackMonthlyDebt(dw.customerID(), YearMonth.now(), dw.balance());
+            Customer customer = new Customer().getCustomer(dw.customerID());
+            float creditLimit = customer.getCreditLimit();
+
+            StatementService.trackMonthlyDebt(dw.customerID(), YearMonth.now(), creditLimit - dw.balance());
         }
     }
 
