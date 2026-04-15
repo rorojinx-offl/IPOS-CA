@@ -14,7 +14,9 @@ import org.novastack.iposca.user.User;
 import org.novastack.iposca.user.UserEnums;
 import org.novastack.iposca.utils.ui.CommonCalls;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -140,8 +142,19 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void ord(MouseEvent event) {
-
+    void ord(MouseEvent event) throws IOException {
+        User user = session.getCurrentUser();
+        if (user == null) {
+            return;
+        }
+        if (session.hasAccess(user.getRole(), UserEnums.UserAccess.ORD)) {
+            String url = "http://localhost:8080/login.html";
+            try {
+                openBrowser(url);
+            } catch (IOException e) {
+                new CommonCalls().openErrorDialog("Error opening URL in browser, please copy this link and paste it into the browser: " + url);
+            }
+        }
     }
 
     @FXML
@@ -227,4 +240,11 @@ public class DashboardController implements Initializable {
         new CommonCalls().traverse(stage, "/ui/user/userMenu.fxml", "Admin Dashboard");
     }
 
+    private static void openBrowser(String url) throws IOException {
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().browse(URI.create(url));
+        } else {
+            new CommonCalls().openErrorDialog("Error opening URL in browser, please copy this link and paste it into the browser: " + url);
+        }
+    }
 }
