@@ -145,7 +145,7 @@ public class CustomerDebt {
                     custName,
                     creditLimit,
                     custStatus,
-                    CUSTOMER_DEBT.BALANCE.getValue(record),
+                    creditLimit - CUSTOMER_DEBT.BALANCE.getValue(record),
                     CUSTOMER_DEBT.STATUS_1_REMINDER.getValue(record),
                     parseDate(CUSTOMER_DEBT.DATE_1_REMINDER.getValue(record)),
                     CUSTOMER_DEBT.STATUS_2_REMINDER.getValue(record),

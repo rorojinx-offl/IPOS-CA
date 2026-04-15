@@ -116,6 +116,11 @@ public class DebtController implements Initializable {
             return;
         }
 
+        if (customerTable.getSelectionModel().getSelectedItem().getBalance() == customerTable.getSelectionModel().getSelectedItem().getCustCreditLimit()) {
+            new CommonCalls().openErrorDialog("This customer has repaid already!");
+            return;
+        }
+
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/cust/debtRepay.fxml"));
         Parent root = loader.load();
@@ -209,7 +214,7 @@ public class DebtController implements Initializable {
             return;
         }
 
-        if (customerTable.getSelectionModel().getSelectedItem().getBalance() > 0f) {
+        if (customerTable.getSelectionModel().getSelectedItem().getBalance() != customerTable.getSelectionModel().getSelectedItem().getCustCreditLimit()) {
             new CommonCalls().openErrorDialog("This customer has unsettled debts! Please settle them before restoring the account.");
             return;
         }
