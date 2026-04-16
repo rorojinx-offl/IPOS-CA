@@ -8,13 +8,39 @@ import java.time.LocalDate;
 public class TestAddUser {
     static void main() {
         User user = new User(
-                "TestManager",
-                "apple",
-                UserEnums.UserRole.MANAGER,
-                "John Smith",
+                "sysdba",
+                "masterkey",
+                UserEnums.UserRole.ADMIN,
+                "Rohit Gurunathan",
                 LocalDate.now()
         );
+        user.createUser(user);
 
+        user = new User(
+                "manager",
+                "Get_it_done",
+                UserEnums.UserRole.MANAGER,
+                "Ahmed Hassan",
+                LocalDate.now()
+        );
+        user.createUser(user);
+
+        user = new User(
+                "accountant",
+                "Count_money",
+                UserEnums.UserRole.PHARMACIST,
+                "Hetal Patel",
+                LocalDate.now()
+        );
+        user.createUser(user);
+
+        user = new User(
+                "clerk",
+                "Paperwork",
+                UserEnums.UserRole.PHARMACIST,
+                "Wasil Barits",
+                LocalDate.now()
+        );
         user.createUser(user);
     }
 }
