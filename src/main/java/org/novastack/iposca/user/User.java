@@ -3,6 +3,7 @@ package org.novastack.iposca.user;
 import org.jooq.DSLContext;
 import org.mindrot.jbcrypt.BCrypt;
 import org.novastack.iposca.exceptions.AuthenticationException;
+import org.novastack.iposca.session.SessionManager;
 import org.novastack.iposca.utils.db.JooqConnection;
 import schema.tables.records.UserRecord;
 
@@ -68,7 +69,10 @@ public class User {
                 .execute();
     }
 
-    public static void updateUserRole(int id, UserEnums.UserRole role) {
+    public static void updateUserRole(int id, UserEnums.UserRole role) throws AuthenticationException {
+        if (SessionManager.getCurrentSession().getCurrentUser().getId() == id) {
+            throw new AuthenticationException("Cannot change your own role while logged in!");
+        }
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.update(USER)
                 .set(USER.ROLE, role.name())
