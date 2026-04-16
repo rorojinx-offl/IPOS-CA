@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="251.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.sales.UIControllers.SuccessController">
    <children>
       <Pane prefHeight="71.0" prefWidth="678.0" style="-fx-background-color: Red;">
@@ -31,7 +30,7 @@
             </Label>
          </children>
       </StackPane>
-      <GridPane layoutX="97.0" layoutY="147.0" prefHeight="90.0" prefWidth="484.0">
+      <GridPane hgap="10.0" layoutX="97.0" layoutY="147.0" prefHeight="90.0" prefWidth="484.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -40,12 +39,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#printInvoice" prefHeight="90.0" prefWidth="300.0" style="-fx-background-color: Orange;" text="Print Invoice">
+            <Button mnemonicParsing="false" onMouseClicked="#printInvoice" prefHeight="90.0" prefWidth="300.0" style="-fx-background-color: ff6969;" text="Print Invoice">
                <font>
                   <Font size="27.0" />
                </font>
             </Button>
-            <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#returnToMenu" prefHeight="90.0" prefWidth="312.0" style="-fx-background-color: LawnGreen;" text="OK" GridPane.columnIndex="1">
+            <Button fx:id="okButton" mnemonicParsing="false" onMouseClicked="#returnToMenu" prefHeight="90.0" prefWidth="312.0" style="-fx-background-color: ff6969;" text="OK" GridPane.columnIndex="1">
                <font>
                   <Font size="28.0" />
                </font>

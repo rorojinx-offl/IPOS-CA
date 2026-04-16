@@ -18,7 +18,10 @@
                   <Font name="Agency FB" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="back" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="38.0" prefWidth="73.0" style="-fx-background-color: Yellow;" text="Back" />
+            <Button fx:id="back" layoutX="26.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="45.0" prefWidth="86.0" style="-fx-background-color: Yellow;" text="Back">
+               <font>
+                  <Font size="24.0" />
+               </font></Button>
          </children>
       </Pane>
       <HBox alignment="CENTER" layoutX="16.0" layoutY="82.0" spacing="5.0">
@@ -78,7 +81,7 @@
       </HBox>
       <Button fx:id="save" layoutX="456.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="71.0" prefWidth="130.0" style="-fx-background-color: Yellow;" text="Save">
          <font>
-            <Font size="25.0" />
+            <Font size="36.0" />
          </font></Button>
       <HBox alignment="CENTER" layoutX="25.0" layoutY="226.0" style="-fx-border-color: Black; -fx-border-width: 2;">
          <children>

@@ -19,7 +19,10 @@
                   <Font name="Agency FB" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: DeepSkyBlue;" text="Back" />
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: E6609F;" text="Back" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
          </children>
       </Pane>
       <VBox fx:id="addButton" alignment="CENTER" layoutX="112.0" layoutY="91.0" onMouseClicked="#createUser" onMouseEntered="#highlight" onMouseExited="#restoreCol">

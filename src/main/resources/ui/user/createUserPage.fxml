@@ -24,9 +24,9 @@
 
 <ComboBox fx:id="roleComboBox" prefWidth="250.0" promptText="Select role" />
 
-<Button onMouseClicked="#handleCreateUser" prefWidth="250.0" style="-fx-background-color: green; -fx-text-fill: white;" text="Create User" />
-   <Button fx:id="viewAllUsersButton" onMouseClicked="#handleViewAllUsers" prefWidth="250.0" style="-fx-background-color: #5b7db1; -fx-text-fill: white;" text="View All Users" />
-   <Button fx:id="backButton" onMouseClicked="#returnToParent" prefWidth="250.0" text="Back" />
+<Button onMouseClicked="#handleCreateUser" prefWidth="250.0" style="-fx-background-color: E660B3; -fx-text-fill: white;" text="Create User" />
+   <Button fx:id="viewAllUsersButton" onMouseClicked="#handleViewAllUsers" prefWidth="250.0" style="-fx-background-color: E660B3; -fx-text-fill: white;" text="View All Users" />
+   <Button fx:id="backButton" onMouseClicked="#returnToParent" prefWidth="250.0" style="-fx-background-color: E660B3;" text="Back" textFill="WHITE" />
 
 <Label fx:id="messageLabel" style="-fx-text-fill: red;" text="" />
 

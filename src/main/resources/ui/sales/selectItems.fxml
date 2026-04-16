@@ -23,7 +23,10 @@
                   <Font name="Agency FB" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: DeepSkyBlue;" text="Back" />
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: ff6969;" text="Back">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
          </children>
       </Pane>
       <GridPane fx:id="memberButtons" layoutX="127.0" layoutY="846.0" prefHeight="92.0" prefWidth="676.0" visible="false">
@@ -49,9 +52,9 @@
       </GridPane>
       <TextField fx:id="searchField" layoutX="151.0" layoutY="95.0" prefHeight="26.0" prefWidth="275.0" promptText="Search For a Product..." />
       <ListView fx:id="searchResults" layoutX="31.0" layoutY="142.0" prefHeight="200.0" prefWidth="515.0" />
-      <Button layoutX="647.0" layoutY="196.0" mnemonicParsing="false" onMouseClicked="#addToCart" prefHeight="71.0" prefWidth="193.0" style="-fx-background-color: LawnGreen;" text="Add Product">
+      <Button layoutX="647.0" layoutY="196.0" mnemonicParsing="false" onMouseClicked="#addToCart" prefHeight="71.0" prefWidth="193.0" style="-fx-background-color: ff6969;" text="Add Product">
          <font>
-            <Font size="19.0" />
+            <Font size="24.0" />
          </font>
       </Button>
       <TableView fx:id="cart" layoutX="23.0" layoutY="371.0" prefHeight="275.0" prefWidth="883.0">

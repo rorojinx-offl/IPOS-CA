@@ -21,7 +21,10 @@
                   <Font name="Agency FB" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: DeepSkyBlue;" text="Back" />
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: ff6969;" text="Back">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
          </children>
       </Pane>
       <TableView fx:id="customerTable" layoutX="14.0" layoutY="119.0" prefHeight="266.0" prefWidth="722.0">
@@ -44,9 +47,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#selectItems" prefHeight="92.0" prefWidth="721.0" style="-fx-background-color: LawnGreen;" text="Select Items">
+            <Button mnemonicParsing="false" onMouseClicked="#selectItems" prefHeight="92.0" prefWidth="721.0" style="-fx-background-color: ff6969;" text="Select Items">
                <font>
-                  <Font size="29.0" />
+                  <Font size="48.0" />
                </font>
             </Button>
          </children>
