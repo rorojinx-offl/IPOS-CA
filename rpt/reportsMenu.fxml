@@ -11,7 +11,7 @@
     <children>
         <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: #28282B;">
             <children>
-                <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" text="Reports" textAlignment="CENTER" textFill="WHITE">
+                <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: black;" text="Reports" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Agency FB" size="45.0" />
                     </font>
@@ -21,24 +21,24 @@
 
         <VBox alignment="CENTER" layoutX="239.0" layoutY="126.0" spacing="25.0">
             <children>
-                <Button fx:id="turnoverButton" onMouseClicked="#openTurnoverReport" style="-fx-background-color: #FFD700;" text="Turnover Report">
+                <Button fx:id="turnoverButton" onMouseClicked="#openTurnoverReport" style="-fx-background-color: grey;" text="Turnover Report" textFill="WHITE">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="stockButton" onMouseClicked="#openStockReport" style="-fx-background-color: #FFD700;" text="Stock Availability Report">
+                <Button fx:id="stockButton" onMouseClicked="#openStockReport" style="-fx-background-color: grey;" text="Stock Availability Report" textFill="WHITE">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="debtButton" onMouseClicked="#openDebtReport" style="-fx-background-color: #FFD700;" text="Aggregated Debt Change Report">
+                <Button fx:id="debtButton" onMouseClicked="#openDebtReport" style="-fx-background-color: grey;" text="Aggregated Debt Change Report" textFill="WHITE">
                     <font>
                         <Font size="16.0" />
                     </font>
                 </Button>
-                <Button fx:id="backButton" onMouseClicked="#goBack" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #FF4444; -fx-text-fill: white;" text="Back">
+                <Button fx:id="backButton" onMouseClicked="#goBack" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: grey; -fx-text-fill: white;" text="Back">
                     <font>
-                        <Font size="14.0" />
+                        <Font size="18.0" />
                     </font>
                 </Button>
             </children>

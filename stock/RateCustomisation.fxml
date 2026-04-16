@@ -18,7 +18,7 @@
     <children>
         <Pane prefHeight="44.0" prefWidth="379.0" style="-fx-background-color: Orange;">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="379.0" style="-fx-background-color: #eca7ec;" text="Rate Customisation" textAlignment="CENTER">
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="44.0" prefWidth="379.0" style="-fx-background-color: purple;" text="Rate Customisation" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Agency FB" size="35.0" />
                     </font>
@@ -37,12 +37,12 @@
                 <TableColumn fx:id="markupRate" minWidth="0.0" prefWidth="107.9999938964844" text="Markup Rate" />
             </columns>
         </TableView>
-        <Button fx:id="editingRate" layoutX="67.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#changeMarkupRate" prefHeight="38.0" prefWidth="244.0" style="-fx-background-color: Purple;" text="Edit Markup Rate for Stock Item" textFill="WHITE">
+        <Button fx:id="editingRate" layoutX="67.0" layoutY="422.0" mnemonicParsing="false" onMouseClicked="#changeMarkupRate" prefHeight="38.0" prefWidth="244.0" style="-fx-background-color: #eca7ec;" text="Edit Markup Rate for Stock Item">
             <font>
                 <Font size="13.0" />
             </font>
         </Button>
-        <Button layoutX="82.0" layoutY="575.0" mnemonicParsing="false" onMouseClicked="#changeAllVAT" prefHeight="44.0" prefWidth="214.0" style="-fx-background-color: Purple;" text="Edit VAT for All Items" textFill="WHITE">
+        <Button layoutX="82.0" layoutY="575.0" mnemonicParsing="false" onMouseClicked="#changeAllVAT" prefHeight="44.0" prefWidth="214.0" style="-fx-background-color: #eca7ec;" text="Edit VAT for All Items">
             <font>
                 <Font size="20.0" />
             </font>

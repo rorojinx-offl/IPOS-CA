@@ -14,16 +14,16 @@
 
 <AnchorPane prefHeight="538.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.DebtController">
    <children>
-      <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Orange;">
+      <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: ee7001;">
          <children>
-            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" text="Debt Management">
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: ee7001;" text="Debt Management">
                <font>
                   <Font size="45.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #FF0000;" text="Back">
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: orange;" text="Back">
                <font>
-                  <Font size="17.0" />
+                  <Font size="18.0" />
                </font></Button>
          </children>
       </Pane>
@@ -51,22 +51,22 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#processRepayment" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Khaki;" text="Process Repayment">
+            <Button mnemonicParsing="false" onMouseClicked="#processRepayment" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="Process Repayment">
                <font>
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#manualAccountRestore" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: LawnGreen; -fx-border-radius: 25;" text="Restore In-Default Account" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#manualAccountRestore" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange; -fx-border-radius: 25;" text="Restore In-Default Account" GridPane.rowIndex="1">
                <font>
                   <Font size="23.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#generateReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Yellow;" text="Generate Reminders" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#generateReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="Generate Reminders" GridPane.columnIndex="1">
                <font>
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#viewReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Turquoise;" text="View Past Reminders" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#viewReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="View Past Reminders" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="29.0" />
                </font>

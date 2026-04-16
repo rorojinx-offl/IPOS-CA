@@ -19,7 +19,7 @@
     <children>
         <Pane prefHeight="71.0" prefWidth="800.0" style="-fx-background-color: #28282B;">
             <children>
-                <Label alignment="CENTER" prefHeight="71.0" prefWidth="800.0" text="Turnover Report" textAlignment="CENTER" textFill="WHITE">
+                <Label alignment="CENTER" prefHeight="71.0" prefWidth="800.0" style="-fx-background-color: black;" text="Turnover Report" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Agency FB" size="45.0" />
                     </font>
@@ -51,7 +51,7 @@
                </rowConstraints>
                 </GridPane>
 
-                <Button fx:id="generateButton" onMouseClicked="#generateReport" prefWidth="150.0" style="-fx-background-color: #FFD700;" text="Generate Report">
+                <Button fx:id="generateButton" onMouseClicked="#generateReport" prefWidth="150.0" style="-fx-background-color: grey;" text="Generate Report" textFill="WHITE">
                     <font><Font size="14.0" /></font>
                 </Button>
 
@@ -130,10 +130,10 @@
 
                 <HBox spacing="20.0">
                     <children>
-                        <Button fx:id="exportPdfButton" onMouseClicked="#exportToPdf" prefWidth="120.0" style="-fx-background-color: #FFD700;" text="Export to PDF">
+                        <Button fx:id="exportPdfButton" onMouseClicked="#exportToPdf" prefWidth="120.0" style="-fx-background-color: grey;" text="Export to PDF" textFill="WHITE">
                             <font><Font size="14.0" /></font>
                         </Button>
-                        <Button fx:id="backButton" onMouseClicked="#goBack" prefWidth="100.0" style="-fx-background-color: #FF4444; -fx-text-fill: white;" text="Back">
+                        <Button fx:id="backButton" onMouseClicked="#goBack" prefWidth="100.0" style="-fx-background-color: grey; -fx-text-fill: white;" text="Back" textFill="WHITE">
                             <font><Font size="14.0" /></font>
                         </Button>
                     </children>

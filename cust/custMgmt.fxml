@@ -16,12 +16,15 @@
    <children>
       <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Orange;">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="750.0" text="Customer Management">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: ee7001;" text="Customer Management">
                <font>
                   <Font name="Agency FB" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #FF0000;" text="Back" />
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: orange;" text="Back">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
          </children>
       </Pane>
       <TableView fx:id="customerTable" layoutX="14.0" layoutY="119.0" prefHeight="266.0" prefWidth="722.0">
@@ -51,17 +54,17 @@
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#delCustomer" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: IndianRed;" text="Delete Customer" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#delCustomer" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="Delete Customer" GridPane.rowIndex="1">
                <font>
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#viewFlexiDsc" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Cyan;" text="View Flexi Discounts" GridPane.columnIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#viewFlexiDsc" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="View Flexi Discounts" GridPane.columnIndex="1">
                <font>
                   <Font size="29.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onMouseClicked="#setFixedDsc" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: Violet;" text="Set Fixed Discounts" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onMouseClicked="#setFixedDsc" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="Set Fixed Discounts" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="29.0" />
                </font>

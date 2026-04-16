@@ -16,14 +16,14 @@
     <children>
         <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: eca7ec;">
             <children>
-                <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: eca7ec;" text="Stock Management">
+                <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: purple;" text="Stock Management" textFill="WHITE">
                     <font>
                         <Font size="45.0" />
                     </font>
                 </Label>
-                <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: purple;" text="Back" textFill="WHITE">
+                <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: eca7ec;" text="Back">
                     <font>
-                        <Font size="17.0" />
+                        <Font size="18.0" />
                     </font></Button>
             </children>
         </Pane>
@@ -51,22 +51,22 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addPage" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-color: black; -fx-border-width: 1.5;" text="Add Non-IPOS Stock" textFill="WHITE">
+                <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addPage" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: eca7ec; -fx-border-color: black; -fx-border-width: 1.5;" text="Add Non-IPOS Stock">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deleteStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-width: 1.5; -fx-border-color: black;" text="Delete Stock" textFill="WHITE" GridPane.rowIndex="1">
+                <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deleteStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: eca7ec; -fx-border-width: 1.5; -fx-border-color: black;" text="Delete Stock" GridPane.rowIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#editStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-color: black; -fx-border-width: 1.5;" text="Edit Non-IPOS Stock" textFill="WHITE" GridPane.columnIndex="1">
+                <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#editStock" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: eca7ec; -fx-border-color: black; -fx-border-width: 1.5;" text="Edit Non-IPOS Stock" GridPane.columnIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>
                 </Button>
-                <Button fx:id="rateButton" mnemonicParsing="false" onMouseClicked="#rateChange" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: #bc4abc; -fx-border-color: black; -fx-border-width: 1.5;" text="Rate Customisation" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Button fx:id="rateButton" mnemonicParsing="false" onMouseClicked="#rateChange" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: eca7ec; -fx-border-color: black; -fx-border-width: 1.5;" text="Rate Customisation" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
                         <Font size="29.0" />
                     </font>

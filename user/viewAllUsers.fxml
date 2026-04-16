@@ -32,7 +32,7 @@
         <children>
             <ComboBox fx:id="roleComboBox" prefWidth="200.0" promptText="Select new role" />
             <Button mnemonicParsing="false" onMouseClicked="#handleUpdateRole" prefWidth="180.0" text="Update Role" />
-            <Button mnemonicParsing="false" onMouseClicked="#handleDeleteUser" prefWidth="180.0" style="-fx-background-color: maroon; -fx-text-fill: white;" text="Delete User" />
+            <Button mnemonicParsing="false" onMouseClicked="#handleDeleteUser" prefWidth="180.0" style="-fx-background-color: E660B3; -fx-text-fill: white;" text="Delete User" />
         </children>
     </HBox>
 

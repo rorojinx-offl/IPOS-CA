@@ -14,14 +14,14 @@
    <children>
       <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: eca7ec;">
          <children>
-            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: eca7ec;" text="Stock Portal" textAlignment="CENTER">
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: purple;" text="Stock Portal" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Agency FB" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: purple;" text="Back" textFill="WHITE">
+            <Button fx:id="backButton" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: eca7ec;" text="Back">
                <font>
-                  <Font size="17.0" />
+                  <Font size="18.0" />
                </font>
             </Button>
          </children>
@@ -35,15 +35,15 @@
             </ImageView>
             <Label alignment="CENTER" text="Manage Stock" textAlignment="CENTER">
                <font>
-                  <Font size="16.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
          </children>
       </VBox>
       <ListView fx:id="lowStockList" layoutX="38.0" layoutY="97.0" prefHeight="279.0" prefWidth="349.0" />
-      <Button layoutX="113.0" layoutY="413.0" mnemonicParsing="false" onMouseClicked="#genReport" prefHeight="45.0" prefWidth="204.0" style="-fx-background-color: Purple;" text="Generate Report" textFill="WHITE">
+      <Button layoutX="113.0" layoutY="413.0" mnemonicParsing="false" onMouseClicked="#genReport" prefHeight="45.0" prefWidth="204.0" style="-fx-background-color: eca7ec;" text="Generate Report">
          <font>
-            <Font size="21.0" />
+            <Font size="24.0" />
          </font></Button>
    </children>
 </AnchorPane>

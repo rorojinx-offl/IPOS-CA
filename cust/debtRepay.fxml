@@ -12,14 +12,17 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.RepaymentController">
    <children>
-      <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: Orange;">
+      <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: ee7001;">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="-3.0" prefHeight="71.0" prefWidth="750.0" text="Debt Repayment" textAlignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="-3.0" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: ee7001;" text="Debt Repayment" textAlignment="CENTER">
                <font>
                   <Font name="Agency FB" size="45.0" />
                </font>
             </Label>
-            <Button fx:id="backButton" layoutX="22.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: #FF0000;" text="Back" />
+            <Button fx:id="backButton" layoutX="22.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: orange;" text="Back">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
          </children>
       </Pane>
       <HBox layoutX="22.0" layoutY="101.0">
@@ -97,7 +100,7 @@
             </Label>
          </children>
       </HBox>
-      <Button layoutX="22.0" layoutY="295.0" mnemonicParsing="false" onMouseClicked="#absolveDebt" prefHeight="122.0" prefWidth="706.0" style="-fx-background-color: #7FFF00;" text="Absolve Debt">
+      <Button layoutX="22.0" layoutY="295.0" mnemonicParsing="false" onMouseClicked="#absolveDebt" prefHeight="122.0" prefWidth="706.0" style="-fx-background-color: orange;" text="Absolve Debt">
          <font>
             <Font size="62.0" />
          </font>

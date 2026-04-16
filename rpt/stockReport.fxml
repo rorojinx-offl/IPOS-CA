@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="950.0" style="-fx-background-color: #FFF7B2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.rpt.controller.StockReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="950.0" style="-fx-background-color: #FFF7B2;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.rpt.controller.StockReportController">
     <children>
         <Pane prefHeight="71.0" prefWidth="950.0" style="-fx-background-color: #28282B;">
             <children>
-                <Label alignment="CENTER" prefHeight="71.0" prefWidth="950.0" text="Stock Availability Report" textAlignment="CENTER" textFill="#bec421">
+                <Label alignment="CENTER" prefHeight="71.0" prefWidth="950.0" style="-fx-background-color: black;" text="Stock Availability Report" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Agency FB" size="45.0" />
                     </font>
@@ -41,7 +53,7 @@
                </rowConstraints>
                 </GridPane>
 
-                <Button fx:id="generateButton" onMouseClicked="#generateReport" prefWidth="150.0" style="-fx-background-color: #FFD700;" text="Generate Report">
+                <Button fx:id="generateButton" onMouseClicked="#generateReport" prefWidth="150.0" style="-fx-background-color: grey;" text="Generate Report" textFill="WHITE">
                     <font><Font size="14.0" /></font>
                 </Button>
 
@@ -109,10 +121,10 @@
 
                 <HBox spacing="20.0">
                     <children>
-                        <Button fx:id="exportPdfButton" onMouseClicked="#exportToPdf" prefWidth="120.0" style="-fx-background-color: #FFD700;" text="Export to PDF">
+                        <Button fx:id="exportPdfButton" onMouseClicked="#exportToPdf" prefWidth="120.0" style="-fx-background-color: grey;" text="Export to PDF" textFill="WHITE">
                             <font><Font size="14.0" /></font>
                         </Button>
-                        <Button fx:id="backButton" onMouseClicked="#goBack" prefWidth="100.0" style="-fx-background-color: #FF4444; -fx-text-fill: white;" text="Back">
+                        <Button fx:id="backButton" onMouseClicked="#goBack" prefWidth="100.0" style="-fx-background-color: grey; -fx-text-fill: white;" text="Back">
                             <font><Font size="14.0" /></font>
                         </Button>
                     </children>
