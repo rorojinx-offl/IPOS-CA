@@ -81,7 +81,7 @@ public class Stock {
         this.bulkCost = bulkCost;
         this.quantity = quantity;
     }
-
+    // create item entry and populate database
     public void createItem(Stock stock) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.insertInto(STOCK)
@@ -96,7 +96,7 @@ public class Stock {
                 .set(STOCK.STOCK_LIMIT, stock.getStockLimit())
                 .execute();
     }
-
+    // link between CA and SA
     public static int upsertIPOSItem(Stock stock) {
         DSLContext ctx = JooqConnection.getDSLContext();
 
@@ -142,7 +142,7 @@ public class Stock {
 
         return inventory;
     }
-
+    // calculate retail price, and minimizes info shown (abstraction layer)
     public static ArrayList<Stock> getAllStockForSale() {
         ArrayList<Stock> inventory = new ArrayList<>();
         DSLContext ctx = JooqConnection.getDSLContext();
@@ -160,7 +160,7 @@ public class Stock {
     private static float calcRetailPrice(float bulkCost, int markupRate) {
         return bulkCost * (1 + (markupRate / 100f));
     }
-
+    // collects all stock that is below a certain thresold, refrences stock limit column in the table
     public static ArrayList<Stock> getLowStock() {
         ArrayList<Stock> inventory = new ArrayList<>();
         DSLContext ctx = JooqConnection.getDSLContext();
@@ -205,7 +205,7 @@ public class Stock {
                 .where(STOCK.ITEM_ID.eq(itemId))
                 .execute();
     }
-
+    //
     public static ArrayList<Stock> getAllMarkupRates() {
         DSLContext ctx = JooqConnection.getDSLContext();
         ArrayList<Stock> inventory = new ArrayList<>();
@@ -226,7 +226,7 @@ public class Stock {
                 .where(STOCK.ITEM_ID.eq(id))
                 .execute();
     }
-
+    // link to PU and Sales-CA package, decrments only since incrementation occurs in upsertItem
     public static int minusStock(int productID, int quantity) {
         DSLContext ctx = JooqConnection.getDSLContext();
         int rowsUpdated = ctx.update(STOCK)
