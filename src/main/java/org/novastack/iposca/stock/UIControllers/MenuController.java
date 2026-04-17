@@ -76,6 +76,11 @@ public class MenuController implements Initializable {
         ArrayList<Stock> list = new ArrayList<>(lowStockObservableList);
         ArrayList<LowStockBean> beans = new ArrayList<>();
 
+        if (list.isEmpty()) {
+            new CommonCalls().openErrorDialog("No low stock items found!");
+            return;
+        }
+
         for (Stock stock : list){
             beans.add(new LowStockBean(
                     stock.getId(),
