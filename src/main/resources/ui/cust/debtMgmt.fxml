@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="538.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.cust.UIControllers.DebtController">
+   <children>
+      <Pane prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: ee7001;">
+         <children>
+            <Label alignment="CENTER" prefHeight="71.0" prefWidth="750.0" style="-fx-background-color: ee7001;" text="Debt Management">
+               <font>
+                  <Font size="45.0" />
+               </font>
+            </Label>
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#returnToParent" prefHeight="43.0" prefWidth="90.0" style="-fx-background-color: orange;" text="Back">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+         </children>
+      </Pane>
+      <TableView fx:id="customerTable" layoutX="14.0" layoutY="120.0" prefHeight="266.0" prefWidth="722.0">
+         <columns>
+            <TableColumn fx:id="customerID" prefWidth="42.39999485015869" text="ID" visible="false" />
+            <TableColumn fx:id="name" editable="false" prefWidth="119.20000839233398" text="Name" />
+            <TableColumn fx:id="credLimit" prefWidth="95.0" text="Credit Limit" />
+            <TableColumn fx:id="balance" prefWidth="75.0" text="Balance" />
+            <TableColumn fx:id="status" prefWidth="102.0" text="Status" />
+            <TableColumn fx:id="r1d" prefWidth="132.0" text="1st Reminder Date" />
+            <TableColumn fx:id="r1s" prefWidth="145.0" text="1st Reminder Status" />
+            <TableColumn fx:id="r2d" prefWidth="132.0" text="2nd Reminder Date" />
+            <TableColumn fx:id="r2s" prefWidth="145.0" text="2nd Reminder Status" />
+            <TableColumn fx:id="statca" prefWidth="130.0" text="Status Changed At" />
+         </columns>
+      </TableView>
+      <GridPane hgap="10.0" layoutX="14.0" layoutY="394.0" prefHeight="130.0" prefWidth="722.0" vgap="10.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" onMouseClicked="#processRepayment" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="Process Repayment">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#manualAccountRestore" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange; -fx-border-radius: 25;" text="Restore In-Default Account" GridPane.rowIndex="1">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#generateReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="Generate Reminders" GridPane.columnIndex="1">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onMouseClicked="#viewReminders" prefHeight="78.0" prefWidth="362.0" style="-fx-background-color: orange;" text="View Past Reminders" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+      <TextField fx:id="searchField" layoutX="238.0" layoutY="82.0" prefHeight="26.0" prefWidth="275.0" promptText="Search By Name..." />
+   </children>
+</AnchorPane>

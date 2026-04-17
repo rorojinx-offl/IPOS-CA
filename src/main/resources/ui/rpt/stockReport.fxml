@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="950.0" style="-fx-background-color: #FFF7B2;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.rpt.controller.StockReportController">
+    <children>
+        <Pane prefHeight="71.0" prefWidth="950.0" style="-fx-background-color: #28282B;">
+            <children>
+                <Label alignment="CENTER" prefHeight="71.0" prefWidth="950.0" style="-fx-background-color: black;" text="Stock Availability Report" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font name="Agency FB" size="45.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+
+        <VBox layoutX="22.0" layoutY="95.0" prefWidth="890.0" spacing="15.0">
+            <children>
+                <GridPane hgap="15.0" vgap="10.0">
+                    <children>
+                        <Label text="Stock Status:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <ComboBox fx:id="stockStatusCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="Search:" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                            <font><Font size="14.0" /></font>
+                        </Label>
+                        <TextField fx:id="searchField" prefWidth="200.0" promptText="Product ID or Name" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                    </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <Button fx:id="generateButton" onMouseClicked="#generateReport" prefWidth="150.0" style="-fx-background-color: grey;" text="Generate Report" textFill="WHITE">
+                    <font><Font size="14.0" /></font>
+                </Button>
+
+                <Separator />
+
+                <TableView fx:id="stockTable" prefHeight="400.0">
+                    <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="80.0" text="ID" />
+                        <TableColumn fx:id="nameColumn" prefWidth="150.0" text="Product Name" />
+                        <TableColumn fx:id="quantityColumn" prefWidth="80.0" text="Quantity" />
+                        <TableColumn fx:id="thresholdColumn" prefWidth="80.0" text="Reorder Threshold" />
+                        <TableColumn fx:id="lowStockColumn" prefWidth="80.0" text="Low Stock" />
+                        <TableColumn fx:id="bulkCostColumn" prefWidth="80.0" text="Unit Cost" />
+                        <TableColumn fx:id="retailPriceColumn" prefWidth="80.0" text="Retail Price" />
+                        <TableColumn fx:id="vatRateColumn" prefWidth="60.0" text="VAT %" />
+                        <TableColumn fx:id="vatAmountColumn" prefWidth="80.0" text="VAT Amount" />
+                        <TableColumn fx:id="totalValueColumn" prefWidth="100.0" text="Total Value" />
+                    </columns>
+                </TableView>
+
+                <GridPane hgap="20.0" vgap="5.0">
+                    <children>
+                        <Label text="Total Distinct Items:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+                        <Label fx:id="totalItemsLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+
+                        <Label text="Total Units:" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+                        <Label fx:id="totalUnitsLabel" text="0" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+
+                        <Label text="Total Stock Value:" GridPane.columnIndex="4" GridPane.rowIndex="0">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+                        <Label fx:id="totalStockValueLabel" text="£0.00" GridPane.columnIndex="5" GridPane.rowIndex="0">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+
+                        <Label text="Total VAT:" GridPane.columnIndex="6" GridPane.rowIndex="0">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+                        <Label fx:id="totalVatLabel" text="£0.00" GridPane.columnIndex="7" GridPane.rowIndex="0">
+                            <font><Font size="12.0" /></font>
+                        </Label>
+                    </children>
+               <columnConstraints>
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+                  <ColumnConstraints />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints />
+               </rowConstraints>
+                </GridPane>
+
+                <HBox spacing="20.0">
+                    <children>
+                        <Button fx:id="exportPdfButton" onMouseClicked="#exportToPdf" prefWidth="120.0" style="-fx-background-color: grey;" text="Export to PDF" textFill="WHITE">
+                            <font><Font size="14.0" /></font>
+                        </Button>
+                        <Button fx:id="backButton" onMouseClicked="#goBack" prefWidth="100.0" style="-fx-background-color: grey; -fx-text-fill: white;" text="Back">
+                            <font><Font size="14.0" /></font>
+                        </Button>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+<!--        <Separator layoutX="450.0" layoutY="71.0" orientation="VERTICAL" prefHeight="579.0" />-->
+<!--        <Separator layoutY="600.0" prefHeight="1.0" prefWidth="950.0" />-->
+    </children>
+</AnchorPane>

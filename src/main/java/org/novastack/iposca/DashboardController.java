@@ -1,0 +1,262 @@
+package org.novastack.iposca;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import org.novastack.iposca.session.Session;
+import org.novastack.iposca.session.SessionManager;
+import org.novastack.iposca.user.User;
+import org.novastack.iposca.user.UserEnums;
+import org.novastack.iposca.utils.ui.CommonCalls;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class DashboardController implements Initializable {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if (SessionManager.getCurrentSession() != null) {
+            session = SessionManager.getCurrentSession();
+            User user = session.getCurrentUser();
+            welcome.setText("Welcome, " + getForename(user.getFullName()));
+            applyAccess(user);
+        } else {
+            try {
+                logout(null);
+            } catch (IOException e) {
+                System.exit(1);
+            }
+        }
+    }
+
+    private Session session;
+
+
+    private void applyAccess(User user) {
+        setTileAccess(custButton, UserEnums.UserAccess.CUST, user);
+        setTileAccess(ordButton, UserEnums.UserAccess.ORD, user);
+        setTileAccess(rptButton, UserEnums.UserAccess.RPT, user);
+        setTileAccess(saleButton, UserEnums.UserAccess.SALES, user);
+        setTileAccess(stockButton, UserEnums.UserAccess.STOCK, user);
+        setTileAccess(templatesButton, UserEnums.UserAccess.TEMPLATES, user);
+        setTileAccess(userButton, UserEnums.UserAccess.USER, user);
+    }
+
+    private void setTileAccess(VBox tile, UserEnums.UserAccess access, User user) {
+        boolean allowed = session.hasAccess(user.getRole(), access);
+
+        if (allowed) {
+            tile.setDisable(false);
+            tile.setOpacity(1);
+            tile.getStyleClass().remove("tile-disabled");
+            if (!tile.getStyleClass().contains("tile-enabled")) {
+                tile.getStyleClass().add("tile-enabled");
+            }
+            tile.setMouseTransparent(false);
+            tile.setCursor(Cursor.HAND);
+        } else {
+            tile.setDisable(true);
+            tile.setOpacity(0.45);
+            tile.getStyleClass().add("tile-enabled");
+            if (!tile.getStyleClass().contains("tile-disabled")) {
+                tile.getStyleClass().add("tile-disabled");
+            }
+            tile.setMouseTransparent(true);
+            tile.setCursor(Cursor.DEFAULT);
+        }
+    }
+
+    private String getForename(String fullName) {
+        String forename = fullName;
+
+        if (fullName != null && !fullName.trim().isEmpty()) {
+            forename = fullName.trim().split("\\s+")[0];
+        }
+
+        return forename;
+    }
+
+    @FXML
+    private VBox custButton;
+
+    @FXML
+    private VBox logOutButton;
+
+    @FXML
+    private VBox ordButton;
+
+    @FXML
+    private VBox rptButton;
+
+    @FXML
+    private VBox saleButton;
+
+    @FXML
+    private VBox stockButton;
+
+    @FXML
+    private VBox templatesButton;
+
+    @FXML
+    private VBox userButton;
+
+    @FXML
+    private Label welcome;
+
+    @FXML
+    void cust(MouseEvent event) throws IOException {
+        Stage stage = (Stage) custButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
+
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.CUST)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/cust/custMenu.fxml", "Customer Portal");
+    }
+
+    @FXML
+    void highlight(MouseEvent event) {
+        VBox option = (VBox) event.getSource();
+        Label childLabel = (Label) option.getChildren().get(1);
+        childLabel.setTextFill(Color.RED);
+        option.setCursor(Cursor.HAND);
+    }
+
+    @FXML
+    void logout(MouseEvent event) throws IOException {
+        SessionManager.end();
+        Stage stage = (Stage) logOutButton.getScene().getWindow();
+        new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+    }
+
+    @FXML
+    void ord(MouseEvent event) throws IOException {
+        User user = session.getCurrentUser();
+        if (user == null) {
+            return;
+        }
+        if (session.hasAccess(user.getRole(), UserEnums.UserAccess.ORD)) {
+            String url = "http://localhost:8080/login.html";
+            try {
+                openBrowser(url);
+            } catch (IOException e) {
+                new CommonCalls().openErrorDialog("Error opening URL in browser, please copy this link and paste it into the browser: " + url);
+            }
+        }
+    }
+
+    @FXML
+    void restoreCol(MouseEvent event) {
+        VBox option = (VBox) event.getSource();
+        Label childLabel = (Label) option.getChildren().get(1);
+        childLabel.setTextFill(Color.BLACK);
+        option.setCursor(Cursor.DEFAULT);
+    }
+
+    @FXML
+    void rpt(MouseEvent event) throws IOException {
+        Stage stage = (Stage) rptButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
+
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.RPT)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/rpt/reportsMenu.fxml", "Reports Portal");
+    }
+
+    @FXML
+    void sales(MouseEvent event) throws IOException {
+        Stage stage = (Stage) saleButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
+
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.SALES)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/sales/salesMenu.fxml", "Sales Portal");
+    }
+
+    @FXML
+    void stock(MouseEvent event) throws IOException {
+        Stage stage =  (Stage) stockButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
+
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.STOCK)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/stock/StockMenu.fxml", "Stock Portal");
+    }
+
+    @FXML
+    void templates(MouseEvent event) throws IOException {
+        Stage stage =  (Stage) templatesButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
+
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.TEMPLATES)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/templates/templates.fxml", "Configure Document Template");
+    }
+
+    @FXML
+    void user(MouseEvent event) throws IOException {
+        Stage stage = (Stage) userButton.getScene().getWindow();
+        User user = session.getCurrentUser();
+        if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
+            return;
+        }
+
+        if (!session.hasAccess(user.getRole(), UserEnums.UserAccess.USER)) {
+            return;
+        }
+        new CommonCalls().traverse(stage, "/ui/user/userMenu.fxml", "Admin Dashboard");
+    }
+
+    private static void openBrowser(String url) throws IOException {
+
+        String os = System.getProperty("os.name").toLowerCase();
+
+        if (os.contains("linux")) {
+            try {
+                new ProcessBuilder("xdg-open", url).start();
+            } catch (Exception e) {
+                throw new IOException("Failed to open PDF file: " + e.getMessage());
+            }
+            return;
+        }
+
+        if (Desktop.isDesktopSupported()) {
+            Desktop.getDesktop().browse(URI.create(url));
+        } else {
+            new CommonCalls().openErrorDialog("Error opening URL in browser, please copy this link and paste it into the browser: " + url);
+        }
+    }
+}
