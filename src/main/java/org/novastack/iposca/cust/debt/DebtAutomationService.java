@@ -10,7 +10,18 @@ import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
 
+/**
+ * Class that automates the debt evaluation process. It is responsible for checking the balance of each customer,
+ * escalating the debt if necessary, setting reminders, and updating the customer's account status accordingly.
+ * */
 public class DebtAutomationService {
+    /**
+     * A monthly debt evaluation that checks the balance of each customer and initiates the debt escalation process. It
+     * starts off by checking the balances in {@link DAUtils#checkBalances()} and then iterates through each customer's
+     * debt. For each entry, we get the full debt info and check if the first reminder has been sent. If not, we push
+     * the first reminder date forward by 5 days and set the reminder status to DUE. Then we also add this to the record
+     * of monthly debt transactions in {@link StatementService}, which is to be used to generate monthly statements.
+     * */
     public static void runDebtEvaluation() {
         ArrayList<DAUtils.DebtWarrant> list = DAUtils.checkBalances();
         if (list.isEmpty()) return;
@@ -31,6 +42,13 @@ public class DebtAutomationService {
         }
     }
 
+    /**
+     * This method is for continuing the debt evaluation process after the first reminder has been sent. It starts off by
+     * fetching eligible debts, and for each entry, we check if the second reminder has been sent. If not, we push the
+     * date for it to be sent forward by 15 days and set the reminder status to DUE, we also change the account status
+     * from normal to suspended. If the second reminder has been sent, then we know that the debtor hasn't repaid despite
+     * both reminders, so we change the account status to in-default.
+     * */
     public static void runDailyDebtEvaluation() {
         ArrayList<DAUtils.DebtWarrant> list = DAUtils.checkBalances();
         if (list.isEmpty()) return;
