@@ -10,6 +10,9 @@ import static schema.tables.Customer.CUSTOMER;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
+/**
+ * Class that records customer payments and absolves debt status to applicable customers.
+ * */
 public class CustomerPayment {
     private int customerID;
     private float amount;
@@ -20,6 +23,9 @@ public class CustomerPayment {
     private String cardLast4;
     private String cardExp;
 
+    /**
+     * Constructor for CustomerPayment class when the customer repays with a card.
+     * */
     public CustomerPayment(int customerID, float amount, LocalDate date, String paymentMethod, String cardType, String cardFirst4, String cardLast4, String cardExp) {
         this.customerID = customerID;
         this.amount = amount;
@@ -31,6 +37,9 @@ public class CustomerPayment {
         this.cardExp = cardExp;
     }
 
+    /**
+     * Constructor for CustomerPayment class when the customer repays with cash.
+     * */
     public CustomerPayment(int customerID, float amount, LocalDate date, String paymentMethod) {
         this.customerID = customerID;
         this.amount = amount;
@@ -42,6 +51,10 @@ public class CustomerPayment {
         this.cardExp = null;
     }
 
+    /**
+     * Records a successful debt repayment and absolves the customer's debt status.
+     * @param crp The customer payment info to be recorded.
+     * */
     public void addRepayment(CustomerPayment crp) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.insertInto(CUSTOMER_REPAYMENT)
@@ -55,11 +68,19 @@ public class CustomerPayment {
                 .set(CUSTOMER_REPAYMENT.CARD_EXP, crp.getCardExp())
                 .execute();
 
+        //After the repayment is recorded, the customer's debt status is absolved.'
         absolveDebt(crp.getCustomerID());
     }
 
+    /**
+     * Revokes the customer's debt status by deleting the debt entry and deleting the month's data (so that a monthly
+     * statement can't be generated for the customer). If the customer is in default, the debt entry is nullified, maintaining
+     * their name on the debt list to allow for the restoration of their account status.
+     * @param customerID The ID of the customer whose debt status is to be absolved.
+     * */
     private void absolveDebt(int customerID) {
         DSLContext ctx = JooqConnection.getDSLContext();
+        //Get the customer's current status so that we can decide how to delete the debt.
         String custStatus = ctx.select(CUSTOMER.STATUS)
                 .from(CUSTOMER)
                 .where(CUSTOMER.ID.eq(customerID))
@@ -67,6 +88,8 @@ public class CustomerPayment {
 
         custStatus = custStatus == null ? "" : custStatus;
 
+        /*If the customer is in default, we don't need to delete the debt entry but instead remove data on it so that
+        * their name remains on the debt table to allow for account restoration.*/
         if (custStatus.equals(CustomerEnums.AccountStatus.IN_DEFAULT.name())) {
             org.novastack.iposca.cust.customer.CustomerDebt.dryDeleteDebt(customerID);
             return;
