@@ -143,17 +143,14 @@ public class DashboardController implements Initializable {
 
     @FXML
     void ord(MouseEvent event) throws IOException {
+        Stage stage = (Stage) ordButton.getScene().getWindow();
         User user = session.getCurrentUser();
         if (user == null) {
+            new CommonCalls().traverse(stage, "/ui/login/login.fxml", "Login");
             return;
         }
         if (session.hasAccess(user.getRole(), UserEnums.UserAccess.ORD)) {
-            String url = "http://localhost:8080/login.html";
-            try {
-                openBrowser(url);
-            } catch (IOException e) {
-                new CommonCalls().openErrorDialog("Error opening URL in browser, please copy this link and paste it into the browser: " + url);
-            }
+            new CommonCalls().traverse(stage, "/ui/ord/orderModeSelect.fxml", "Order Mode Select");
         }
     }
 

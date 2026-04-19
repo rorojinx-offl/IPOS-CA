@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!-- Mock create-order screen: load local catalogue, build cart, submit to local DB. -->
+<AnchorPane prefHeight="680.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.ord.UIControllers.orderCreateMockController">
+   <children>
+      <HBox prefHeight="680.0" prefWidth="980.0">
+         <children>
+            <AnchorPane prefHeight="680.0" prefWidth="260.0" style="-fx-background-color: #181b37;">
+               <children>
+                  <Label layoutX="24.0" layoutY="282.0" text="CREATE" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="24.0" layoutY="322.0" text="ORDER (MOCK)" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="680.0" prefWidth="720.0">
+               <children>
+                  <!-- Top table = available items, bottom table = current order lines. -->
+                  <Label layoutX="24.0" layoutY="20.0" text="Create Order (Mock)">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="backButton" layoutX="632.0" layoutY="636.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="72.0" text="Back" />
+                  <Button fx:id="loadCatalogueButton" layoutX="24.0" layoutY="58.0" mnemonicParsing="false" onAction="#loadCatalogue" prefHeight="34.0" prefWidth="150.0" style="-fx-background-color: #181b37; -fx-text-fill: white;" text="Load Catalogue" />
+                  <TableView fx:id="catalogueTable" layoutX="24.0" layoutY="103.0" prefHeight="258.0" prefWidth="680.0">
+                    <columns>
+                      <TableColumn fx:id="itemIdColumn" prefWidth="88.0" text="Item ID" />
+                      <TableColumn fx:id="descriptionColumn" prefWidth="185.0" text="Description" />
+                      <TableColumn fx:id="unitCostColumn" prefWidth="95.0" text="Package Cost" />
+                        <TableColumn fx:id="availabilityColumn" prefWidth="110.0" text="Availability" />
+                        <TableColumn fx:id="stockLimitColumn" prefWidth="110.0" text="Stock Limit" />
+                    </columns>
+                  </TableView>
+                  <VBox layoutX="24.0" layoutY="378.0" prefHeight="120.0" prefWidth="680.0" spacing="10.0">
+                     <children>
+                        <Label text="Add selected item to order">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="10.0">
+                           <children>
+                              <Label text="Quantity" />
+                              <TextField fx:id="quantityField" prefWidth="100.0" promptText="e.g. 10" />
+                              <Button fx:id="addToOrderButton" mnemonicParsing="false" onAction="#addToOrder" prefWidth="130.0" style="-fx-background-color: #4f9d69; -fx-text-fill: white;" text="Add to Order" />
+                              <Button fx:id="submitOrderButton" mnemonicParsing="false" onAction="#submitOrder" prefWidth="130.0" style="-fx-background-color: #f29f3d;" text="Submit Order" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="warning" textFill="RED" />
+                     </children>
+                  </VBox>
+                  <TableView fx:id="orderLinesTable" layoutX="24.0" layoutY="509.0" prefHeight="115.0" prefWidth="680.0">
+                     <columns>
+                        <TableColumn fx:id="orderItemIdColumn" prefWidth="90.0" text="Item ID" />
+                        <TableColumn fx:id="orderDescriptionColumn" prefWidth="210.0" text="Description" />
+                        <TableColumn fx:id="orderQuantityColumn" prefWidth="95.0" text="Quantity" />
+                        <TableColumn fx:id="orderUnitCostColumn" prefWidth="120.0" text="Unit Cost" />
+                        <TableColumn fx:id="orderTotalColumn" prefWidth="130.0" text="Total" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

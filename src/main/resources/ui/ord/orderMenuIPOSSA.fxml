@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!-- Real dashboard for IPOS-SA mode, mirroring mock actions. -->
+<AnchorPane prefHeight="420.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.novastack.iposca.ord.UIControllers.orderMenuIPOSSAController">
+   <children>
+      <HBox prefHeight="420.0" prefWidth="760.0">
+         <children>
+            <AnchorPane prefHeight="420.0" prefWidth="260.0" style="-fx-background-color: #181b37;">
+               <children>
+                  <Label layoutX="24.0" layoutY="170.0" text="ORDER" textFill="WHITE">
+                     <font>
+                        <Font size="34.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="24.0" layoutY="210.0" text="IPOS-SA MODE" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="420.0" prefWidth="500.0">
+               <children>
+                  <!-- Each button opens a dedicated real-mode screen. -->
+                  <Button fx:id="backButton" layoutX="412.0" layoutY="375.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="72.0" text="Back" />
+                  <VBox alignment="CENTER" layoutX="100.0" layoutY="55.0" prefHeight="304.0" prefWidth="300.0" spacing="14.0">
+                     <children>
+                        <Label text="Order Menu (IPOS-SA)">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="createOrderButton" mnemonicParsing="false" onAction="#openCreateOrder" prefHeight="44.0" prefWidth="260.0" style="-fx-background-color: #4f9d69; -fx-text-fill: white;" text="Create Order" />
+                        <Button fx:id="statusButton" mnemonicParsing="false" onAction="#openOrderStatus" prefHeight="44.0" prefWidth="260.0" style="-fx-background-color: #3f7ab8; -fx-text-fill: white;" text="Check Order Status" />
+                        <Button fx:id="balanceButton" mnemonicParsing="false" onAction="#openBalance" prefHeight="44.0" prefWidth="260.0" style="-fx-background-color: #8a6bbf; -fx-text-fill: white;" text="Check Balance" />
+                        <Button fx:id="invoiceButton" mnemonicParsing="false" onAction="#openInvoices" prefHeight="44.0" prefWidth="260.0" style="-fx-background-color: #f29f3d;" text="View Invoices" />
+                        <Label fx:id="warning" textFill="RED" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

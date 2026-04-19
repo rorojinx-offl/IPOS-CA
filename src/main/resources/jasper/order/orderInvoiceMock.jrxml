@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Jasper template used to print one selected mock invoice as a PDF. -->
+<jasperReport name="orderInvoiceMock" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1b66a285-6ad6-4c81-a5ae-f61d70cbc40b">
+    <parameter name="INVOICE_NO" class="java.lang.String"/>
+    <parameter name="ORDER_NO" class="java.lang.String"/>
+    <parameter name="ISSUED_AT" class="java.lang.String"/>
+    <parameter name="MERCHANT_ID" class="java.lang.Integer"/>
+    <parameter name="MERCHANT_NAME" class="java.lang.String"/>
+    <parameter name="MERCHANT_USERNAME" class="java.lang.String"/>
+    <parameter name="MERCHANT_STATUS" class="java.lang.String"/>
+    <parameter name="SUBTOTAL" class="java.lang.Double"/>
+    <parameter name="VAT" class="java.lang.Double"/>
+    <parameter name="GRAND_TOTAL" class="java.lang.Double"/>
+    <parameter name="GENERATED_AT" class="java.lang.String"/>
+
+    <field name="itemId" class="java.lang.String"/>
+    <field name="description" class="java.lang.String"/>
+    <field name="quantity" class="java.lang.Integer"/>
+    <field name="unitCost" class="java.lang.Double"/>
+    <field name="total" class="java.lang.Double"/>
+
+    <title height="160" splitType="Stretch">
+        <element kind="staticText" uuid="b1f4f732-31b0-4cb2-83b9-1743fd2fd4e0" x="0" y="0" width="555" height="30" fontSize="22.0" bold="true" hTextAlign="Center">
+            <text><![CDATA[IPOS-CA Mock Order Invoice]]></text>
+        </element>
+        <element kind="textField" uuid="77f1512e-f5ea-479f-a2f8-c6ee3286e14f" x="0" y="38" width="270" height="18">
+            <expression><![CDATA["Invoice No: " + $P{INVOICE_NO}]]></expression>
+        </element>
+        <element kind="textField" uuid="1f4304bb-b535-436a-86f5-3f51d6e6ad48" x="285" y="38" width="270" height="18" hTextAlign="Right">
+            <expression><![CDATA["Order No: " + $P{ORDER_NO}]]></expression>
+        </element>
+        <element kind="textField" uuid="f5036f46-e9f0-4fc3-9b0f-76a89f311f53" x="0" y="58" width="270" height="18">
+            <expression><![CDATA["Issued At: " + $P{ISSUED_AT}]]></expression>
+        </element>
+        <element kind="textField" uuid="7b290ea8-c500-4d32-8251-d95dca95bcd2" x="285" y="58" width="270" height="18" hTextAlign="Right">
+            <expression><![CDATA["Generated At: " + $P{GENERATED_AT}]]></expression>
+        </element>
+
+        <element kind="staticText" uuid="2f58f141-1304-4429-a5d0-a561c14595de" x="0" y="84" width="555" height="20" bold="true">
+            <text><![CDATA[Merchant Details]]></text>
+        </element>
+        <element kind="textField" uuid="2d190d77-133d-42ec-8e93-c8ee17f42f1f" x="0" y="106" width="555" height="16">
+            <expression><![CDATA["Merchant ID: " + $P{MERCHANT_ID} + "    Name: " + $P{MERCHANT_NAME}]]></expression>
+        </element>
+        <element kind="textField" uuid="d53ad8bc-9ea7-4348-a1c8-4010d06ea13e" x="0" y="124" width="555" height="16">
+            <expression><![CDATA["Username: " + $P{MERCHANT_USERNAME} + "    Status: " + $P{MERCHANT_STATUS}]]></expression>
+        </element>
+    </title>
+
+    <columnHeader height="22">
+        <element kind="staticText" uuid="f5de4186-fb88-4f54-a020-c7174cf8cbc4" x="0" y="0" width="85" height="22" mode="Opaque" backcolor="#D6E5F7" hTextAlign="Center" bold="true">
+            <text><![CDATA[Item ID]]></text>
+        </element>
+        <element kind="staticText" uuid="f4c24476-6625-4449-be7f-76d31fe2e994" x="85" y="0" width="225" height="22" mode="Opaque" backcolor="#D6E5F7" hTextAlign="Center" bold="true">
+            <text><![CDATA[Description]]></text>
+        </element>
+        <element kind="staticText" uuid="8e79e142-c86f-4ef4-a89c-f6d4f7f50fe5" x="310" y="0" width="75" height="22" mode="Opaque" backcolor="#D6E5F7" hTextAlign="Center" bold="true">
+            <text><![CDATA[Quantity]]></text>
+        </element>
+        <element kind="staticText" uuid="4fef0dcc-e140-47eb-a0ba-45ecf6af64f6" x="385" y="0" width="85" height="22" mode="Opaque" backcolor="#D6E5F7" hTextAlign="Center" bold="true">
+            <text><![CDATA[Unit Cost]]></text>
+        </element>
+        <element kind="staticText" uuid="fd7193c5-08e4-4271-9502-9e1f82f1b5b9" x="470" y="0" width="85" height="22" mode="Opaque" backcolor="#D6E5F7" hTextAlign="Center" bold="true">
+            <text><![CDATA[Total]]></text>
+        </element>
+    </columnHeader>
+
+    <!-- Detail band repeats once per invoice line item (item, qty, price, total). -->
+    <detail>
+        <band height="20">
+            <element kind="textField" uuid="17b5c321-a0ed-4754-b7b4-9a0c6019a5ff" x="0" y="0" width="85" height="20">
+                <expression><![CDATA[$F{itemId}]]></expression>
+            </element>
+            <element kind="textField" uuid="48f7f8f8-a34f-4f97-af84-f2ef0f8040da" x="85" y="0" width="225" height="20">
+                <expression><![CDATA[$F{description}]]></expression>
+            </element>
+            <element kind="textField" uuid="09593c3d-178f-4f75-9956-a8372f32768d" x="310" y="0" width="75" height="20" hTextAlign="Right">
+                <expression><![CDATA[$F{quantity}]]></expression>
+            </element>
+            <element kind="textField" uuid="f33e98e9-8f97-43eb-805a-ba95dd53b4bc" x="385" y="0" width="85" height="20" hTextAlign="Right">
+                <expression><![CDATA[String.format("£%.2f", $F{unitCost})]]></expression>
+            </element>
+            <element kind="textField" uuid="d9966ca4-c9b9-4729-bfdd-2327c8f9af3a" x="470" y="0" width="85" height="20" hTextAlign="Right">
+                <expression><![CDATA[String.format("£%.2f", $F{total})]]></expression>
+            </element>
+        </band>
+    </detail>
+
+    <summary height="74">
+        <element kind="textField" uuid="0c36fcb7-8de4-4ac4-b874-19eff8af4d12" x="360" y="10" width="195" height="18" hTextAlign="Right">
+            <expression><![CDATA["Subtotal: " + String.format("£%.2f", $P{SUBTOTAL})]]></expression>
+        </element>
+        <element kind="textField" uuid="87192a79-8279-45c0-88bc-ad84f6d21b80" x="360" y="30" width="195" height="18" hTextAlign="Right">
+            <expression><![CDATA["VAT: " + String.format("£%.2f", $P{VAT})]]></expression>
+        </element>
+        <element kind="textField" uuid="ed722117-bc4e-4ba2-aa56-af03be267f1f" x="360" y="50" width="195" height="20" bold="true" hTextAlign="Right">
+            <expression><![CDATA["Grand Total: " + String.format("£%.2f", $P{GRAND_TOTAL})]]></expression>
+        </element>
+    </summary>
+</jasperReport>
