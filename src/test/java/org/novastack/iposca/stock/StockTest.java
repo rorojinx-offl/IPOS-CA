@@ -56,32 +56,20 @@ class StockTest {
     }
 
     @Test
-    @DisplayName("TC-01: Test to see if retail price before VAT is calculated correctly.")
+    @DisplayName("TC-01: retail price is derived from bulk cost plus markup")
     @Order(1)
-    void testCalculateRetailPriceBeforeVAT() {
-        String itemName = uniqueName("tc01_item");
-        Stock item = new Stock(
-                itemName,
-                StockEnums.ProductType.NON_IPOS.name(),
-                StockEnums.PackageType.BOX.name(),
-                StockEnums.UnitType.CAPS.name(),
-                1,
-                10.00f,
-                50,
-                10,
-                2
-        );
-        item.createItem(item);
-        stockIdsToCleanup.add(findStockIdByName(itemName));
+    void retailPriceFromMarkup() {
+        String name = uniqueName("tc01");
+        createStock(name, 10.0f, 50, 10, 2);
 
-        Stock saleView = findSaleViewByName(itemName);
-        assertEquals(15.00f, saleView.getBulkCost(), 0.001f);
+        Stock saleView = findSaleViewByName(name);
+        assertEquals(15.0f, saleView.getBulkCost(), 0.001f);
     }
 
     @Test
-    @DisplayName("TC-02: Test to see if final selling price including VAT is calculated correctly.")
+    @DisplayName("TC-02: report total includes VAT at configured rate")
     @Order(2)
-    void testCalculateFinalSellingPrice() throws Exception {
+    void vatIsAppliedToReportedTotal() throws Exception {
         backupVatConfig();
         setVatRate(20);
 
@@ -103,64 +91,41 @@ class StockTest {
         StockItem reportItem = findReportItemByName(itemName);
         float finalPrice = reportItem.getTotalStockValue() + reportItem.getVatAmount();
 
-        assertEquals(18.00f, finalPrice, 0.001f);
+        assertEquals(18.0f, finalPrice, 0.001f);
+        assertEquals(20.0f, reportItem.getVatRate(), 0.001f);
     }
 
     @Test
-    @DisplayName("TC-03: Test to see if zero mark-up keeps retail price equal to bulk cost.")
+    @DisplayName("TC-03: zero markup keeps sale price equal to bulk cost")
     @Order(3)
-    void testCalculateRetailPriceWithZeroMarkup() {
-        String itemName = uniqueName("tc03_item");
-        Stock item = new Stock(
-                itemName,
-                StockEnums.ProductType.NON_IPOS.name(),
-                StockEnums.PackageType.BOX.name(),
-                StockEnums.UnitType.CAPS.name(),
-                1,
-                12.00f,
-                0,
-                10,
-                2
-        );
-        item.createItem(item);
-        stockIdsToCleanup.add(findStockIdByName(itemName));
+    void zeroMarkupLeavesPriceUnchanged() {
+        String name = uniqueName("tc03");
+        createStock(name, 12.0f, 0, 4, 2);
 
-        Stock saleView = findSaleViewByName(itemName);
-        assertEquals(12.00f, saleView.getBulkCost(), 0.001f);
+        assertEquals(12.0f, findSaleViewByName(name).getBulkCost(), 0.001f);
     }
 
     @Test
-    @DisplayName("TC-04: Test to see if zero VAT keeps final selling price unchanged.")
+    @DisplayName("TC-04: with VAT at zero, final value does not change")
     @Order(4)
-    void testCalculateFinalSellingPriceWithZeroVAT() throws Exception {
+    void zeroVatMeansNoExtraCharge() throws Exception {
         backupVatConfig();
         setVatRate(0);
 
-        String itemName = uniqueName("tc04_item");
-        Stock item = new Stock(
-                itemName,
-                StockEnums.ProductType.NON_IPOS.name(),
-                StockEnums.PackageType.BOX.name(),
-                StockEnums.UnitType.CAPS.name(),
-                1,
-                20.00f,
-                0,
-                1,
-                1
-        );
-        item.createItem(item);
-        stockIdsToCleanup.add(findStockIdByName(itemName));
+        String name = uniqueName("tc04");
+        createStock(name, 20.0f, 0, 1, 1);
 
-        StockItem reportItem = findReportItemByName(itemName);
+        StockItem reportItem = findReportItemByName(name);
         float finalPrice = reportItem.getTotalStockValue() + reportItem.getVatAmount();
 
         assertEquals(reportItem.getTotalStockValue(), finalPrice, 0.001f);
+        assertEquals(0.0f, reportItem.getVatAmount(), 0.001f);
     }
 
     @Test
-    @DisplayName("TC-05: Test to see if retail price is greater than bulk cost when mark-up is applied.")
+    @DisplayName("TC-05: applying markup pushes retail above bulk cost")
     @Order(5)
-    void testRetailPriceIsGreaterThanBulkCost() {
+    void markupIncreasesRetail() {
         String itemName = uniqueName("tc05_item");
         Stock item = new Stock(
                 itemName,
@@ -177,70 +142,34 @@ class StockTest {
         stockIdsToCleanup.add(findStockIdByName(itemName));
 
         Stock saleView = findSaleViewByName(itemName);
-        assertTrue(saleView.getBulkCost() > 8.00f);
+        assertTrue(saleView.getBulkCost() > 8.0f);
     }
 
     @Test
-    @DisplayName("TC-06: Test to see if final selling price is greater than retail price when VAT is applied.")
+    @DisplayName("TC-06: final value is higher than retail when VAT is present")
     @Order(6)
-    void testFinalSellingPriceIsGreaterThanRetailPrice() throws Exception {
+    void vatMakesFinalHigherThanRetail() throws Exception {
         backupVatConfig();
         setVatRate(20);
 
-        String itemName = uniqueName("tc06_item");
-        Stock item = new Stock(
-                itemName,
-                StockEnums.ProductType.NON_IPOS.name(),
-                StockEnums.PackageType.BOX.name(),
-                StockEnums.UnitType.CAPS.name(),
-                1,
-                30.00f,
-                0,
-                1,
-                1
-        );
-        item.createItem(item);
-        stockIdsToCleanup.add(findStockIdByName(itemName));
+        String name = uniqueName("tc06");
+        createStock(name, 30.0f, 0, 1, 1);
 
-        StockItem reportItem = findReportItemByName(itemName);
+        StockItem reportItem = findReportItemByName(name);
         float finalPrice = reportItem.getTotalStockValue() + reportItem.getVatAmount();
 
         assertTrue(finalPrice > reportItem.getRetailPrice());
     }
 
     @Test
-    @DisplayName("TC-07: Test to see if low stock items are returned correctly.")
+    @DisplayName("TC-07: low-stock list contains only items at or under limit")
     @Order(7)
-    void testGetLowStockReturnsItemsAtOrBelowLimit() {
+    void lowStockFilter() {
         String lowName = uniqueName("tc07_low");
-        Stock lowStockItem = new Stock(
-                lowName,
-                StockEnums.ProductType.NON_IPOS.name(),
-                StockEnums.PackageType.BOX.name(),
-                StockEnums.UnitType.CAPS.name(),
-                1,
-                5.00f,
-                10,
-                2,
-                5
-        );
-        lowStockItem.createItem(lowStockItem);
-        stockIdsToCleanup.add(findStockIdByName(lowName));
+        createStock(lowName, 5.0f, 10, 2, 5);
 
         String healthyName = uniqueName("tc07_healthy");
-        Stock healthyItem = new Stock(
-                healthyName,
-                StockEnums.ProductType.NON_IPOS.name(),
-                StockEnums.PackageType.BOX.name(),
-                StockEnums.UnitType.CAPS.name(),
-                1,
-                5.00f,
-                10,
-                10,
-                5
-        );
-        healthyItem.createItem(healthyItem);
-        stockIdsToCleanup.add(findStockIdByName(healthyName));
+        createStock(healthyName, 5.0f, 10, 10, 5);
 
         List<Stock> lowStockList = Stock.getLowStock();
 
@@ -273,6 +202,22 @@ class StockTest {
                 .filter(item -> item.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Stock item not found in report view: " + name));
+    }
+
+    private void createStock(String name, float bulkCost, int markupRate, int quantity, int stockLimit) {
+        Stock item = new Stock(
+                name,
+                StockEnums.ProductType.NON_IPOS.name(),
+                StockEnums.PackageType.BOX.name(),
+                StockEnums.UnitType.CAPS.name(),
+                1,
+                bulkCost,
+                markupRate,
+                quantity,
+                stockLimit
+        );
+        item.createItem(item);
+        stockIdsToCleanup.add(findStockIdByName(name));
     }
 
     private void setVatRate(int rate) {
