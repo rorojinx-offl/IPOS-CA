@@ -9,23 +9,38 @@ import java.util.ArrayList;
 import static schema.tables.FixedDsc.FIXED_DSC;
 import static schema.tables.Customer.CUSTOMER;
 
+/**
+ * Class that handles fixed discount plans and is the child class of {@link DiscountPlans}.
+ * */
 public class FixedDiscountPlan implements DiscountPlans {
     private final int customerID;
     private final String customerName;
     private final int discountRate;
 
+    /**
+     * Constructor for FixedDiscountPlan class used for fetching all fixed discount plans.
+     * @param customerID The ID of the customer.
+     * @param discountRate The discount rate of the customer.
+     * @param customerName The name of the customer.
+     * */
     public FixedDiscountPlan(int customerID, int discountRate, String customerName) {
         this.customerID = customerID;
         this.discountRate = discountRate;
         this.customerName = customerName;
     }
 
+    /**
+     * Constructor for FixedDiscountPlan class used for adding a new fixed discount plan or editing an existing one.
+     * @param customerID The ID of the customer.
+     * @param discountRate The discount rate of the customer.
+     * */
     public FixedDiscountPlan(int customerID, int discountRate) {
         this.customerID = customerID;
         this.discountRate = discountRate;
         this.customerName = null;
     }
 
+    /** Default constructor for FixedDiscountPlan class.*/
     public FixedDiscountPlan() {customerID = 0; discountRate = 0; customerName = null;}
 
     @Override
@@ -43,8 +58,13 @@ public class FixedDiscountPlan implements DiscountPlans {
         return discountRate;
     }
 
+    /**
+     * Modifies the discount rate of a fixed discount plan.
+     * @param fixedPlan The fixed discount plan to modify.
+     * */
     @Override
     public void modifyRate(DiscountPlans fixedPlan) {
+        //As both discount plans share the same interface, we can use instanceof to check the type of the discount plan.
         if (fixedPlan instanceof FixedDiscountPlan) {
             DSLContext ctx = JooqConnection.getDSLContext();
             ctx.update(FIXED_DSC)
@@ -56,6 +76,10 @@ public class FixedDiscountPlan implements DiscountPlans {
         }
     }
 
+    /**
+     * Sets a discount rate for all fixed discount plans.
+     * @param newRate The new discount rate to set.
+     * */
     public static void modifyRateForAll(int newRate) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.update(FIXED_DSC)
@@ -63,6 +87,11 @@ public class FixedDiscountPlan implements DiscountPlans {
                 .execute();
     }
 
+    /**
+     * Just fetches the current discount rate of a fixed discount plan.
+     * @param id The ID of the customer whose discount rate is to be fetched.
+     * @return The current discount rate of the customer.
+     * */
     @Override
     public int getCurrentDiscountRate(int id) {
         DSLContext ctx = JooqConnection.getDSLContext();
@@ -72,8 +101,12 @@ public class FixedDiscountPlan implements DiscountPlans {
                 .fetchOneInto(Integer.class);
     }
 
+    /**
+     * Adds a new fixed discount plan to the database.
+     * */
     @Override
     public void addDiscount(DiscountPlans fixedPlan) {
+        //As both discount plans share the same interface, we can use instanceof to check the type of the discount plan.
         if (fixedPlan instanceof FixedDiscountPlan) {
             DSLContext ctx = JooqConnection.getDSLContext();
             ctx.insertInto(FIXED_DSC)
@@ -85,6 +118,10 @@ public class FixedDiscountPlan implements DiscountPlans {
         }
     }
 
+    /**
+     * Deletes a discount plan and is used for when discount plans are changed. As the table's schema deletes on cascade,
+     * this method isn't directly used for the removal of a customer.
+     * */
     @Override
     public void removeDiscount(int dID) {
         DSLContext ctx = JooqConnection.getDSLContext();
@@ -93,6 +130,11 @@ public class FixedDiscountPlan implements DiscountPlans {
                 .execute();
     }
 
+    /**
+     * Gets all fixed discount plans from the database.
+     * @return An {@link ArrayList} of {@link FixedDiscountPlan} objects.
+     * @throws DataAccessException If there is an error in the database operation.
+     * */
     @Override
     public ArrayList<DiscountPlans> getAllDiscounts() throws DataAccessException {
         ArrayList<DiscountPlans> fdps = new ArrayList<>();
