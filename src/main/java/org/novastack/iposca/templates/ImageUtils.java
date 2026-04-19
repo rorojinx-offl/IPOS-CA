@@ -11,8 +11,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+/**
+ * Utility class for handling image operations for the templates functionality.
+ * */
 public class ImageUtils {
+    //Image file
     private static File selectAFile;
+
+    /**
+     * Allows user to select an image file and display it in an {@link ImageView}.
+     * @param window The {@link Window} from which the file chooser will be displayed.
+     * @param imageView The {@link ImageView} to display the selected image.
+     * */
     public static void chooseImage(Window window, ImageView imageView) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");
@@ -29,6 +39,10 @@ public class ImageUtils {
         }
     }
 
+    /**
+     * Converts the selected image file to a byte array, suitable for storage as a BLOB in the database.
+     * @return {@code byte[]} representing the image file.
+     * */
     public static byte[] getImageBytes() throws IOException {
         if (selectAFile == null) {
             return null;
@@ -36,6 +50,11 @@ public class ImageUtils {
         return Files.readAllBytes(selectAFile.toPath());
     }
 
+    /**
+     * Loads an image from a {@code byte[]} array into an {@link ImageView}.
+     * @param image The {@code byte[]} array representing the image.
+     * @param imageView The {@link ImageView} to display the image.
+     * */
     public static void loadImage(byte[] image, ImageView imageView) {
         if (image == null || image.length == 0) {
             imageView.setImage(null);

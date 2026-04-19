@@ -119,6 +119,7 @@ public class TemplatesController implements Initializable {
     }
 
     private void getConfig(){
+        //Get config only if it isn't corrupted
         if(AppConfig.configExists()){
             name.setText(AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_NAME)));
             address.setText(AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_ADDRESS)));
