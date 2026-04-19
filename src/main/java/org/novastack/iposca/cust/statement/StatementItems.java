@@ -2,6 +2,9 @@ package org.novastack.iposca.cust.statement;
 
 import java.time.LocalDate;
 
+/**
+ * A java bean to hold the required statement data.
+ * */
 public class StatementItems {
     private String productName;
     private int quantity;

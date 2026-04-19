@@ -13,9 +13,26 @@ import java.util.Map;
 
 import static schema.tables.CustomerMonthlyBalance.CUSTOMER_MONTHLY_BALANCE;
 
+/**
+ * A utility class that handles and organises data required for generating monthly statements.
+ * */
 public class StatementService {
+    /**
+     * A record class that holds the required data for generating a monthly statement.
+     * @param customer The customer information.
+     * @param billingMonth The month of the billing cycle.
+     * @param balance The balance due for the customer.
+     * @param items The products bought with credit during the billing cycle.
+     * */
     public record StatementInfo(Customer customer, YearMonth billingMonth, float balance, ArrayList<StatementItems> items) {}
 
+    /**
+     * Records the amount of debt accrued by a customer in a specific month. It is used by {@link org.novastack.iposca.cust.debt.DebtAutomationService}
+     * at the end of each month.
+     * @param custID The ID of the customer.
+     * @param month The month of the billing cycle.
+     * @param balance The balance due for the customer.
+     * */
     public static void trackMonthlyDebt(int custID, YearMonth month, float balance) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.insertInto(CUSTOMER_MONTHLY_BALANCE)
@@ -25,6 +42,12 @@ public class StatementService {
                 .execute();
     }
 
+    /**
+     * When a debt gets absolved before the end of the month, there is no need for a statement, so delete the debt
+     * tracking data.
+     * @param custID The ID of the customer.
+     * @param month The month of the billing cycle.
+     * */
     public static void deleteMonthData(int custID, YearMonth month) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.deleteFrom(CUSTOMER_MONTHLY_BALANCE)
@@ -33,6 +56,10 @@ public class StatementService {
                 .execute();
     }
 
+    /**
+     * Get eligible customers for generating statements.
+     * @return An {@link ArrayList} of {@link Customer} objects.
+     * */
     public static ArrayList<Customer> getEligibleCustomers() {
         DSLContext ctx = JooqConnection.getDSLContext();
         ArrayList<Customer> customers = new ArrayList<>();
@@ -45,6 +72,18 @@ public class StatementService {
         return customers;
     }
 
+    /**
+     * A factory method that builds a {@link StatementInfo} object using data across several tables. First it gets
+     * monthly balance data for the customer, then it gets the products bought with credit during the billing cycle. Then,
+     * using {@link #convertSaleDataToStatementFormat(Map)} it flattens the sales data and converts into the
+     * {@link StatementItems} bean format. This allows the statement to have a flat list of all items purchased with
+     * credit during the billing cycle and tie them to a single customer. As a customer could've purchased multiple items
+     * with credit during the billing cycle, we collect it as an {@link ArrayList} of {@link StatementItems}. Finally,
+     * all the data collected is packaged into a {@link StatementInfo} object and returned.
+     * @param custID The ID of the customer.
+     * @param month The month of the billing cycle.
+     * @return A {@link StatementInfo} object containing the required data for generating a monthly statement.
+     * */
     public static StatementInfo buildStatementData(int custID, YearMonth month) {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.selectFrom(CUSTOMER_MONTHLY_BALANCE)
@@ -71,6 +110,16 @@ public class StatementService {
                 });
     }
 
+    /**
+     * Converts the sale data (which is in a {@link Map} format) into a {@link ArrayList} of {@link StatementItems}, which
+     * can be used to simply list all the products bought with credit during the billing cycle and link it all to a single
+     * customer. First, we iterate through the {@link Map}, which links a {@link org.novastack.iposca.sales.SaleService.Sale}
+     * to the products (an {@link ArrayList} of {@link org.novastack.iposca.sales.SaleService.SaleItem}) it sold. Then,
+     * we get the separate sale items from the sale object. Finally, we iterate through the sale items and add them to
+     * the {@link ArrayList} of {@link StatementItems} whilst recording the sale date.
+     * @param saleData A {@link Map} that links a {@link SaleService.Sale} to the products (an {@link ArrayList} of {@link SaleService.SaleItem})
+     * @return An {@link ArrayList} of {@link StatementItems} containing all the products bought with credit during the billing cycle.
+     * */
     private static ArrayList<StatementItems> convertSaleDataToStatementFormat(Map<SaleService.Sale, ArrayList<SaleService.SaleItem>> saleData) {
         ArrayList<StatementItems> items = new ArrayList<>();
 
