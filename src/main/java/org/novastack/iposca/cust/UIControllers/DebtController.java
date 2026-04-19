@@ -41,7 +41,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * JavaFX Controller class for the debt management screen.
+ * */
 public class DebtController implements Initializable {
+    /**
+     * Initialises the debt table ny fetching data from the database. Also sets up the search functionality.
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         refreshTable();
@@ -133,6 +139,9 @@ public class DebtController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Generates reminders for the selected customer. Has checks in place to ensure that it is appropriate to generate reminders.
+     * */
     @FXML
     void generateReminders(MouseEvent event) throws IOException, JRException {
         CustomerDebt cd = customerTable.getSelectionModel().getSelectedItem();
@@ -171,7 +180,9 @@ public class DebtController implements Initializable {
             new CommonCalls().openErrorDialog("Document Template not configured. Please contact your admin/manager to configure it.");
             return;
         }
+        //Convert customer debt info to a format for reminder PDF generation
         ReminderInfo info = ReminderInfo.setReminderInfo(cd, type);
+        //Use AppConfig and AppConfigAPI to get the merchant details
         ReminderInfo.Merchant merchant = new ReminderInfo.Merchant(
                 AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_NAME)),
                 AppConfigAPI.decodeByteToString(AppConfig.get(AppConfig.ConfigKey.MERCHANT_ADDRESS)),
@@ -179,10 +190,11 @@ public class DebtController implements Initializable {
                 AppConfig.get(AppConfig.ConfigKey.MERCHANT_LOGO));
 
         Path jrxml = Path.of("/jasper/cust/reminder.jrxml");
-        int remNumber = type.equals(CustomerEnums.ReminderType.FIRST) ? 1 : 2;
+        int remNumber = type.equals(CustomerEnums.ReminderType.FIRST) ? 1 : 2; //Resolve reminder type
         Path pdf = Path.of(Bootstrap.getDocsPath("reminders").toString(), "debt-reminder"+ remNumber +"-"+ cd.getCustomerID() +".pdf");
         ReminderFactory.generateReminder(info, merchant, type, pdf, jrxml);
 
+        //Depending on the type of reminder, update the automation state and record the generation of a reminder
         switch (type) {
             case FIRST -> {
                 CustomerDebt.setReminderDateStatus(cd.getCustomerID(), CustomerEnums.ReminderType.FIRST, cd.getDate1Reminder().toString(), CustomerEnums.ReminderStatus.SENT.name());
@@ -201,6 +213,9 @@ public class DebtController implements Initializable {
     }
 
 
+    /**
+     * Restores an in-default account to normal. Has checks in place to ensure that only managers can perform this action.
+     * */
     @FXML
     void manualAccountRestore(MouseEvent event) throws IOException {
         if (customerTable.getSelectionModel().getSelectedItem() == null || !customerTable.getSelectionModel().getSelectedItem().getCustStatus().equals(CustomerEnums.AccountStatus.IN_DEFAULT.name())) {

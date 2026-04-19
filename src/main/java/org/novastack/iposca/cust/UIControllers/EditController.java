@@ -154,6 +154,8 @@ public class EditController implements Initializable {
                 new CommonCalls().openErrorDialog(e.getMessage());
             }
 
+
+            //For discount plan changes, remove the former plan and add the new one.
             if (!(checkDSChange(id)) && (discountPlan.getValue().equals(CustomerEnums.DiscountPlan.FLEXIBLE.name()))) {
                 FixedDiscountPlan fdp = new FixedDiscountPlan();
                 fdp.removeDiscount(id);

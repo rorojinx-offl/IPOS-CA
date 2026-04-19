@@ -127,8 +127,10 @@ public class RepaymentController implements Initializable {
             CustomerPayment crp;
 
             if (methodChoice.getSelectionModel().getSelectedItem().equals(CustomerEnums.PaymentMethod.CASH.name())) {
+                //For cash simply record the payment.
                 crp = new CustomerPayment(customerID, Float.parseFloat(amount.getText()), LocalDate.now(), CustomerEnums.PaymentMethod.CASH.name());
             } else {
+                //For card, record the payment and also record the card details by parsing only the first 4 and last 4 digits.
                 String first4 = cardNo.getText().substring(0, 4);
                 String last4 = cardNo.getText().substring(cardNo.getText().length() - 4);
                 crp = new CustomerPayment(customerID, Float.parseFloat(amount.getText()), LocalDate.now(), CustomerEnums.PaymentMethod.CARD.name(), cardChoice.getSelectionModel().getSelectedItem(), first4, last4, cardExp.getValue().toString());
@@ -137,6 +139,7 @@ public class RepaymentController implements Initializable {
             crp.addRepayment(crp);
 
             Customer cus = new Customer().getCustomer(customerID);
+            //Ensure that after repayment, the customer's status is normal if they were previously suspended.
             if (cus.getStatus().equals(CustomerEnums.AccountStatus.SUSPENDED.name())) {
                 Customer.updateAccountStatus(customerID, CustomerEnums.AccountStatus.NORMAL.name());
             }
