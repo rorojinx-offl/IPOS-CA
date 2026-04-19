@@ -7,6 +7,9 @@ import org.novastack.iposca.utils.db.JooqConnection;
 import java.util.ArrayList;
 import static schema.tables.Stock.STOCK;
 
+/**
+ * A comprehensive class that manages the storage, retrieval and management of stock information.
+ * */
 public class Stock {
     private int id;
     private String name;
@@ -18,9 +21,37 @@ public class Stock {
     private int markupRate;
     private int quantity;
     private int stockLimit;
+    /**
+     * This record contains the data required to make a PU request to take stock from CA.
+     * @param id The ID of the stock item.
+     * @param quantity The quantity of stock to take.
+     * */
     public record PUStockRequest(int id, int quantity) {}
+    /**
+     * This record contains the data required to make a SA request to add/update stock in CA.
+     * @param name The name of the stock item.
+     * @param packageType The type of packaging for the stock item.
+     * @param units The units of the stock item.
+     * @param unitsInAPack The number of units in a single pack.
+     * @param bulkCost The bulk cost of the stock item.
+     * @param markupRate The markup rate of the stock item.
+     * @param quantity The quantity of stock to add/update.
+     * @param stockLimit The low stock level that triggers a warning.
+     * */
     public record SAStockRequest(String name, String packageType, String units , int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {}
 
+    /**
+     * Constructor for the Stock class that is used to create a new (non-IPOS) stock item.
+     * @param name The name of the stock item.
+     * @param productType The type of product (IPOS or non-IPOS, but usually always non-IPOS).
+     * @param packageType The type of packaging for the stock item.
+     * @param units The units of the stock item.
+     * @param unitsInAPack The number of units in a single pack.
+     * @param bulkCost The bulk cost of the stock item.
+     * @param markupRate The markup rate of the stock item.
+     * @param quantity The initial quantity of stock to add.
+     * @param stockLimit The low stock level that triggers a warning.
+     * */
     public Stock(String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {
         this.name = name;
         this.productType = productType;
@@ -33,6 +64,17 @@ public class Stock {
         this.stockLimit = stockLimit;
     }
 
+    /**
+     * Constructor for the Stock class that is used to add/update an IPOS stock item.
+     * @param name The name of the stock item.
+     * @param packageType The type of packaging for the stock item.
+     * @param units The units of the stock item.
+     * @param unitsInAPack The number of units in a single pack.
+     * @param bulkCost The bulk cost of the stock item.
+     * @param markupRate The markup rate of the stock item.
+     * @param quantity The initial/additional quantity of stock to add.
+     * @param stockLimit The low stock level that triggers a warning.
+     * */
     public Stock(String name, String packageType, String units, int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {
         this.name = name;
         this.packageType = packageType;
@@ -44,6 +86,19 @@ public class Stock {
         this.stockLimit = stockLimit;
     }
 
+    /**
+     * Constructor for the Stock class that is used to fetch all stock items (comprehensive) or low-stock items.
+     * @param id The ID of the stock item.
+     * @param name The name of the stock item.
+     * @param productType The type of product (IPOS or non-IPOS, but usually always non-IPOS).
+     * @param packageType The type of packaging for the stock item.
+     * @param units The units of the stock item.
+     * @param unitsInAPack The number of units in a single pack.
+     * @param bulkCost The bulk cost of the stock item.
+     * @param markupRate The markup rate of the stock item.
+     * @param quantity The initial quantity of stock to add.
+     * @param stockLimit The low stock level that triggers a warning.
+     * */
     public Stock(int id, String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int markupRate, int quantity, int stockLimit) {
         this.id=id;
         this.name = name;
@@ -57,6 +112,18 @@ public class Stock {
         this.stockLimit = stockLimit;
     }
 
+    /**
+     * Constructor for the Stock class that is used to edit a (non-IPOS) stock item.
+     * @param id The ID of the stock item.
+     * @param name The name of the stock item.
+     * @param productType The type of product (IPOS or non-IPOS, but usually always non-IPOS).
+     * @param packageType The type of packaging for the stock item.
+     * @param units The units of the stock item.
+     * @param unitsInAPack The number of units in a single pack.
+     * @param bulkCost The bulk cost of the stock item.
+     * @param quantity The initial quantity of stock to add.
+     * @param stockLimit The low stock level that triggers a warning.
+     * */
     public Stock(int id, String name, String productType, String packageType, String units, int unitsInAPack, float bulkCost, int quantity, int stockLimit) {
         this.id=id;
         this.name = name;
@@ -69,19 +136,36 @@ public class Stock {
         this.stockLimit = stockLimit;
     }
 
+    /**
+     * Constructor for the Stock class that is used to fetch markup rates.
+     * @param id The ID of the stock item.
+     * @param name The name of the stock item.
+     * @param markupRate The markup rate of the stock item.
+     * */
     public Stock(int id, String name, int markupRate) {
         this.id=id;
         this.name = name;
         this.markupRate = markupRate;
     }
 
+    /**
+     * Constructor for the Stock class that is used to fetch all products to display for sale.
+     * @param id The ID of the stock item.
+     * @param name The name of the stock item.
+     * @param bulkCost The bulk cost of the stock item.
+     * @param quantity The initial quantity of stock to add.
+     * */
     public Stock(int id, String name, float bulkCost, int quantity) {
         this.id = id;
         this.name = name;
         this.bulkCost = bulkCost;
         this.quantity = quantity;
     }
-    // create item entry and populate database
+
+    /**
+     * Adds a new non-IPOS stock item to the database.
+     * @param stock The stock item to be added.
+     * */
     public void createItem(Stock stock) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.insertInto(STOCK)
@@ -96,7 +180,13 @@ public class Stock {
                 .set(STOCK.STOCK_LIMIT, stock.getStockLimit())
                 .execute();
     }
-    // link between CA and SA
+
+    /**
+     * Adds or updates an IPOS stock item in the database. It is invoked by {@link org.novastack.iposca.http.Server}
+     * after a SA request following successful stock order.
+     * @param stock The stock item to be added or updated.
+     * @return HTTP status code in relation to rows affected. 200 if the item was added successfully, 404 if the item already exists.
+     * */
     public static int upsertIPOSItem(Stock stock) {
         DSLContext ctx = JooqConnection.getDSLContext();
 
@@ -122,6 +212,10 @@ public class Stock {
         }
     }
 
+    /**
+     * Fetches all stock items from the database and is used for displaying on the debt management screen.
+     * @return An {@link ArrayList} of {@link Stock} objects representing all stock items.
+     * */
     public static ArrayList<Stock> getAllStock() {
         ArrayList<Stock> inventory = new ArrayList<>();
         DSLContext ctx = JooqConnection.getDSLContext();
@@ -142,7 +236,8 @@ public class Stock {
 
         return inventory;
     }
-    // calculate retail price, and minimizes info shown (abstraction layer)
+
+
     public static ArrayList<Stock> getAllStockForSale() {
         ArrayList<Stock> inventory = new ArrayList<>();
         DSLContext ctx = JooqConnection.getDSLContext();
