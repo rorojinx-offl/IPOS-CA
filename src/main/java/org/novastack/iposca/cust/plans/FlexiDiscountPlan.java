@@ -1,6 +1,7 @@
 package org.novastack.iposca.cust.plans;
 
 import org.jooq.DSLContext;
+import org.jooq.exception.DataAccessException;
 import org.novastack.iposca.utils.db.JooqConnection;
 
 import java.time.YearMonth;
@@ -10,12 +11,21 @@ import static schema.tables.Customer.CUSTOMER;
 import static schema.tables.CustomerMonthlySpend.CUSTOMER_MONTHLY_SPEND;
 import static schema.tables.FlexiDsc.FLEXI_DSC;
 
+/**
+ * Class that handles flexible discount plans and is the child class of {@link DiscountPlans}.
+ * */
 public class FlexiDiscountPlan implements DiscountPlans {
     private final int customerID;
     private final String customerName;
     private final int discountRate;
     private final float custSpending;
 
+    /**
+     * Constructor for FlexiDiscountPlan class used for fetching all flexible discount plans.
+     * @param customerID The ID of the customer.
+     * @param discountRate The discount rate of the customer.
+     * @param customerName The name of the customer.
+     * */
     public FlexiDiscountPlan(int customerID, int discountRate, String customerName, float custSpending) {
         this.customerID = customerID;
         this.discountRate = discountRate;
@@ -23,6 +33,11 @@ public class FlexiDiscountPlan implements DiscountPlans {
         this.custSpending = custSpending;
     }
 
+    /**
+     * Constructor for FlexiDiscountPlan class used for adding a new flexible discount plan or editing an existing one.
+     * @param customerID The ID of the customer.
+     * @param discountRate The discount rate of the customer.
+     * */
     public FlexiDiscountPlan(int customerID, int discountRate) {
         this.customerID = customerID;
         this.discountRate = discountRate;
@@ -30,6 +45,7 @@ public class FlexiDiscountPlan implements DiscountPlans {
         this.custSpending = 0;
     }
 
+    /** Default constructor for FlexiDiscountPlan class.*/
     public FlexiDiscountPlan() {
         this.customerID = 0;
         this.discountRate = 0;
@@ -37,6 +53,11 @@ public class FlexiDiscountPlan implements DiscountPlans {
         this.custSpending = 0;
     }
 
+    /**
+     * Modifies the discount rate of a flexible discount plan. It is automatically invoked by {@link org.novastack.iposca.sales.SaleService}
+     * when a flexible discount plan customer meets the spending thresholds to increase their discount rate.
+     * @param flexiPlan The flexible discount plan to modify.
+     * */
     @Override
     public void modifyRate(DiscountPlans flexiPlan) {
         if (flexiPlan instanceof FlexiDiscountPlan) {
@@ -50,6 +71,9 @@ public class FlexiDiscountPlan implements DiscountPlans {
         }
     }
 
+    /**
+     * Adds a new flexible discount plan to the database.
+     * */
     @Override
     public void addDiscount(DiscountPlans flexiPlan) {
         if (flexiPlan instanceof FlexiDiscountPlan) {
@@ -62,6 +86,10 @@ public class FlexiDiscountPlan implements DiscountPlans {
         }
     }
 
+    /**
+     * Deletes a discount plan and is used for when discount plans are changed. As the table's schema deletes on cascade,
+     * this method isn't directly used for the removal of a customer.
+     * */
     @Override
     public void removeDiscount(int d) {
         DSLContext ctx = JooqConnection.getDSLContext();
@@ -70,6 +98,12 @@ public class FlexiDiscountPlan implements DiscountPlans {
                 .execute();
     }
 
+    /**
+     * Gets all flexible discount plans from the database. It also additionally retrieves the customer's name and
+     * their spending so that their discount rate can be viewed in relation to their spending.
+     * @return An {@link ArrayList} of {@link DiscountPlans} objects.
+     * @throws DataAccessException If there is an error in the database operation.
+     * */
     @Override
     public ArrayList<DiscountPlans> getAllDiscounts() {
         ArrayList<DiscountPlans> fdps = new ArrayList<>();

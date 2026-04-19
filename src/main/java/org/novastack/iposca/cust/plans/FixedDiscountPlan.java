@@ -132,7 +132,7 @@ public class FixedDiscountPlan implements DiscountPlans {
 
     /**
      * Gets all fixed discount plans from the database.
-     * @return An {@link ArrayList} of {@link FixedDiscountPlan} objects.
+     * @return An {@link ArrayList} of {@link DiscountPlans} objects.
      * @throws DataAccessException If there is an error in the database operation.
      * */
     @Override
