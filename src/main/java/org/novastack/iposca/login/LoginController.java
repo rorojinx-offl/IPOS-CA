@@ -83,6 +83,9 @@ public class LoginController implements Initializable {
 
         if (allFieldsFilled) {
             try {
+                /* Attempt a login with the Login class. If the user logs in with the password visible, that means
+                * we must get the plaintext from the naked password field. As for the node to pass in, we can pass in
+                * any UI element from this screen as they all share a stage anyway.*/
                 Login.login(uname, pwd.isEmpty() ? pwdNaked.getText() : pwd, username);
             } catch (Exception e) {
                 if (e instanceof AuthenticationException) {
