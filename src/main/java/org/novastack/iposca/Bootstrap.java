@@ -18,10 +18,19 @@ import java.util.function.BiConsumer;
 
 import static java.util.Map.entry;
 
+/**
+ * Class that handles the initialisation of the application.
+ * */
 public class Bootstrap {
     public static final Map<String, Path> docsPath = new HashMap<>();
     public static final int TOTAL_STEPS = 17;
 
+    /**
+     * Initialises the application by creating the database tables and setting up the docs path.
+     * @param progress A {@link BiConsumer} that is used to track the progress of the initialisation.
+     * @throws SQLException If an error occurs while connecting to the database.
+     * @throws IOException If an error occurs while setting up the docs path.
+     * */
     public static void init(BiConsumer<Integer, String> progress) throws SQLException, IOException {
         int step = 0;
 
@@ -35,6 +44,13 @@ public class Bootstrap {
         progress.accept(++step, "Starting server and session manager");
     }
 
+    /**
+     * Initialises the database by creating the tables.
+     * @param progress A {@link BiConsumer} that is used to track the progress of the initialisation.
+     * @param step The current step in the initialisation process.
+     * @return The updated step.
+     * @throws SQLException If an error occurs while connecting to the database.
+     * */
     private static int dbInit(BiConsumer<Integer, String> progress, int step) throws SQLException {
         Connection connection = new SQLiteConnection().getConnection();
         DDLEngine ddl = new DDLEngine();
@@ -84,6 +100,10 @@ public class Bootstrap {
         return step;
     }
 
+    /**
+     * Creates the paths for the different types of documents.
+     * @throws IOException If an error occurs while creating the directories.
+     * */
     private static void docsPathInit() throws IOException {
         String programData = System.getenv("ProgramData");
         Path base = (programData != null && !programData.isBlank())
@@ -127,6 +147,9 @@ public class Bootstrap {
         docsPath.putAll(docs);
     }
 
+    /**
+     * Checks the debt status of all customers and runs the debt automation service if necessary.
+     * */
     private static void debtCheck() {
         LocalDate date = LocalDate.now();
         int lastDayOfMonth = date.getMonth().maxLength();
