@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Java bean to hold the data for the Turnover Report*/
 public class TurnoverData {
     private LocalDate reportPeriodStart;
     private LocalDate reportPeriodEnd;

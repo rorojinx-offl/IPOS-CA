@@ -1,5 +1,6 @@
 package org.novastack.iposca.rpt.model;
 
+/** Java bean to hold the data for the Stock Availability Report*/
 public class StockItem {
     private int id;
     private String name;

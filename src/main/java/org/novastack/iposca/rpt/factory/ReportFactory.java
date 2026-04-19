@@ -18,10 +18,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Centralised factory class for generating reports for the RPT package using JasperReports.
+ * */
 public class ReportFactory {
-
-    private static final String REPORT_DIR = "generated-reports";
-
+    /**
+     * Generates a PDF turnover report.
+     * @param data The data required to generate the report.
+     * @param currentUser The user who generated the report.
+     * @return The generated PDF file URI.
+     * */
     public static File generateTurnoverReport(TurnoverData data, String currentUser) throws IOException, JRException {
         InputStream jrxml = ReportFactory.class.getResourceAsStream("/jasper/rpt/turnoverReport.jrxml");
         if (jrxml == null) {
@@ -52,6 +58,12 @@ public class ReportFactory {
         return new File(pdf.toUri());
     }
 
+    /**
+     * Generates a PDF debt report.
+     * @param data The data required to generate the report.
+     * @param currentUser The user who generated the report.
+     * @return The generated PDF file URI.
+     * */
     public static File generateDebtReport(DebtChangeData data, String currentUser) throws IOException, JRException {
         InputStream jrxml = ReportFactory.class.getResourceAsStream("/jasper/rpt/debtReport.jrxml");
         if (jrxml == null) {
@@ -87,6 +99,12 @@ public class ReportFactory {
         return new File(pdf.toUri());
     }
 
+    /**
+     * Generates a PDF stock availability report.
+     * @param items The stock items to generate the report for.
+     * @param currentUser The user who generated the report.
+     * @return The generated PDF file URI.
+     * */
     public static File generateStockReport(List<StockItem> items, String currentUser) throws IOException, JRException {
         InputStream jrxml = ReportFactory.class.getResourceAsStream("/jasper/rpt/stockReport.jrxml");
         if (jrxml == null) {
