@@ -105,9 +105,21 @@ public class SelectController implements Initializable {
     private final ObservableList<Stock> allProducts = FXCollections.observableArrayList();
     private ObservableList<SaleLine> cartItems = FXCollections.observableArrayList();
     private SaleService.CartMode currentMode;
-    public record Totals(float sum, float vat, float discount) {
-    }
+    /**
+     * A record that stores the 3 different totals: Cart Sum, Total with VAT and Total with Discounts.
+     * @param sum The sum of all the items in the cart.
+     * @param vat The sum of all the items in the cart multiplied by the VAT rate.
+     * @param discount The sum of all the items in the cart multiplied by the discount rate.
+     * */
+    public record Totals(float sum, float vat, float discount) {}
 
+    /**
+     * Receiver function that gets customer and cart mode from the parent. If the cart mode is MEMBER, then the customer
+     * has to be set. If the cart mode is GUEST, then the customer has to be null. Depending on the cart mode, the buttons
+     * are shown or hidden.
+     * @param cust The customer object.
+     * @param mode The cart mode.
+     * */
     public void receive(Customer cust, SaleService.CartMode mode) {
         switch (mode) {
             case MEMBER -> {
@@ -138,6 +150,9 @@ public class SelectController implements Initializable {
         }
     }
 
+    /**
+     * Another receiver function that gets the cart session from another scene.
+     * */
     public void cartCallback(SaleService.Callback cb) {
         if (cb != null) {
             customer = cb.customer();

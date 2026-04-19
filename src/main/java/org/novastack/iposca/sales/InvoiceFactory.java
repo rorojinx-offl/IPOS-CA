@@ -22,10 +22,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Factory class for generating invoices using JasperReports.
+ * */
 public class InvoiceFactory {
+    /**
+     * Record class for bundling data required to generate an invoice.
+     * @param items The items bought in the sale.
+     * @param customer The customer who bought the items.
+     * @param totals The total amount of the sale in 3 different categories: subtotal, VAT, and discount.
+     * @param cartMode The mode of the cart (member or guest).
+     * */
     public record InvoiceData(ArrayList<InvoiceItems> items, Customer customer, SelectController.Totals totals, SaleService.CartMode cartMode) {}
 
-    public static void generateInvoice(InvoiceData data, ReminderInfo.Merchant merchant) throws IOException, JRException, UnsupportedOperationException {
+    /**
+     * Factory method for generating invoices using JasperReports. This method can either produce a member invoice or
+     * a guest invoice depending on the cart mode. The difference between the two is the presence of the customer's
+     * details.
+     * @param data The data required to generate the invoice.
+     * @param merchant The merchant's details.
+     * @throws IOException If there is an error reading the JasperReport schema.
+     * @throws JRException If there is an error in the JasperReport compilation.
+     * */
+    public static void generateInvoice(InvoiceData data, ReminderInfo.Merchant merchant) throws IOException, JRException {
         InputStream jrxml = data.cartMode() == SaleService.CartMode.MEMBER ? InvoiceFactory.class.getResourceAsStream("/jasper/sales/purchaseInvoice.jrxml") : InvoiceFactory.class.getResourceAsStream("/jasper/sales/guestInvoice.jrxml");
         if (jrxml == null) {
             throw new IOException("Resource not found!");
@@ -45,6 +64,17 @@ public class InvoiceFactory {
         PDF.openPDF(pdf.toFile());
     }
 
+    /**
+     * The parent method for building the parameters for the JasperReport. This method is responsible for deciding which
+     * parameter-building method to use based on the cart mode. The reason for this is that the parameters for both schemas
+     * differ slightly.
+     * @param items The items bought in the sale.
+     * @param customer The customer who bought the items (if applicable).
+     * @param cartMode The mode of the cart (member or guest).
+     * @param merchant The merchant's details.
+     * @param totals The total amount of the sale in 3 different categories: subtotal, VAT, and discount.
+     * @return A {@link Map} of parameter names ({@link String}) to their respective values ({@link Object}).
+     * */
     private static Map<String, Object> buildParams(ArrayList<InvoiceItems> items, Customer customer, SaleService.CartMode cartMode, ReminderInfo.Merchant merchant, SelectController.Totals totals) {
         switch (cartMode) {
             case MEMBER -> {
@@ -57,6 +87,14 @@ public class InvoiceFactory {
         }
     }
 
+    /**
+     * The child method for building the parameters for the member invoice schema.
+     * @param items The items bought in the sale.
+     * @param customer The customer who bought the items.
+     * @param merchant The merchant's details.
+     * @param totals The total amount of the sale in 3 different categories: subtotal, VAT, and discount.
+     * @return A {@link Map} of parameter names ({@link String}) to their respective values ({@link Object}).
+     * */
     private static Map<String, Object> buildParamsForCust(ArrayList<InvoiceItems> items, Customer customer, ReminderInfo.Merchant merchant, SelectController.Totals totals) {
         Map<String, Object> params = new HashMap<>();
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(items);
@@ -84,6 +122,13 @@ public class InvoiceFactory {
         return params;
     }
 
+    /**
+     * The child method for building the parameters for the guest invoice schema.
+     * @param items The items bought in the sale.
+     * @param merchant The merchant's details.
+     * @param totals The total amount of the sale in 3 different categories: subtotal, VAT, and discount.
+     * @return A {@link Map} of parameter names ({@link String}) to their respective values ({@link Object}).
+     * */
     private static Map<String, Object> buildParamsForGuest(ArrayList<InvoiceItems> items, ReminderInfo.Merchant merchant, SelectController.Totals totals) {
         Map<String, Object> params = new HashMap<>();
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(items);

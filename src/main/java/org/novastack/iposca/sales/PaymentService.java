@@ -8,7 +8,18 @@ import org.novastack.iposca.exceptions.CreditPaymentException;
 
 import java.time.LocalDate;
 
+/**
+ * Class that processes payments
+ * */
 public class PaymentService {
+    /**
+     * Method that processes a credit payment. First we check if the customer is authorised to make a credit payment.
+     * Then we check if the customer has enough credits to make the payment. If so, we record the payment and update
+     * their debt.
+     * @param draft The draft sale to process.
+     * @param customer The customer to process the payment for.
+     * @throws CreditPaymentException If the customer is not authorised to make a credit payment, or if they don't have enough credits.
+     * */
     public static void processCreditPayment(SaleService.SaleDraft draft, Customer customer) throws CreditPaymentException {
         if (draft == null || customer == null) {
             throw new CreditPaymentException("Unable to process customer and sales data!");

@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import org.novastack.iposca.stock.Stock;
 
+/** Java bean that represents a line in a cart.*/
 public class SaleLine {
     private final ObjectProperty<Stock> product = new SimpleObjectProperty<>();
     private final IntegerProperty quantity = new SimpleIntegerProperty(1);

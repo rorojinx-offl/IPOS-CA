@@ -1,5 +1,8 @@
 package org.novastack.iposca.sales;
 
+/**
+ * Bean class that represents an item in an invoice
+ * */
 public class InvoiceItems {
     private String productName;
     private int quantity;

@@ -20,14 +20,58 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SaleService {
+    /**
+     * This record is a data class that represents a sale.
+     * @param saleID The ID of the sale.
+     * @param customerID The ID of the customer who made the sale.
+     * @param paymentMethod The payment method used for the sale.
+     * @param cardVendor The vendor of the credit card used for the sale.
+     * @param cardFirst4 The first 4 digits of the credit card used for the sale.
+     * @param cardLast4 The last 4 digits of the credit card used for the sale.
+     * @param cardExp The expiration date of the credit card used for the sale.
+     * @param saleDateTime The date and time of the sale.
+     * @param saleAmount The total amount of the sale.
+     * */
     public record Sale(Integer saleID, Integer customerID, String paymentMethod, String cardVendor, String cardFirst4, String cardLast4, YearMonth cardExp, LocalDateTime saleDateTime, float saleAmount) {}
+    /**
+     * This record is a data class that represents an item in a sale.
+     * @param saleItemID The ID of the sale item.
+     * @param saleID The ID of the sale the item belongs to.
+     * @param productID The ID of the product sold.
+     * @param quantity The quantity of the product sold.
+     * @param price The price of the product sold.
+     * @param subtotal The subtotal of the product sold (quantity * price).
+     * */
     public record SaleItem(Integer saleItemID, Integer saleID, int productID, int quantity, float price, float subtotal) {}
+    /**
+     * This record is a data class that represents a draft of a sale. It contains the necessary information to create a sale.
+     * @param customerID The ID of the customer who made the sale.
+     * @param items The items in the sale.
+     * @param totalAmount The total amount of the sale.
+     * @param totalWithTax The total amount of the sale with VAT.
+     * @param grandTotal The total amount of the sale after applying discounts (if applicable).
+     * */
     public record SaleDraft(Integer customerID, ArrayList<SaleItem> items, float totalAmount, float totalWithTax, float grandTotal) {}
+    /**
+     * This record is a data class that contains the session data for a sale.
+     * @param customer The customer who made the sale.
+     * @param cartSession The items in the cart session in a presentable JavaFX {@link ObservableList}.
+     * @param mode The mode of the cart (member or guest).
+     * */
     public record Callback(Customer customer, ObservableList<SaleLine> cartSession, CartMode mode) {}
+
+    /**
+     * An enum representing the mode of the cart (member or guest).
+     * */
     public enum CartMode {
         MEMBER, GUEST
     }
 
+    /**
+     * Records a sale in the database and returns the ID of the record so that it can be used to link products to a sale.
+     * @param sale The sale info to be recorded.
+     * @return The ID of the record.
+     * */
     public static int recordSale(Sale sale) {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.insertInto(SALE)
@@ -42,6 +86,10 @@ public class SaleService {
                 .returning(SALE.ID).fetchOne().getId();
     }
 
+    /**
+     * Records an item in a sale in the database.
+     * @param saleItem The sale item info to be recorded.
+     * */
     public static void recordSaleItem(SaleItem saleItem) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.insertInto(SALE_ITEM)
@@ -53,6 +101,16 @@ public class SaleService {
                 .execute();
     }
 
+    /**
+     * Fetches all sales made by a customer and its products in a specific month. We set a timebox between the beginning
+     * and end of the month to ensure that we only fetch sales that occurred within that month. Then we fetch a list of
+     * sales made during that month. If there were no sales made, we return null. Then we iterate through each sale,
+     * and in each iteration, we create a new {@link ArrayList} of {@link SaleItem}s, fetch all sale items for that sale,
+     * using the sale ID. Finally, we link the sale and its items to a {@link Map} and return it.
+     * @param customerID The ID of the customer.
+     * @param month The month to fetch sales for.
+     * @return A {@link Map} linking a {@link Sale} to a {@link ArrayList} of {@link SaleItem}s.
+     * */
     public static Map<Sale, ArrayList<SaleItem>> getSaleItems(int customerID, YearMonth month) {
         DSLContext ctx = JooqConnection.getDSLContext();
         LocalDateTime start = month.atDay(1).atStartOfDay().withSecond(0).withNano(0);
@@ -102,6 +160,12 @@ public class SaleService {
         return saleMap;
     }
 
+    /**
+     * Following a flexible discount holder's purchase, we check if the new expenditure rate warrants a change in
+     * the flexi rate.
+     * @param customer The customer who made the purchase.
+     * @param transactionAmount The amount of the purchase.
+     * */
     public static void checkFlexiRateChange(Customer customer, float transactionAmount) {
         if (customer.getDiscountPlan().equals(CustomerEnums.DiscountPlan.FLEXIBLE.name())) {
             int id = customer.getCustomerID();
