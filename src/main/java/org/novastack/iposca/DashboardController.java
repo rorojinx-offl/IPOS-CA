@@ -155,6 +155,12 @@ public class DashboardController implements Initializable {
                 new CommonCalls().openErrorDialog("Error opening URL in browser, please copy this link and paste it into the browser: " + url);
             }
         }
+
+        /* Below is the access for ORD if SA had fulfilled their deliverable.
+        if (session.hasAccess(user.getRole(), UserEnums.UserAccess.ORD)) {
+            Stage stage = (Stage) ordButton.getScene().getWindow();
+            new CommonCalls().traverse(stage, "/ui/ord/orderMenuMock.fxml", "Order Menu");
+        }*/
     }
 
     @FXML
