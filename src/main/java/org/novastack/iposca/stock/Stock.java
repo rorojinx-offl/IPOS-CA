@@ -237,7 +237,10 @@ public class Stock {
         return inventory;
     }
 
-
+    /**
+     * Fetches all the stock in a format that can be presented to the customer for sale.
+     * @return An {@link ArrayList} of {@link Stock} objects representing all stock items.
+     * */
     public static ArrayList<Stock> getAllStockForSale() {
         ArrayList<Stock> inventory = new ArrayList<>();
         DSLContext ctx = JooqConnection.getDSLContext();
@@ -255,7 +258,11 @@ public class Stock {
     private static float calcRetailPrice(float bulkCost, int markupRate) {
         return bulkCost * (1 + (markupRate / 100f));
     }
-    // collects all stock that is below a certain thresold, refrences stock limit column in the table
+
+    /**
+     * Collects all stock that is below a certain threshold, references stock limit column in the table.
+     * @return An {@link ArrayList} of {@link Stock} objects representing low stock items.
+     * */
     public static ArrayList<Stock> getLowStock() {
         ArrayList<Stock> inventory = new ArrayList<>();
         DSLContext ctx = JooqConnection.getDSLContext();
@@ -279,6 +286,10 @@ public class Stock {
         return inventory;
     }
 
+    /**
+     * Updates a non-IPOS product in the database.
+     * @param stock The stock item to be updated.
+     * */
     public void editStock(Stock stock) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.update(STOCK)
@@ -294,13 +305,21 @@ public class Stock {
                 .execute();
     }
 
-    public static int deleteItem(int itemId) {
+    /**
+     * Deletes a non-IPOS product from the database.
+     * @param itemId The ID of the stock item to be deleted.
+     * */
+    public static void deleteItem(int itemId) {
         DSLContext ctx = JooqConnection.getDSLContext();
-        return ctx.deleteFrom(STOCK)
+        ctx.deleteFrom(STOCK)
                 .where(STOCK.ITEM_ID.eq(itemId))
                 .execute();
     }
-    //
+
+    /**
+     * Fetches all the markup rates from the database.
+     * @return An {@link ArrayList} of {@link Stock} objects representing all stock items (markup rates only).
+     * */
     public static ArrayList<Stock> getAllMarkupRates() {
         DSLContext ctx = JooqConnection.getDSLContext();
         ArrayList<Stock> inventory = new ArrayList<>();
@@ -314,6 +333,11 @@ public class Stock {
         return inventory;
     }
 
+    /**
+     * Changes markup rate for a specified product.
+     * @param id The ID of the product whose markup rate is to be changed.
+     * @param markupRate The new markup rate to be applied.
+     * */
     public static void changeMarkupRate(int id, int markupRate) {
         DSLContext ctx = JooqConnection.getDSLContext();
         ctx.update(STOCK)
@@ -321,7 +345,13 @@ public class Stock {
                 .where(STOCK.ITEM_ID.eq(id))
                 .execute();
     }
-    // link to PU and Sales-CA package, decrments only since incrementation occurs in upsertItem
+
+    /**
+     * Used in sales within CA POS and PU, to deduct stock after a successful purchase.
+     * @param productID The ID of the product to be deducted.
+     * @param quantity The quantity of stock to be deducted.
+     * @return HTTP status code in relation to rows affected. 200 if the stock was successfully deducted, 404 if the stock is insufficient.
+     * */
     public static int minusStock(int productID, int quantity) {
         DSLContext ctx = JooqConnection.getDSLContext();
         int rowsUpdated = ctx.update(STOCK)
@@ -337,6 +367,10 @@ public class Stock {
         }
     }
 
+    /**
+     * Gets product name from the database based on product ID.
+     * @param productID The ID of the product whose name is to be fetched.
+     * */
     public static String getProductName(int productID) {
         DSLContext ctx = JooqConnection.getDSLContext();
         return ctx.selectFrom(STOCK).where(STOCK.ITEM_ID.eq(productID)).fetchOne().getValue(STOCK.NAME);
