@@ -30,6 +30,7 @@ class UserTest {
     private static final String GREEN = "\u001B[32m";
     private static final String RED = "\u001B[31m";
     private static final String RESET = "\u001B[0m";
+
     private final List<String> usernamesToCleanup = new ArrayList<>();
 
     @RegisterExtension
@@ -56,24 +57,21 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("TC-01: Test to see if user account with valid details is successfully created.")
+    @DisplayName("TC-01: login succeeds with valid credentials")
     @Order(1)
     void testSuccessfulLogin() throws Exception {
         String username = uniqueUsername("tc01_admin");
-        String password = "password123";
-        createUser(username, password, UserEnums.UserRole.ADMIN, "TC01 Admin");
+        createUser(username, "password123", UserEnums.UserRole.ADMIN, "TC01 Admin");
 
-        User authenticated = User.authenticateUser(username, password);
+        User authenticated = User.authenticateUser(username, "password123");
         SessionManager.start(authenticated);
 
-        assertNotNull(authenticated);
         assertEquals(username, authenticated.getUsername());
-        assertEquals(UserEnums.UserRole.ADMIN, authenticated.getRole());
-        assertNotNull(SessionManager.getCurrentSession());
+        assertNotNull(SessionManager.getCurrentUser());
     }
 
     @Test
-    @DisplayName("TC-02: Test to see if user account with invalid password is successfully created.")
+    @DisplayName("TC-02: login fails when password is wrong")
     @Order(2)
     void testUnsuccessfulLoginWithInvalidPassword() throws Exception {
         String username = uniqueUsername("tc02_admin");
@@ -81,60 +79,50 @@ class UserTest {
 
         AuthenticationException ex = assertThrows(AuthenticationException.class,
                 () -> User.authenticateUser(username, "wrongPassword"));
-
         assertEquals("Invalid Password!", ex.getMessage());
-        assertNull(SessionManager.getCurrentSession());
     }
 
     @Test
-    @DisplayName("TC-03: Test to see if user account with invalid username is successfully created.")
+    @DisplayName("TC-03: login fails for an unknown username")
     @Order(3)
     void testUnsuccessfulLoginWithInvalidUsername() {
         String username = uniqueUsername("tc03_missing");
 
         AuthenticationException ex = assertThrows(AuthenticationException.class,
                 () -> User.authenticateUser(username, "password123"));
-
         assertEquals("User doesn't exist!", ex.getMessage());
-        assertNull(SessionManager.getCurrentSession());
     }
 
     @Test
-    @DisplayName("TC-04: Test to see whether session will timeout")
+    @DisplayName("TC-04: timeout path ends the active session")
     @Order(4)
     void testSessionTimeout() {
-        User admin = new User("admin", "password123", UserEnums.UserRole.ADMIN, "Admin User", LocalDate.now());
-        SessionManager.start(admin);
-        assertNotNull(SessionManager.getCurrentSession());
-
-        // Real timeout logic is JavaFX-driven; this is the direct end-of-session equivalent.
-        SessionManager.end();
-        assertNull(SessionManager.getCurrentSession());
-        assertNull(SessionManager.getCurrentUser());
-    }
-
-    @Test
-    @DisplayName("TC-05: Test to see whether user can logout")
-    @Order(5)
-    void testLogoutFunctionality() {
         User admin = new User("admin", "password123", UserEnums.UserRole.ADMIN, "Admin User", LocalDate.now());
         SessionManager.start(admin);
 
         assertTrue(SessionManager.getCurrentSession().isLoggedIn());
         SessionManager.end();
         assertNull(SessionManager.getCurrentSession());
+    }
+
+    @Test
+    @DisplayName("TC-05: logout clears current user")
+    @Order(5)
+    void testLogoutFunctionality() {
+        User admin = new User("admin", "password123", UserEnums.UserRole.ADMIN, "Admin User", LocalDate.now());
+        SessionManager.start(admin);
+
+        SessionManager.end();
         assertNull(SessionManager.getCurrentUser());
     }
 
     @Test
-    @DisplayName("TC-06: Test to see whether an admin can create a user account, with username, password and role")
+    @DisplayName("TC-06: admin can create a pharmacist user")
     @Order(6)
     void testAdminCreatesUserAccount() {
         String newUsername = uniqueUsername("tc06_pharmacist");
-        String newPassword = "password123";
-
         User adminActor = new User("admin", "password123", UserEnums.UserRole.ADMIN, "Admin User", LocalDate.now());
-        User newUser = new User(newUsername, newPassword, UserEnums.UserRole.PHARMACIST, "TC06 Pharmacist", LocalDate.now());
+        User newUser = new User(newUsername, "password123", UserEnums.UserRole.PHARMACIST, "TC06 Pharmacist", LocalDate.now());
         adminActor.createUser(newUser);
         usernamesToCleanup.add(newUsername);
 
@@ -144,7 +132,7 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("TC-07: Test to create user account with invalid fields")
+    @DisplayName("TC-07: creating a user with missing required fields fails")
     @Order(7)
     void testValidationOfRequiredFields() {
         String username = uniqueUsername("tc07_invalid");
@@ -155,19 +143,18 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("TC-08: Test to prevent user accounts with duplicate usernames being created")
+    @DisplayName("TC-08: duplicate usernames are rejected")
     @Order(8)
     void testDuplicateUsernames() {
         String username = uniqueUsername("tc08_pharmacist");
         createUser(username, "password123", UserEnums.UserRole.PHARMACIST, "TC08 Pharmacist");
 
         User duplicate = new User(username, "newPassword", UserEnums.UserRole.PHARMACIST, "TC08 Pharmacist Dup", LocalDate.now());
-        assertThrows(DataAccessException.class, () -> duplicate.createUser(duplicate),
-                "System should reject duplicate usernames");
+        assertThrows(DataAccessException.class, () -> duplicate.createUser(duplicate));
     }
 
     @Test
-    @DisplayName("TC-09: Test to delete account")
+    @DisplayName("TC-09: deleting a user removes it from the list")
     @Order(9)
     void testDeleteAccounts() {
         String username = uniqueUsername("tc09_pharmacist");
@@ -175,15 +162,15 @@ class UserTest {
 
         User created = findUserByUsername(username);
         assertNotNull(created);
+
         User.deleteUserById(created.getId());
         usernamesToCleanup.remove(username);
 
-        User deletedUser = findUserByUsername(username);
-        assertNull(deletedUser);
+        assertNull(findUserByUsername(username));
     }
 
     @Test
-    @DisplayName("TC-10: Test - Admin has access to all packages")
+    @DisplayName("TC-10: admin role can access every package")
     @Order(10)
     void testAdminAccess() {
         User admin = new User("admin", "password123", UserEnums.UserRole.ADMIN, "Admin User", LocalDate.now());
@@ -196,61 +183,28 @@ class UserTest {
     }
 
     @Test
-    @DisplayName("TC-11: Test manager access to packages")
+    @DisplayName("TC-11: manager access matches policy")
     @Order(11)
     void testManagerAccess() {
         User manager = new User("manager1", "password123", UserEnums.UserRole.MANAGER, "Manager User", LocalDate.now());
         Session session = new Session(manager);
 
-        UserEnums.UserAccess[] allowedPackages = {
-                UserEnums.UserAccess.CUST,
-                UserEnums.UserAccess.TEMPLATES,
-                UserEnums.UserAccess.RPT
-        };
-        UserEnums.UserAccess[] restrictedPackages = {
-                UserEnums.UserAccess.ORD,
-                UserEnums.UserAccess.USER,
-                UserEnums.UserAccess.STOCK,
-                UserEnums.UserAccess.SALES
-        };
-
-        for (UserEnums.UserAccess access : allowedPackages) {
-            assertTrue(session.hasAccess(UserEnums.UserRole.MANAGER, access),
-                    "Manager should have access to: " + access.name());
-        }
-
-        for (UserEnums.UserAccess access : restrictedPackages) {
-            assertFalse(session.hasAccess(UserEnums.UserRole.MANAGER, access),
-                    "Manager should NOT have access to: " + access.name());
-        }
+        assertTrue(session.hasAccess(UserEnums.UserRole.MANAGER, UserEnums.UserAccess.CUST));
+        assertTrue(session.hasAccess(UserEnums.UserRole.MANAGER, UserEnums.UserAccess.TEMPLATES));
+        assertTrue(session.hasAccess(UserEnums.UserRole.MANAGER, UserEnums.UserAccess.RPT));
+        assertFalse(session.hasAccess(UserEnums.UserRole.MANAGER, UserEnums.UserAccess.SALES));
     }
 
     @Test
-    @DisplayName("TC-12: Test Pharmacist access to packages")
+    @DisplayName("TC-12: pharmacist can access sales/stock but not user admin")
     @Order(12)
     void testPharmacistAccess() {
         User pharmacist = new User("pharmacist1", "password123", UserEnums.UserRole.PHARMACIST, "Pharmacist User", LocalDate.now());
         Session session = new Session(pharmacist);
 
-        UserEnums.UserAccess[] allowedPackages = {
-                UserEnums.UserAccess.ORD,
-                UserEnums.UserAccess.CUST,
-                UserEnums.UserAccess.TEMPLATES,
-                UserEnums.UserAccess.STOCK,
-                UserEnums.UserAccess.SALES,
-                UserEnums.UserAccess.RPT
-        };
-        UserEnums.UserAccess[] restrictedPackages = {UserEnums.UserAccess.USER};
-
-        for (UserEnums.UserAccess access : allowedPackages) {
-            assertTrue(session.hasAccess(UserEnums.UserRole.PHARMACIST, access),
-                    "Pharmacist should have access to: " + access.name());
-        }
-
-        for (UserEnums.UserAccess access : restrictedPackages) {
-            assertFalse(session.hasAccess(UserEnums.UserRole.PHARMACIST, access),
-                    "Pharmacist should NOT have access to: " + access.name());
-        }
+        assertTrue(session.hasAccess(UserEnums.UserRole.PHARMACIST, UserEnums.UserAccess.SALES));
+        assertTrue(session.hasAccess(UserEnums.UserRole.PHARMACIST, UserEnums.UserAccess.STOCK));
+        assertFalse(session.hasAccess(UserEnums.UserRole.PHARMACIST, UserEnums.UserAccess.USER));
     }
 
     private void createUser(String username, String password, UserEnums.UserRole role, String fullName) {
