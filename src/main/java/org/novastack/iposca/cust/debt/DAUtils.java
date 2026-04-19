@@ -17,6 +17,8 @@ import static schema.tables.CustomerDebt.CUSTOMER_DEBT;
 public class DAUtils {
     /**
      * Record that stores the customer ID and balance of a debt that requires a state change.
+     * @param customerID The ID of the customer.
+     * @param balance The balance of the customer.
      * */
     protected record DebtWarrant(int customerID, float balance) {}
 
